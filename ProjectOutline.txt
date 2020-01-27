@@ -1,0 +1,27 @@
+Goal:
+ - steal a helicopter and escape
+Levels:
+ - 3 levels
+ - second level boss can be killed to lower difficulty of last level
+ - timed escape on final level
+Currency:
+ - gain money when destroying enemies
+Resources:
+Upgrades:
+ - damage
+ - health
+ - shield
+ - speed
+Power-ups:
+ - slow motion
+ - constantly shooting and shield
+Hazards:
+ - falling rocks
+ - turrets
+Enemies:
+ - other helicopters
+ - one boss on second level
+Weapon:
+ - gun shoots to the sides
+ - activatable shield with energy level
+ - drop bombs
