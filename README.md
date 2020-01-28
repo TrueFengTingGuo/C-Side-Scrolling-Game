@@ -15,7 +15,7 @@ Note that there are no requirements relating to art or other assets. Use free, e
 
 
 
-Technical requirements.
+### Technical requirements.
 
 1. Written in C++ using OpenGL to render; readable code with no fatal bugs.
 
@@ -39,7 +39,7 @@ Technical requirements.
 
 10. At least two instances of particle systems used.
 
-Gameplay requirements.
+### Gameplay requirements.
 
 0. Side-scrolling underground action-helicopter game!
 
