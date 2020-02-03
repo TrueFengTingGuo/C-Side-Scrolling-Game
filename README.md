@@ -1,6 +1,8 @@
 # COMP-2501-Project
  platformer-like game in which a player controls a helicopter navigating a constrained environment of some kind, such as a series of underground passages. You can draw inspiration from the action game "Fort Apocalypse"
 
+## Project Proposal
+https://docs.google.com/document/d/11w8i67usC2qqwpQjNIjQBj_gado-Njf7UBycqj7xNZw/edit?usp=sharing
 
 ## Project Requirements
 The project has both technical requirements (restrictions on how you do things and requirements for things that must be included) and gameplay requirements (things that you need to incorporate into the game somehow). Note that this list identifies the bare minimum; projects that contain all required elements but remain uninspired or incomplete will not be received well. Here is a rule of thumb: treating the requirements as a checklist, and minimally meeting all of them, will result in an overall grade of D+.  Use the project as a chance to show off your skills and make something creative and interesting.
