@@ -25,3 +25,4 @@ Weapon:
  - gun shoots to the sides
  - activatable shield with energy level
  - drop bombs
+ -
