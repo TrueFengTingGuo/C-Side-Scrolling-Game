@@ -1,0 +1,38 @@
+Useful git commands
+
+git pull
+pull newest repo from github
+
+git branch
+check which branch you are currently at
+
+git branch -a 
+check all the branch you have
+
+git checkout -b <branch name>
+create local git branch
+
+git status
+check the local files that are different from the files in master branch
+
+git add <file>
+add local file to remote branch
+
+git commit  -m “comments”
+commit changes with comments
+
+git push origin <branch name>
+push all the changes to remote branch
+
+
+Steps/processes that I work on git
+Assume you are already in your remote branch 
+
+1.  git pull
+2. Edit your code in your branch
+3. git status
+4. git add <...>
+5. git commit -m “....”
+6. git push origin <....>
+
+
