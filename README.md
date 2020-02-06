@@ -4,6 +4,9 @@
 ## Project Proposal
 https://docs.google.com/document/d/11w8i67usC2qqwpQjNIjQBj_gado-Njf7UBycqj7xNZw/edit?usp=sharing
 
+## Project UML
+https://docs.google.com/document/d/1wq5VrmR4vyvCo-xW_HNXjncdMQe2wXcfluBDSPRP2ZY/edit?usp=sharing
+
 ## Schedule
 
 ### Feb 12:
