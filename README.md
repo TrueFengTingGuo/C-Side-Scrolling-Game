@@ -4,6 +4,9 @@
 ## Project Proposal
 https://docs.google.com/document/d/11w8i67usC2qqwpQjNIjQBj_gado-Njf7UBycqj7xNZw/edit?usp=sharing
 
+## Project UML
+https://www.lucidchart.com/invitations/accept/f35ba023-22c0-452e-ad85-32691fd5d11b
+
 ## Schedule
 
 ### Feb 12:
