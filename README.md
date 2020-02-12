@@ -5,7 +5,7 @@
 https://docs.google.com/document/d/11w8i67usC2qqwpQjNIjQBj_gado-Njf7UBycqj7xNZw/edit?usp=sharing
 
 ## Project UML
-https://docs.google.com/document/d/1wq5VrmR4vyvCo-xW_HNXjncdMQe2wXcfluBDSPRP2ZY/edit?usp=sharing
+https://www.lucidchart.com/invitations/accept/f35ba023-22c0-452e-ad85-32691fd5d11b
 
 ## Schedule
 
