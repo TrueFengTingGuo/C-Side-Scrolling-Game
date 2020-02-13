@@ -1,1 +1,0 @@
-You may need to right click your solution and select "Retarget solution".
