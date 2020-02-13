@@ -10,10 +10,10 @@ https://www.lucidchart.com/invitations/accept/f35ba023-22c0-452e-ad85-32691fd5d1
 ## Schedule
 
 ### Feb 12:
-- [ ] UML
+- [X] UML
 - [ ] Plan more specifics
 - [ ] Find sprites for all entities
-- [ ] Map design/layout
+- [X] Map design/layout
 ### Feb 19:
 - [ ] Collision
 - [ ] Player class (movement, shooting bullets, dropping bombs, stats)
