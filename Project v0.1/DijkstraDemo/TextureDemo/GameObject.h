@@ -10,7 +10,7 @@
 
 class GameObject {
 public:
-	GameObject(glm::vec3 &entityPosition, GLuint entityTexture, GLint entityNumElements);
+	GameObject(glm::vec3& entityPosition, GLuint entityTexture, GLint entityNumElements, std::string myType);
 
 	// Updates the GameObject's state. Can be overriden for children
 	virtual void update(double deltaTime);
