@@ -164,6 +164,7 @@
     <ClCompile Include="FileUtils.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Store.cpp" />
+    <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +179,7 @@
     <ClInclude Include="FileUtils.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Store.h" />
+    <ClInclude Include="Weapon.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>

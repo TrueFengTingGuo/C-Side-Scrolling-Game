@@ -5,11 +5,12 @@
 	The update method is virtual, so you can inherit from GameObject and override the update functionality (see PlayerGameObject for reference)
 */
 
-GameObject::GameObject(glm::vec3 &entityPosition, GLuint entityTexture, GLint entityNumElements) {
+GameObject::GameObject(glm::vec3 &entityPosition, GLuint entityTexture, GLint entityNumElements,std::string newType) {
 	position = entityPosition;
 	texture = entityTexture;
 	numElements = entityNumElements;
 	velocity = glm::vec3(0.0f, 0.0f, 0.0f);
+	type = newType;
 }
 
 // Updates the GameObject's state. Can be overriden for children

@@ -1,5 +1,43 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(459,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (TextureDemo.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  AliveGameObject.cpp
   Enemy.cpp
+  Graph.cpp
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\Graph.cpp(42,48): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\Graph.cpp(43,50): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\Graph.cpp(58,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\Graph.cpp(59,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\Graph.cpp(62,14): warning C4018: '<': signed/unsigned mismatch
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\Graph.cpp(72,14): warning C4018: '<': signed/unsigned mismatch
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\Graph.cpp(83,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\Graph.cpp(84,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\Graph.cpp(119,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\Graph.cpp(187,18): warning C4018: '>=': signed/unsigned mismatch
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\Graph.cpp(212,18): warning C4018: '>=': signed/unsigned mismatch
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\Graph.cpp(238,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\Graph.cpp(239,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\Graph.cpp(285,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\Graph.cpp(286,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\Graph.cpp(291,9): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\Graph.cpp(292,9): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\Graph.cpp(295,28): warning C4018: '>=': signed/unsigned mismatch
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\Graph.cpp(312,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\Graph.cpp(321,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\Graph.cpp(364,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\Graph.cpp(365,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\Graph.cpp(391,21): warning C4018: '<': signed/unsigned mismatch
+  PlayerGameObject.cpp
+  GameObject.cpp
+  GLM: rotate function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  main.cpp
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(143,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(144,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(184,18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(185,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(191,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(214,23): warning C4018: '<': signed/unsigned mismatch
+  Store.cpp
+  Weapon.cpp
+  Generating Code...
   SOIL.lib(SOIL.obj) : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
 LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library

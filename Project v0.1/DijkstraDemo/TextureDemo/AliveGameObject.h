@@ -4,7 +4,7 @@ class AliveGameObject :
 	public GameObject
 {
 public:
-	AliveGameObject(glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, float newHealth, float newDamage, int newLevel);
+	AliveGameObject(glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string newType,float newHealth, float newDamage, int newLevel);
 
 	void setLevel(int newLevel) {
 		hp += newLevel * growingHealth;

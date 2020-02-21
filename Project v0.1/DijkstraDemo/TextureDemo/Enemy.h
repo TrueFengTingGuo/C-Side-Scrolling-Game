@@ -6,7 +6,7 @@ class Enemy :public AliveGameObject
 {
 
 public:
-	Enemy(glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, float newHealth, float newDamage, int newLevel, float newSpottingRange, PlayerGameObject* playerReference);
+	Enemy(glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string newType,float newHealth, float newDamage, int newLevel, float newSpottingRange, PlayerGameObject* playerReference);
 
 protected:
 	float spottingRange;
