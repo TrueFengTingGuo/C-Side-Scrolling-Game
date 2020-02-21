@@ -17,6 +17,7 @@
 #include "PlayerGameObject.h"
 #include "Graph.h"
 #include "Node.h"
+#include "Store.h"
 
 float mult = 2.75; //play with this if you want a bigger or smaller graph but still framed the same
 
@@ -144,12 +145,12 @@ int main(void){
 
 		////////////////////////////These will be implemented ////////////////////////////
 		//Map gameMap;
-		//Store gameStore;
+		
 
-		//PlayerGameObject player = PlayerGameObject(gameStore,"Player",...... anything else?);
+		//PlayerGameObject(,"Player",...... anything else?);
+		//Store* gameStore = Store(glm::vec3(0.0f), tex[0], size, );
 		//gameObjects.push_back(player);
-		//gameMap.setReferenceOfPlayer(&player)
-		//gameStore.setReferenceOfPlayer(&player)
+		
 
 
 
@@ -183,8 +184,7 @@ int main(void){
 			wid = 4 * mod -1;
 			height = 3 * mod -1;
 			
-			////////////////////////////implements////////////////////////
-			//gameobjects Collision
+			
 
 
 			// Update and render all game objects
@@ -209,6 +209,16 @@ int main(void){
 				*/
 
 				currentGameObject->update(deltaTime);
+
+				//gameobjects Collision
+				for (int j = 0; j < gameObjects.size(); j++) {
+					GameObject* otherGameObjects = gameObjects[j];
+					float distance = glm::length(currentGameObject->getPosition() - otherGameObjects->getPosition());
+					if (distance < 1.0f) {
+
+					}
+
+				}
 
 				//reset color uniform.
 				GLint color_loc = glGetUniformLocation(shader.getShaderID(), "colorMod");
