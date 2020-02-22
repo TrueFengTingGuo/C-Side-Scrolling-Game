@@ -110,6 +110,22 @@ void setallTexture(void){
 	glBindTexture(GL_TEXTURE_2D, tex[0]);
 }
 
+//set all starting gameobjects which will not be deleted after refreshing the map
+void setAllStartingGameObject() {
+
+	PlayerGameObject* player = new PlayerGameObject(glm::vec3(0.0f), tex[0], 6, "Player", 100.0f, 10.0f, 0);
+	gameObjects.push_back(player);
+	gameObjects.push_back(new Store(glm::vec3(0.0f), tex[0], 6,"Store", player));
+
+}
+
+//this function should reload the map depends on the player gameobject
+//do nothing if there is no need to reload
+void ReloadingMap() {
+
+	/////////////////////////// implement plz ////////////////////////////////
+}
+
 
 // Main function that builds and runs the game
 int main(void){
@@ -147,10 +163,8 @@ int main(void){
 		//Map gameMap;
 		
 
-		//PlayerGameObject(,"Player",...... anything else?);
-		//Store* gameStore = Store(glm::vec3(0.0f), tex[0], size, );
-		//gameObjects.push_back(player);
-		
+		//inital all gameobjects
+		setAllStartingGameObject();
 
 
 
@@ -158,6 +172,9 @@ int main(void){
 		double lastTime = glfwGetTime();
 		while (!glfwWindowShouldClose(window.getWindow())) {
 			
+			//reloading the gameObjects vector array if it is necessary
+			ReloadingMap();
+
 			// Clear background
 			window.clear(viewport_background_color_g);
 
@@ -183,8 +200,6 @@ int main(void){
 			mod = 13 / mult;  //allows you to play with the size of the graph by changing mult before running
 			wid = 4 * mod -1;
 			height = 3 * mod -1;
-			
-			
 
 
 			// Update and render all game objects
@@ -194,13 +209,13 @@ int main(void){
 
 				// Updates game objects
 				////////////////////////////implements////////////////////////
-				/*
-				if(currentGameObject.getType() == "Player"){
-					PlayerGameObject *playerGameObject = dynamic_casts<PlayerGameObject*>(gameObjects[i]);
-					playerGameObject.update();
-					.....
+				
+				if(currentGameObject->getType() == "Player"){
+					PlayerGameObject *playerGameObject = dynamic_cast<PlayerGameObject*>(currentGameObject);
+			
 				}
-				.
+				
+				/*.
 				.
 				.
 				.
@@ -233,6 +248,9 @@ int main(void){
 
 			// Push buffer drawn in the background onto the display
 			glfwSwapBuffers(window.getWindow());
+
+
+			
 		}
 	}
 	catch (std::exception &e){
