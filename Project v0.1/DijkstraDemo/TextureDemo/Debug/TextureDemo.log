@@ -1,15 +1,12 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(459,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (TextureDemo.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  main.cpp
-C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(143,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(144,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(184,18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(185,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(191,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(214,23): warning C4018: '<': signed/unsigned mismatch
-  FileUtils.cpp
   Store.cpp
-  Weapon.cpp
-  Window.cpp
+  main.cpp
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(159,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(160,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(201,18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(202,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(206,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(229,23): warning C4018: '<': signed/unsigned mismatch
   Generating Code...
   SOIL.lib(SOIL.obj) : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
 LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification
@@ -44,9 +41,9 @@ LINK : warning LNK4286: symbol '___glewVertexAttribPointer' defined in 'glew32s.
 LINK : warning LNK4286: symbol '_glewInit@0' defined in 'glew32s.lib(glew.obj)' is imported by 'Window.obj'
 LINK : warning LNK4286: symbol '_glewGetErrorString@4' defined in 'glew32s.lib(glew.obj)' is imported by 'Window.obj'
 LINK : warning LNK4286: symbol '_glewExperimental' defined in 'glew32s.lib(glew.obj)' is imported by 'Window.obj'
-SOIL.lib(SOIL.obj) : warning LNK4099: PDB 'SOIL.pdb' was not found with 'SOIL.lib(SOIL.obj)' or at 'C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\Debug\SOIL.pdb'; linking object as if no debug info
-SOIL.lib(image_helper.obj) : warning LNK4099: PDB 'SOIL.pdb' was not found with 'SOIL.lib(image_helper.obj)' or at 'C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\Debug\SOIL.pdb'; linking object as if no debug info
-SOIL.lib(stb_image_aug.obj) : warning LNK4099: PDB 'SOIL.pdb' was not found with 'SOIL.lib(stb_image_aug.obj)' or at 'C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\Debug\SOIL.pdb'; linking object as if no debug info
-SOIL.lib(image_DXT.obj) : warning LNK4099: PDB 'SOIL.pdb' was not found with 'SOIL.lib(image_DXT.obj)' or at 'C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\Debug\SOIL.pdb'; linking object as if no debug info
-glew32s.lib(glew.obj) : warning LNK4099: PDB 'glew_static.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\Debug\glew_static.pdb'; linking object as if no debug info
-  TextureDemo.vcxproj -> C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\Debug\DijkstraDemo.exe
+SOIL.lib(SOIL.obj) : warning LNK4099: PDB 'SOIL.pdb' was not found with 'SOIL.lib(SOIL.obj)' or at 'C:\Users\guofe\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\Debug\SOIL.pdb'; linking object as if no debug info
+SOIL.lib(image_helper.obj) : warning LNK4099: PDB 'SOIL.pdb' was not found with 'SOIL.lib(image_helper.obj)' or at 'C:\Users\guofe\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\Debug\SOIL.pdb'; linking object as if no debug info
+SOIL.lib(stb_image_aug.obj) : warning LNK4099: PDB 'SOIL.pdb' was not found with 'SOIL.lib(stb_image_aug.obj)' or at 'C:\Users\guofe\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\Debug\SOIL.pdb'; linking object as if no debug info
+SOIL.lib(image_DXT.obj) : warning LNK4099: PDB 'SOIL.pdb' was not found with 'SOIL.lib(image_DXT.obj)' or at 'C:\Users\guofe\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\Debug\SOIL.pdb'; linking object as if no debug info
+glew32s.lib(glew.obj) : warning LNK4099: PDB 'glew_static.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'C:\Users\guofe\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\Debug\glew_static.pdb'; linking object as if no debug info
+  TextureDemo.vcxproj -> C:\Users\guofe\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\Debug\DijkstraDemo.exe
