@@ -18,6 +18,8 @@
 #include "Graph.h"
 #include "Node.h"
 #include "Store.h"
+#include "Map.h"
+#include "mapBlock.h"
 
 float mult = 2.75; //play with this if you want a bigger or smaller graph but still framed the same
 
@@ -144,7 +146,7 @@ int main(void){
 		int height = 3 * mod;
 
 		////////////////////////////These will be implemented ////////////////////////////
-		//Map gameMap;
+		Map *gameMap = new Map();
 		
 
 		//PlayerGameObject(,"Player",...... anything else?);
@@ -185,8 +187,26 @@ int main(void){
 			height = 3 * mod -1;
 			
 			
+			//create the map base on  player  current position/////////
 
+			//delete map block that should not display
 
+			//create new map  block again			
+			vector<vector<string>> currentPartalMap = gameMap->loadPartialMap();
+			for (int col = 0; col < currentPartalMap.size(); col++) {
+
+				for (int row = 0; row < currentPartalMap[col].size(); row++) {
+
+					//create map
+					if (currentPartalMap[col][row].compare("W") == 0) {
+						gameObjects.push_back(new mapBlock(glm::vec3(0.f), tex[0], 6, "mapBlock", row, col));
+						//cout << currentPartalMap[col][row];
+					}
+					
+				}
+				cout << endl;
+			}
+			
 			// Update and render all game objects
 			for (int i = 0; i < gameObjects.size(); i++) {
 				// Get the current object

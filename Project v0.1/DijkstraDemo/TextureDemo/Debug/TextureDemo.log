@@ -1,16 +1,13 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(459,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (TextureDemo.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   main.cpp
-C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(143,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(144,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(184,18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(185,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(191,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(214,23): warning C4018: '<': signed/unsigned mismatch
-  FileUtils.cpp
-  Store.cpp
-  Weapon.cpp
-  Window.cpp
-  Generating Code...
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(145,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(146,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(186,18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(187,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(196,26): warning C4018: '<': signed/unsigned mismatch
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(198,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(211,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\OnlyLovFox\Documents\GitHub\COMP-2501-Project\Project v0.1\DijkstraDemo\TextureDemo\main.cpp(234,23): warning C4018: '<': signed/unsigned mismatch
   SOIL.lib(SOIL.obj) : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
 LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
