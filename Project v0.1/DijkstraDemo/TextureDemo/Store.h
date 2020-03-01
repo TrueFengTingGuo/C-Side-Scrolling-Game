@@ -10,12 +10,9 @@ class Store :
 	public GameObject
 {
 public:
-
-	//need player gameobject when user buys items
 	Store(glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements,std::string newType, PlayerGameObject* playerReference);
 	
-	//but a weapon from store, return back a reference so the player can use copy constructor to construct the exact same
-	//weapon
+	//getter
 	Weapon& buyWeapon(std::string& weaponName);
 	//
 

@@ -18,6 +18,8 @@
 #include "Graph.h"
 #include "Node.h"
 #include "Store.h"
+#include "Map.h"
+#include "mapBlock.h"
 
 float mult = 2.75; //play with this if you want a bigger or smaller graph but still framed the same
 
@@ -110,22 +112,6 @@ void setallTexture(void){
 	glBindTexture(GL_TEXTURE_2D, tex[0]);
 }
 
-//set all starting gameobjects which will not be deleted after refreshing the map
-void setAllStartingGameObject() {
-
-	PlayerGameObject* player = new PlayerGameObject(glm::vec3(0.0f), tex[0], 6, "Player", 100.0f, 10.0f, 0);
-	gameObjects.push_back(player);
-	gameObjects.push_back(new Store(glm::vec3(0.0f), tex[0], 6,"Store", player));
-
-}
-
-//this function should reload the map depends on the player gameobject
-//do nothing if there is no need to reload
-void ReloadingMap() {
-
-	/////////////////////////// implement plz ////////////////////////////////
-}
-
 
 // Main function that builds and runs the game
 int main(void){
@@ -160,11 +146,13 @@ int main(void){
 		int height = 3 * mod;
 
 		////////////////////////////These will be implemented ////////////////////////////
-		//Map gameMap;
+		Map *gameMap = new Map();
 		
 
-		//inital all gameobjects
-		setAllStartingGameObject();
+		//PlayerGameObject(,"Player",...... anything else?);
+		//Store* gameStore = Store(glm::vec3(0.0f), tex[0], size, );
+		//gameObjects.push_back(player);
+		
 
 
 
@@ -172,9 +160,6 @@ int main(void){
 		double lastTime = glfwGetTime();
 		while (!glfwWindowShouldClose(window.getWindow())) {
 			
-			//reloading the gameObjects vector array if it is necessary
-			ReloadingMap();
-
 			// Clear background
 			window.clear(viewport_background_color_g);
 
@@ -200,8 +185,28 @@ int main(void){
 			mod = 13 / mult;  //allows you to play with the size of the graph by changing mult before running
 			wid = 4 * mod -1;
 			height = 3 * mod -1;
+			
+			
+			//create the map base on  player  current position/////////
 
+			//delete map block that should not display
 
+			//create new map  block again			
+			vector<vector<string>> currentPartalMap = gameMap->loadPartialMap();
+			for (int col = 0; col < currentPartalMap.size(); col++) {
+
+				for (int row = 0; row < currentPartalMap[col].size(); row++) {
+
+					//create map
+					if (currentPartalMap[col][row].compare("W") == 0) {
+						gameObjects.push_back(new mapBlock(glm::vec3(0.f), tex[0], 6, "mapBlock", row, col));
+						//cout << currentPartalMap[col][row];
+					}
+					
+				}
+				cout << endl;
+			}
+			
 			// Update and render all game objects
 			for (int i = 0; i < gameObjects.size(); i++) {
 				// Get the current object
@@ -209,13 +214,13 @@ int main(void){
 
 				// Updates game objects
 				////////////////////////////implements////////////////////////
-				
-				if(currentGameObject->getType() == "Player"){
-					PlayerGameObject *playerGameObject = dynamic_cast<PlayerGameObject*>(currentGameObject);
-			
+				/*
+				if(currentGameObject.getType() == "Player"){
+					PlayerGameObject *playerGameObject = dynamic_casts<PlayerGameObject*>(gameObjects[i]);
+					playerGameObject.update();
+					.....
 				}
-				
-				/*.
+				.
 				.
 				.
 				.
@@ -248,9 +253,6 @@ int main(void){
 
 			// Push buffer drawn in the background onto the display
 			glfwSwapBuffers(window.getWindow());
-
-
-			
 		}
 	}
 	catch (std::exception &e){

@@ -13,23 +13,18 @@ PlayerGameObject::PlayerGameObject(glm::vec3 &entityPos, GLuint entityTexture, G
 // Update function for moving the player object around
 void PlayerGameObject::update(double deltaTime) {
 
-	//gravity
-	velocity.y -= 0.001f;
-	//air Resistance
-	velocity.x *= 0.9998f;
-
 	// Checking for player input and changing velocity
 	if (glfwGetKey(Window::getWindow(), GLFW_KEY_W) == GLFW_PRESS) {
-		velocity.y += 0.002f;
+		// This is where you should change the velocity vector of the player
 	}
 	if (glfwGetKey(Window::getWindow(), GLFW_KEY_S) == GLFW_PRESS) {
-		velocity.y -= 0.002f;
+		// This is where you should change the velocity vector of the player
 	}
 	if (glfwGetKey(Window::getWindow(), GLFW_KEY_D) == GLFW_PRESS) {
-		velocity.x += 0.005f;
+		// This is where you should change the velocity vector of the player
 	}
 	if (glfwGetKey(Window::getWindow(), GLFW_KEY_A) == GLFW_PRESS) {
-		velocity.x -= 0.005f;
+		// This is where you should change the velocity vector of the player
 	}
 
 	// Call the parent's update method to move the object
