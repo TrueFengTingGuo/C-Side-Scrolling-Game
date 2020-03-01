@@ -41,7 +41,7 @@ const glm::vec3 viewport_background_color_g(0.15, 0.17, 0.21);
 
 
 // Global texture info
-GLuint tex[1];
+GLuint tex[2];
 
 // Global game object info
 std::vector<GameObject*> gameObjects;
@@ -106,8 +106,9 @@ void setthisTexture(GLuint w, char *fname){
 }
 
 void setallTexture(void){
-	glGenTextures(1, tex);
+	glGenTextures(2, tex);
 	setthisTexture(tex[0], "orb.png");
+	setthisTexture(tex[1], "helicopter.jpg");
 
 	glBindTexture(GL_TEXTURE_2D, tex[0]);
 }
@@ -148,10 +149,10 @@ int main(void){
 		////////////////////////////These will be implemented ////////////////////////////
 		Map *gameMap = new Map();
 		
-
-		//PlayerGameObject(,"Player",...... anything else?);
+		glm::vec3 playerDefaultPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+		GameObject* player = new PlayerGameObject(playerDefaultPosition, tex[1], 6, "Player", 1, 1, 1);
 		//Store* gameStore = Store(glm::vec3(0.0f), tex[0], size, );
-		//gameObjects.push_back(player);
+		gameObjects.push_back(player);
 		
 
 
@@ -187,11 +188,11 @@ int main(void){
 			height = 3 * mod -1;
 			
 			
-			//create the map base on  player  current position/////////
+			//create the map base on player current position/////////
 
 			//delete map block that should not display
-
-			//create new map  block again			
+			
+			//create new map block again			
 			vector<vector<string>> currentPartalMap = gameMap->loadPartialMap();
 			for (int col = 0; col < currentPartalMap.size(); col++) {
 
@@ -214,21 +215,14 @@ int main(void){
 
 				// Updates game objects
 				////////////////////////////implements////////////////////////
-				/*
-				if(currentGameObject.getType() == "Player"){
-					PlayerGameObject *playerGameObject = dynamic_casts<PlayerGameObject*>(gameObjects[i]);
-					playerGameObject.update();
-					.....
+				
+				if(currentGameObject->getType() == "Player"){
+					PlayerGameObject *playerGameObject = (PlayerGameObject*)gameObjects[i];
+					playerGameObject->update(deltaTime);
 				}
-				.
-				.
-				.
-				.
-				.
-
-				*/
-
-				currentGameObject->update(deltaTime);
+				else {
+					currentGameObject->update(deltaTime);
+				}
 
 				//gameobjects Collision
 				for (int j = 0; j < gameObjects.size(); j++) {
