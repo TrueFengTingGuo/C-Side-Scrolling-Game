@@ -10,7 +10,7 @@ class Store :
 	public GameObject
 {
 public:
-	Store(glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements,std::string newType, PlayerGameObject* playerReference);
+	Store(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements,std::string newType, PlayerGameObject* playerReference);
 	
 	//getter
 	Weapon& buyWeapon(std::string& weaponName);

@@ -15,6 +15,7 @@
 #include "common.h"
 #include "Window.h"
 #include "PlayerGameObject.h"
+#include "GameObjectHandler.h"
 #include "Graph.h"
 #include "Node.h"
 #include "Store.h"
@@ -44,7 +45,7 @@ const glm::vec3 viewport_background_color_g(0.15, 0.17, 0.21);
 GLuint tex[2];
 
 // Global game object info
-std::vector<GameObject*> gameObjects;
+GameObjectHandler* gameObjectHandler;
 
 
 // Create the geometry for a square (with two triangles)
@@ -150,9 +151,9 @@ int main(void){
 		Map *gameMap = new Map();
 		
 		glm::vec3 playerDefaultPosition = glm::vec3(0.0f, 0.0f, 0.0f);
-		GameObject* player = new PlayerGameObject(playerDefaultPosition, tex[1], 6, "Player", 1, 1, 1);
+		PlayerGameObject* player = new PlayerGameObject(gameObjectHandler, playerDefaultPosition, tex[1], 6, "Player", 1, 1, 1);
 		//Store* gameStore = Store(glm::vec3(0.0f), tex[0], size, );
-		gameObjects.push_back(player);
+		gameObjectHandler = new GameObjectHandler(player);
 		
 
 
@@ -160,7 +161,7 @@ int main(void){
 		// Run the main loop
 		double lastTime = glfwGetTime();
 		while (!glfwWindowShouldClose(window.getWindow())) {
-			
+
 			// Clear background
 			window.clear(viewport_background_color_g);
 
@@ -178,20 +179,20 @@ int main(void){
 			glm::mat4 window_scale = glm::scale(glm::mat4(1.0f), glm::vec3(aspectRatio, 1.0f, 1.0f));
 			glm::mat4 camera_zoom = glm::scale(glm::mat4(1.0f), glm::vec3(cameraZoom, cameraZoom, cameraZoom));
 
-			glm::mat4 viewMatrix =  window_scale * camera_zoom * cameraTranslatePos;
+			glm::mat4 viewMatrix = window_scale * camera_zoom * cameraTranslatePos;
 			shader.setUniformMat4("viewMatrix", viewMatrix);
 			//user input
-			
+
 			cameraZoom = mult * 0.05f;
 			mod = 13 / mult;  //allows you to play with the size of the graph by changing mult before running
-			wid = 4 * mod -1;
-			height = 3 * mod -1;
-			
-			
+			wid = 4 * mod - 1;
+			height = 3 * mod - 1;
+
+
 			//create the map base on player current position/////////
 
 			//delete map block that should not display
-			
+
 			//create new map block again			
 			vector<vector<string>> currentPartalMap = gameMap->loadPartialMap();
 			for (int col = 0; col < currentPartalMap.size(); col++) {
@@ -200,47 +201,17 @@ int main(void){
 
 					//create map
 					if (currentPartalMap[col][row].compare("W") == 0) {
-						gameObjects.push_back(new mapBlock(glm::vec3(0.f), tex[0], 6, "mapBlock", row, col));
+						gameObjectHandler->add(new mapBlock(gameObjectHandler, glm::vec3(0.f), tex[0], 6, "mapBlock", row, col));
 						//cout << currentPartalMap[col][row];
 					}
-					
+
 				}
 				cout << endl;
 			}
-			
-			// Update and render all game objects
-			for (int i = 0; i < gameObjects.size(); i++) {
-				// Get the current object
-				GameObject* currentGameObject = gameObjects[i];
 
-				// Updates game objects
-				////////////////////////////implements////////////////////////
-				
-				if(currentGameObject->getType() == "Player"){
-					PlayerGameObject *playerGameObject = (PlayerGameObject*)gameObjects[i];
-					playerGameObject->update(deltaTime);
-				}
-				else {
-					currentGameObject->update(deltaTime);
-				}
-
-				//gameobjects Collision
-				for (int j = 0; j < gameObjects.size(); j++) {
-					GameObject* otherGameObjects = gameObjects[j];
-					float distance = glm::length(currentGameObject->getPosition() - otherGameObjects->getPosition());
-					if (distance < 1.0f) {
-
-					}
-
-				}
-
-				//reset color uniform.
-				GLint color_loc = glGetUniformLocation(shader.getShaderID(), "colorMod");
-				glUniform3f(color_loc, 0.0f, 0.0f, 0.0f);
-
-				// Render game objects
-				currentGameObject->render(shader);
-			}
+			// Update and render all GameObjects
+			gameObjectHandler->update(deltaTime);
+			gameObjectHandler->render(shader);
 
 			// Update other events like input handling
 			glfwPollEvents();
@@ -248,6 +219,7 @@ int main(void){
 			// Push buffer drawn in the background onto the display
 			glfwSwapBuffers(window.getWindow());
 		}
+
 	}
 	catch (std::exception &e){
 		// print exception and sleep so error can be read

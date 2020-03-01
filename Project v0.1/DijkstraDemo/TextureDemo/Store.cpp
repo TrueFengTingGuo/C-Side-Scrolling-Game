@@ -2,8 +2,8 @@
 
 
 
-Store::Store(glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string myType, PlayerGameObject* newPlayerReference)
-	: GameObject(entityPos, entityTexture, entityNumElements, myType) {
+Store::Store(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string myType, PlayerGameObject* newPlayerReference)
+	: GameObject(h, entityPos, entityTexture, entityNumElements, myType) {
 	playerGameObjectReference = newPlayerReference;
 }
 

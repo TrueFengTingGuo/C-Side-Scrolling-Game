@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PLAYERGAMEOBJECT_H
+#define PLAYERGAMEOBJECT_H
 
 #include "AliveGameObject.h"
 
@@ -6,7 +7,7 @@
 class PlayerGameObject : public AliveGameObject {
 public:
 
-	PlayerGameObject(glm::vec3 &entityPos, GLuint entityTexture, GLint entityNumElements, std::string newType, float newHealth, float newDamage, int newLevel);
+	PlayerGameObject(GameObjectHandler* h, glm::vec3 &entityPos, GLuint entityTexture, GLint entityNumElements, std::string newType, float newHealth, float newDamage, int newLevel);
 
 
 	// Update function for moving the player object around
@@ -16,3 +17,5 @@ private:
 	int experience;
 	int currency;
 };
+
+#endif

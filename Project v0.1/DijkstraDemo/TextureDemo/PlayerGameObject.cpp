@@ -7,8 +7,8 @@
 	It overrides GameObject's update method, so that you can check for input to change the velocity of the player
 */
 
-PlayerGameObject::PlayerGameObject(glm::vec3 &entityPos, GLuint entityTexture, GLint entityNumElements, std::string newType,float newHealth, float newDamage, int newLevel)
-	: AliveGameObject(entityPos, entityTexture, entityNumElements,newType,newHealth,newDamage,newLevel) {
+PlayerGameObject::PlayerGameObject(GameObjectHandler* h, glm::vec3 &entityPos, GLuint entityTexture, GLint entityNumElements, std::string newType,float newHealth, float newDamage, int newLevel)
+	: AliveGameObject(h, entityPos, entityTexture, entityNumElements,newType,newHealth,newDamage,newLevel) {
 	currentWeapon = 0;
 	experience = 0;
 	currency = 0;

@@ -7,7 +7,9 @@
 
 
 
-GameObject::GameObject(glm::vec3 &entityPosition, GLuint entityTexture, GLint entityNumElements, std::string newType) {
+GameObject::GameObject(GameObjectHandler* h, glm::vec3 &entityPosition, GLuint entityTexture, GLint entityNumElements, std::string newType) {
+
+	handler = h;
 
 	position = entityPosition;
 	texture = entityTexture;

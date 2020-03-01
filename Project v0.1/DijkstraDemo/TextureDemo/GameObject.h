@@ -1,4 +1,6 @@
-#pragma once
+#ifndef GAMEOBJECT_H
+#define GAMEOBJECT_H
+
 
 #include <GL/glew.h>
 #include <GL/glfw3.h>
@@ -7,10 +9,11 @@
 #include <iostream>
 
 #include "Shader.h"
+#include "GameObjectHandler.h"
 
 class GameObject {
 public:
-	GameObject(glm::vec3 &entityPosition, GLuint entityTexture, GLint entityNumElements,std::string newType);
+	GameObject(GameObjectHandler* h, glm::vec3 &entityPosition, GLuint entityTexture, GLint entityNumElements,std::string newType);
 
 
 	// Updates the GameObject's state. Can be overriden for children
@@ -34,6 +37,8 @@ public:
 	inline void setType(bool& newActive) { active = newActive; }
 
 protected:
+	GameObjectHandler* handler;
+
 	// Object's Transform Variables
 	// TODO: Add more transformation variables
 	glm::vec3 position;
@@ -49,3 +54,5 @@ protected:
 	// Object's texture
 	GLuint texture;
 };
+
+#endif
