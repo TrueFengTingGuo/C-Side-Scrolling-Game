@@ -36,6 +36,12 @@ void PlayerGameObject::update(double deltaTime) {
 		// rotate player to face left
 	}
 
+	// Fire weapon
+	if (glfwGetKey(Window::getWindow(), GLFW_KEY_SPACE) == GLFW_PRESS) {
+		if (weapons.size() > 0)
+			weapons[currentWeapon]->fire();
+	}
+
 	// Call the parent's update method to move the object
 	GameObject::update(deltaTime);
 }

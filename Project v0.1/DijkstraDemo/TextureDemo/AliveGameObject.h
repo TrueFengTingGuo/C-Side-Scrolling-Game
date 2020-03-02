@@ -3,6 +3,7 @@
 
 
 #include "GameObject.h"
+#include "Weapon.h"
 
 class AliveGameObject :
 	public GameObject
@@ -17,6 +18,8 @@ public:
 		damage += newLevel * growingDamage;
 	}
 
+	void addWeapon(Weapon* w);
+
 private:
 	float growingHealth = 17.0f;
 	float growingDamage = 2.0f;
@@ -26,6 +29,7 @@ protected:
 	float hp;
 	float damage;
 	int level;
+	std::vector<Weapon*> weapons;
 };
 
 #endif

@@ -18,6 +18,8 @@ GameObject::GameObject(GameObjectHandler* h, glm::vec3 &entityPosition, GLuint e
 
 	type = newType;
 
+	active = true;
+
 }
 
 // Updates the GameObject's state. Can be overriden for children

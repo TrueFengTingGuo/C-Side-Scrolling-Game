@@ -10,13 +10,22 @@ GameObjectHandler::GameObjectHandler(PlayerGameObject* p) {
 
 // Updates all game objects
 void GameObjectHandler::update(double deltaTime) {
+
+	// update player
 	player->update(deltaTime);
+
+	std::vector<int> inactiveObjectsIndex;
+
 	for (int i = 0; i < gameObjects.size(); i++) {
 		// Get the current object
 		GameObject* currentGameObject = gameObjects[i];
 
+		if (!currentGameObject->getActive()) {
+			inactiveObjectsIndex.push_back(i);
+			continue;
+		}
+
 		// Updates game objects
-		////////////////////////////implements////////////////////////
 		currentGameObject->update(deltaTime);
 
 		//gameobjects Collision
@@ -28,6 +37,11 @@ void GameObjectHandler::update(double deltaTime) {
 			}
 
 		}
+	}
+
+	// remove inactive objects
+	for (int i = 0; i < inactiveObjectsIndex.size(); i++) {
+		gameObjects.erase(gameObjects.begin() + inactiveObjectsIndex[i]);
 	}
 }
 
