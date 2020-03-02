@@ -14,11 +14,14 @@ class Map
 
 public:
 	Map();
-	vector<vector<string>> loadPartialMap();
+	vector<vector<string>> loadPartialMap(glm::vec3 playerPosition);
 
 	//getter
 
 private:
 	vector<vector<string>> aLevelMap;
+	int map_height;
+	int map_width;
+	
 };
 
