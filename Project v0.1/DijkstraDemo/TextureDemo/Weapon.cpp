@@ -43,7 +43,11 @@ void Weapon::fire() {
 	glm::vec3 bulletPosition = glm::vec3(position + rotation);
 
 	Bullet* newBullet = new Bullet(handler, bulletPosition, bulletTexture, numElements, "Bullet", bulletDamage, bulletType);
-	newBullet->setVelocity(5.0f*glm::vec3(cos(rotation[0]), sin(rotation[1]), 0.0f));
+
+	// Bullet velocity
+	float bulletSpeed = 10.0f;
+	newBullet->setVelocity(bulletSpeed * glm::vec3(cos(3.14159265 / 360 * 2 * orientation), sin(3.14159265 / 360 * 2 * orientation), 0.0f));
+
 	handler->add(newBullet);
 
 	cooldown = fireRate;

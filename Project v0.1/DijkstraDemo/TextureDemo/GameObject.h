@@ -27,6 +27,7 @@ public:
 	inline glm::vec3& getPosition() { return position; }
 	inline glm::vec3& getVelocity() { return velocity; }
 	inline glm::vec3& getRotation() { return rotation; }
+	inline float getOrientation() { return orientation; }
 	inline std::string& getType() { return type; }
 	inline bool& getActive() { return active; }
 
@@ -34,6 +35,7 @@ public:
 	inline void setPosition(glm::vec3& newPosition) { position = newPosition; }
 	inline void setVelocity(glm::vec3& newVelocity) { velocity = newVelocity; }
 	inline void setRotation(glm::vec3& newRotation) { rotation = newRotation; }
+	inline void setOrientation(float newOrientation) { orientation = newOrientation; }
 	inline void setType(bool& newActive) { active = newActive; }
 
 protected:
@@ -44,6 +46,7 @@ protected:
 	glm::vec3 position;
 	glm::vec3 velocity;
 	glm::vec3 rotation;
+	float orientation;
 	std::string  type;
 	bool active;
 
