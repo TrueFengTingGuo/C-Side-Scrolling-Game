@@ -10,3 +10,7 @@ AliveGameObject::AliveGameObject(GameObjectHandler* h, glm::vec3& entityPos, GLu
 	hp = newHealth + newLevel * growingHealth;
 	damage = newDamage + newLevel * growingDamage;
 }
+
+void AliveGameObject::addWeapon(Weapon* w) {
+	weapons.push_back(w);
+}

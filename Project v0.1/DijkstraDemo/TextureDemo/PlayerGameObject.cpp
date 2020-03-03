@@ -36,6 +36,24 @@ void PlayerGameObject::update(double deltaTime) {
 		// rotate player to face left
 	}
 
+	if (weapons.size() > 0) {
+		// Aim weapon
+		// get mouse input
+		double mouseX, mouseY;
+		glfwGetCursorPos(Window::getWindow(), &mouseX, &mouseY);
+
+		mouseX = (mouseX - window_width_g / 2) * cameraZoom;
+		mouseY = (mouseY - window_height_g / 2) * cameraZoom;
+
+		// set orientation based on mouse position
+		weapons[currentWeapon]->setOrientation(-360.0f / 3.14159265 / 2.0f * atan2(mouseY - position[1], mouseX - position[0]));
+
+		// Fire weapon
+		if (glfwGetKey(Window::getWindow(), GLFW_KEY_SPACE) == GLFW_PRESS) {
+			weapons[currentWeapon]->fire();
+		}
+	}
+
 	// Call the parent's update method to move the object
 	GameObject::update(deltaTime);
 }

@@ -18,6 +18,8 @@ GameObject::GameObject(GameObjectHandler* h, glm::vec3 &entityPosition, GLuint e
 
 	type = newType;
 
+	active = true;
+
 }
 
 // Updates the GameObject's state. Can be overriden for children
@@ -33,7 +35,7 @@ void GameObject::render(Shader &shader) {
 
 	// Setup the transformation matrix for the shader
 	glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), position);
-	glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+	glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), orientation, glm::vec3(0.0f, 0.0f, 1.0f));
 	glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f,1.0f,1.0f));
 
 

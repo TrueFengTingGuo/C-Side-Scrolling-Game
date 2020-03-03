@@ -42,7 +42,7 @@ const glm::vec3 viewport_background_color_g(0.15, 0.17, 0.21);
 
 
 // Global texture info
-GLuint tex[2];
+GLuint tex[3];
 
 // Global game object info
 GameObjectHandler* gameObjectHandler;
@@ -107,9 +107,10 @@ void setthisTexture(GLuint w, char *fname){
 }
 
 void setallTexture(void){
-	glGenTextures(2, tex);
+	glGenTextures(3, tex);
 	setthisTexture(tex[0], "orb.png");
 	setthisTexture(tex[1], "helicopter.jpg");
+	setthisTexture(tex[2], "bullet.png");
 
 	glBindTexture(GL_TEXTURE_2D, tex[0]);
 }
@@ -154,9 +155,11 @@ int main(void){
 		PlayerGameObject* player = new PlayerGameObject(gameObjectHandler, playerDefaultPosition, tex[1], 6, "Player", 1, 1, 1);
 		//Store* gameStore = Store(glm::vec3(0.0f), tex[0], size, );
 		gameObjectHandler = new GameObjectHandler(player);
-		
 
-
+		// test weapon
+		Weapon* testWeapon = new Weapon(gameObjectHandler, playerDefaultPosition, tex[0], 6, "Weapon", 60.0f, 5, 0, "TestBullet", player);
+		player->addWeapon(testWeapon);
+		gameObjectHandler->add(testWeapon);
 
 		// Run the main loop
 		double lastTime = glfwGetTime();
@@ -192,7 +195,7 @@ int main(void){
 			//create the map base on player current position/////////
 
 			//delete map block that should not display
-
+			/*
 			//create new map block again			
 			vector<vector<string>> currentPartalMap = gameMap->loadPartialMap();
 			for (int col = 0; col < currentPartalMap.size(); col++) {
@@ -208,7 +211,7 @@ int main(void){
 				}
 				cout << endl;
 			}
-
+			*/
 			// Update and render all GameObjects
 			gameObjectHandler->update(deltaTime);
 			gameObjectHandler->render(shader);
