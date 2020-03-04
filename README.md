@@ -7,6 +7,9 @@ https://docs.google.com/document/d/11w8i67usC2qqwpQjNIjQBj_gado-Njf7UBycqj7xNZw/
 ## Project UML
 https://www.lucidchart.com/invitations/accept/f35ba023-22c0-452e-ad85-32691fd5d11b
 
+## Project Prototype
+https://docs.google.com/document/d/1MYQRhG01lbmdbv0JwDMv04CwqyXXs7oZxnhU1E3xEHE/edit?usp=sharing
+
 ## Schedule
 
 ### Feb 12:
