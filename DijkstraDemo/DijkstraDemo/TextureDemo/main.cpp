@@ -15,8 +15,12 @@
 #include "common.h"
 #include "Window.h"
 #include "PlayerGameObject.h"
+#include "GameObjectHandler.h"
 #include "Graph.h"
 #include "Node.h"
+#include "Store.h"
+#include "Map.h"
+#include "mapBlock.h"
 
 float mult = 2.75; //play with this if you want a bigger or smaller graph but still framed the same
 
@@ -38,10 +42,10 @@ const glm::vec3 viewport_background_color_g(0.15, 0.17, 0.21);
 
 
 // Global texture info
-GLuint tex[1];
+GLuint tex[3];
 
 // Global game object info
-std::vector<GameObject*> gameObjects;
+GameObjectHandler* gameObjectHandler;
 
 
 // Create the geometry for a square (with two triangles)
@@ -103,8 +107,10 @@ void setthisTexture(GLuint w, char *fname){
 }
 
 void setallTexture(void){
-	glGenTextures(1, tex);
+	glGenTextures(3, tex);
 	setthisTexture(tex[0], "orb.png");
+	setthisTexture(tex[1], "helicopter.jpg");
+	setthisTexture(tex[2], "bullet.png");
 
 	glBindTexture(GL_TEXTURE_2D, tex[0]);
 }
@@ -137,45 +143,28 @@ int main(void){
 		// Set up the textures
 		setallTexture();
 
-		// 2^i *zoom = x/2^i
-		// 0.1 = 6.5
-		// 0.05 = 13
-
 		//Setup widxheight graph
 		float mod = 13 / mult;  //allows you to play with the size of the graph by changing mult before running
 		int wid = 4 * mod;
 		int height = 3 * mod;
-		//Graph gameworld = Graph(wid, height, GameObject(glm::vec3(0.0f), tex[0], size));
 
-
-		//node coords will be rounded to nearest whole number, multiple nodes on the same coordinate WILL throw an error and crash the program.
-		std::vector<Node*> nodes; 
-		nodes.push_back(new Node(0, 0));
-		nodes.push_back(new Node(0, 1.5));  //this will become 0,2
-		nodes.push_back(new Node(2, 1));
-		nodes.push_back(new Node(2, 3));
-		nodes.push_back(new Node(2, -1));
-		nodes.push_back(new Node(4, 0));
-		nodes.push_back(new Node(4, -2));
-		nodes.push_back(new Node(1, -2));
-		//nodes.push_back(new Node(0, 0));  //this would break stuff
-		nodes.at(0)->addNode(*(nodes.at(2)), 10);
-		nodes.at(1)->addNode(*(nodes.at(2)), 10);
-		nodes.at(1)->addNode(*(nodes.at(3)), 10);
-		nodes.at(1)->addNode(*(nodes.at(4)), 10);
-		nodes.at(3)->addNode(*(nodes.at(5)), 10);
-		nodes.at(3)->addNode(*(nodes.at(7)), 10);
-		nodes.at(4)->addNode(*(nodes.at(5)), 10);
-		nodes.at(4)->addNode(*(nodes.at(6)), 10);
-		nodes.at(5)->addNode(*(nodes.at(6)), 10);
-
-		Graph gameworld = Graph(nodes, GameObject(glm::vec3(0.0f), tex[0], size));
+		////////////////////////////These will be implemented ////////////////////////////
+		Map *gameMap = new Map();
 		
+		glm::vec3 playerDefaultPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+		PlayerGameObject* player = new PlayerGameObject(gameObjectHandler, playerDefaultPosition, tex[1], 6, "Player", 1, 1, 1);
+		//Store* gameStore = Store(glm::vec3(0.0f), tex[0], size, );
+		gameObjectHandler = new GameObjectHandler(player);
+
+		// test weapon
+		Weapon* testWeapon = new Weapon(gameObjectHandler, playerDefaultPosition, tex[0], 6, "Weapon", 60.0f, 5, 0, "TestBullet", player);
+		player->addWeapon(testWeapon);
+		gameObjectHandler->add(testWeapon);
 
 		// Run the main loop
 		double lastTime = glfwGetTime();
 		while (!glfwWindowShouldClose(window.getWindow())) {
-			
+
 			// Clear background
 			window.clear(viewport_background_color_g);
 
@@ -193,49 +182,39 @@ int main(void){
 			glm::mat4 window_scale = glm::scale(glm::mat4(1.0f), glm::vec3(aspectRatio, 1.0f, 1.0f));
 			glm::mat4 camera_zoom = glm::scale(glm::mat4(1.0f), glm::vec3(cameraZoom, cameraZoom, cameraZoom));
 
-			glm::mat4 viewMatrix =  window_scale * camera_zoom * cameraTranslatePos;
+			glm::mat4 viewMatrix = window_scale * camera_zoom * cameraTranslatePos;
 			shader.setUniformMat4("viewMatrix", viewMatrix);
-
-			
-			float oldMult = mult;
 			//user input
-			if (glfwGetKey(Window::getWindow(), GLFW_KEY_MINUS) == GLFW_PRESS) {
-				mult -= 0.01;
-			}
-			if (glfwGetKey(Window::getWindow(), GLFW_KEY_EQUAL) == GLFW_PRESS) {
-				mult += 0.01;
-			}
+
 			cameraZoom = mult * 0.05f;
 			mod = 13 / mult;  //allows you to play with the size of the graph by changing mult before running
-			wid = 4 * mod -1;
-			height = 3 * mod -1;
-			if (glfwGetKey(Window::getWindow(), GLFW_KEY_SPACE) == GLFW_PRESS) {  //rebuild the graph from scratch , I advise removing this functionality before starting assignments, just for demo purposes.
-				std::cout << "start" << std::endl;
-				std::cout << "wid" << wid << "height" << height<< std::endl;
-				gameworld = Graph(wid, height, GameObject(glm::vec3(0.0f), tex[0], CreateSquare()));
-				std::cout << "end" << std::endl;
+			wid = 4 * mod - 1;
+			height = 3 * mod - 1;
+
+
+			//create the map base on player current position/////////
+
+			//delete map block that should not display
+			/*
+			//create new map block again			
+			vector<vector<string>> currentPartalMap = gameMap->loadPartialMap();
+			for (int col = 0; col < currentPartalMap.size(); col++) {
+
+				for (int row = 0; row < currentPartalMap[col].size(); row++) {
+
+					//create map
+					if (currentPartalMap[col][row].compare("W") == 0) {
+						gameObjectHandler->add(new mapBlock(gameObjectHandler, glm::vec3(0.f), tex[0], 6, "mapBlock", row, col));
+						//cout << currentPartalMap[col][row];
+					}
+
+				}
+				cout << endl;
 			}
-
-			// Update and render all game objects
-			for (int i = 0; i < gameObjects.size(); i++) {
-				// Get the current object
-				GameObject* currentGameObject = gameObjects[i];
-
-				// Updates game objects
-				currentGameObject->update(deltaTime);
-
-				//reset color uniform.
-				GLint color_loc = glGetUniformLocation(shader.getShaderID(), "colorMod");
-				glUniform3f(color_loc, 0.0f, 0.0f, 0.0f);
-
-				// Render game objects
-				currentGameObject->render(shader);
-			}
-
-			//update graph
-			gameworld.update();
-			//render graph
-			gameworld.render(shader);
+			*/
+			// Update and render all GameObjects
+			gameObjectHandler->update(deltaTime);
+			gameObjectHandler->render(shader);
 
 			// Update other events like input handling
 			glfwPollEvents();
@@ -243,6 +222,7 @@ int main(void){
 			// Push buffer drawn in the background onto the display
 			glfwSwapBuffers(window.getWindow());
 		}
+
 	}
 	catch (std::exception &e){
 		// print exception and sleep so error can be read

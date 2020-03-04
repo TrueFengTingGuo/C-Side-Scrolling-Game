@@ -22,7 +22,7 @@
     <ProjectGuid>{BE2D1B04-3AE2-4B22-AE9A-E8BFD49116EA}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>TextureDemo</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
     <ProjectName>DijkstraDemo</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -152,24 +152,40 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AliveGameObject.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="common.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="GameObjectHandler.cpp" />
     <ClCompile Include="Graph.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="mapBlock.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="PlayerGameObject.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="FileUtils.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Store.cpp" />
+    <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AliveGameObject.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="common.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="GameObjectHandler.h" />
     <ClInclude Include="Graph.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="mapBlock.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="PlayerGameObject.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="FileUtils.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Store.h" />
+    <ClInclude Include="Weapon.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
