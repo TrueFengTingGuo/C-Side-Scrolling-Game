@@ -155,9 +155,6 @@ int main(void){
 		//Store* gameStore = Store(glm::vec3(0.0f), tex[0], size, );
 		gameObjectHandler = new GameObjectHandler(player);
 		
-
-
-
 		// Run the main loop
 		double lastTime = glfwGetTime();
 		while (!glfwWindowShouldClose(window.getWindow())) {
@@ -193,21 +190,29 @@ int main(void){
 
 			//delete map block that should not display
 
-			//create new map block again			
-			vector<vector<string>> currentPartalMap = gameMap->loadPartialMap();
-			for (int col = 0; col < currentPartalMap.size(); col++) {
+			//create new map block again		
+			
+			if (gameMap->loadPartialMap(player->getPosition())) {
 
-				for (int row = 0; row < currentPartalMap[col].size(); row++) {
+				//delete all map black;
+				
+				//recreate a new map
+				vector<vector<string>> currentPartalMap = gameMap->getPartialMap();
+				for (int col = currentPartalMap.size()-1; col >= 0; col--) {
 
-					//create map
-					if (currentPartalMap[col][row].compare("W") == 0) {
-						gameObjectHandler->add(new mapBlock(gameObjectHandler, glm::vec3(0.f), tex[0], 6, "mapBlock", row, col));
-						//cout << currentPartalMap[col][row];
+					for (int row = 0; row < currentPartalMap[col].size(); row++) {
+
+						//create map
+						if (currentPartalMap[col][row].compare("W") == 0) {
+							gameObjectHandler->add(new mapBlock(gameObjectHandler, glm::vec3(0.f), tex[0], 6, "mapBlock", row, col));
+							//cout << currentPartalMap[col][row];
+						}
+
 					}
-
 				}
-				cout << endl;
+
 			}
+			
 
 			// Update and render all GameObjects
 			gameObjectHandler->update(deltaTime);

@@ -45,33 +45,63 @@ Map::Map()
 	
 }
 
-//return the partial map depends on the player location
-vector<vector<string>> Map::loadPartialMap(glm::vec3 playerPosition)
+//return true if a new map is created
+bool Map::loadPartialMap(glm::vec3 playerPosition)
 {
 
-	vector<vector<string>> twoDTemp;
-	int col_range = 10;
-	int row_range = 10;
+	
+	int col_searching_range = 10;
+	int row_searching_range = 10;
 
-	float imageSize = 1.0f; // image size of the map block
-	float partialMapX_axis = col_range * imageSize;
-	float partialMapY_axis = row_range * imageSize;
+	glm::vec2 inGameWallSize  = glm::vec2(1.0f,1.0f);
 
+	//find player position on the table
+	glm::vec2 playerPositionOnTheTable;
+	playerPositionOnTheTable.x = round(playerPositionOnTheTable.x / inGameWallSize.x);
+	playerPositionOnTheTable.y = round(playerPositionOnTheTable.y / inGameWallSize.y);
 
-	//load only the block which are near the player
-	for (int col_count = 0; col_count < col_range; col_count++) {
+	// if player is outside the map
+	if (playerPositionOnTheTable.x > paritalLoadedMap_botRight.x || playerPositionOnTheTable.x < paritalLoadedMap_topLeft.x
+		|| playerPositionOnTheTable.y > paritalLoadedMap_botRight.y || playerPositionOnTheTable.y < paritalLoadedMap_topLeft.y) {
+	
+		//empty the partial map vector and create a new one
+		
+		twoDTemp.empty();
 
-		vector<string> temp;//save a row of block
-
-		for (int row_count = 0; row_count < row_range; row_count++) {
-			if ((row_count* imageSize + playerPosition.x < (partialMapX_axis/2 + playerPosition.x) && row_range * imageSize + playerPosition.y < (partialMapY_axis/2 + playerPosition.y)) ||
-				(row_range * imageSize + playerPosition.x > (-partialMapX_axis / 2 + playerPosition.x) && row_range * imageSize + playerPosition.y > (-partialMapY_axis / 2 + playerPosition.y))) {
-
-				temp.push_back(aLevelMap[row_count][col_count]);
-			}
+		//limit all searching range
+		int rowStart = playerPositionOnTheTable.x - row_searching_range;
+		int rowEnd = playerPositionOnTheTable.x + row_searching_range;
+		if (rowStart < 0) {
+			rowStart = 0;
 		}
-		twoDTemp.push_back(temp);
-	}
+		else if (rowEnd > map_width) {
+			rowEnd = map_width;
+		}
 
-	return twoDTemp;
+		int colStart = playerPositionOnTheTable.y - col_searching_range;
+		int colEnd = playerPositionOnTheTable.y + col_searching_range;
+		if (colStart < 0) {
+			colStart = 0;
+		}
+		else if (rowEnd > map_width) {
+			colEnd = map_height;
+		}
+
+		//save the parital map range
+		paritalLoadedMap_topLeft = glm::vec2(rowStart, colStart);
+		paritalLoadedMap_botRight = glm::vec2(rowEnd, colEnd);
+
+		//create a new partial map
+		for (colStart; colStart < colEnd; colStart++) {
+			vector<string> temp;
+			for (rowStart; rowStart < rowEnd; rowStart++) {
+				temp.push_back(aLevelMap[colStart][rowStart]);
+			}
+			twoDTemp.push_back(temp);
+		}
+		return true;
+	}
+	else {
+		return false;
+	}
 }
