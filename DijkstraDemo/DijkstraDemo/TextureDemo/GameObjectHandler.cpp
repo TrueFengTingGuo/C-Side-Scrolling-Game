@@ -1,5 +1,6 @@
 #include "GameObjectHandler.h"
 #include "PlayerGameObject.h"
+#include "Enemy.h"
 
 
 
@@ -30,10 +31,14 @@ void GameObjectHandler::update(double deltaTime) {
 
 		//gameobjects Collision
 		for (int j = 0; j < gameObjects.size(); j++) {
-			GameObject* otherGameObjects = gameObjects[j];
-			float distance = glm::length(currentGameObject->getPosition() - otherGameObjects->getPosition());
+			GameObject* otherGameObject = gameObjects[j];
+			float distance = glm::length(currentGameObject->getPosition() - otherGameObject->getPosition());
 			if (distance < 1.0f) {
-
+				if (currentGameObject->getType().compare("Bullet") == 0) {
+					if (otherGameObject->getType().compare("Enemy") == 0) {
+						((Enemy*)otherGameObject)->hurt(((Bullet*)currentGameObject)->getDamage());
+					}
+				}
 			}
 
 		}

@@ -18,8 +18,8 @@ Map::Map()
 			getline(inData, line, '\n'); 
 
 			int count = 0;
+			map_width = 0;
 			while (line.length() > count) {
-				map_width = 0;
 				if (line.at(count) != ',') {
 					string lineElement(1, line.at(count)); // char to string
 					newRow.push_back(lineElement);
@@ -39,13 +39,13 @@ Map::Map()
 			aLevelMap.push_back(newRow);
 		}
 
+		cout << "Map size: " << map_width << ", " << map_height << endl;
+
 		inData.close();
 	}
 	else {
 		cout << "Unable to open file." << endl;
 	}
-	
-	cout << aLevelMap.size() << " , " << aLevelMap[aLevelMap.size()-1].size() << endl;
 }
 
 //return true if a new map is created
@@ -71,6 +71,13 @@ bool Map::loadPartialMap(glm::vec3 playerPosition)
 	playerPositionOnTheTable.x = round(playerPositionOnTheTable.x / inGameWallSize.x) ;
 	playerPositionOnTheTable.y = -round(playerPositionOnTheTable.y / inGameWallSize.y) ;
 
+	//cout << "(" << playerPositionOnTheTable.x << ", " << playerPositionOnTheTable.y << ")" << "|" << "(" << aLevelMap[0].size() << ", " << map_height << ")" << endl;
+
+	if (playerPositionOnTheTable.x < 0 || playerPositionOnTheTable.x > aLevelMap[0].size()
+		|| playerPositionOnTheTable.y < 0 || playerPositionOnTheTable.y > map_height) {
+		cout << "Player outside map" << endl;
+		return false;
+	}
 	
 	// if player is outside the map
 	
@@ -104,8 +111,8 @@ bool Map::loadPartialMap(glm::vec3 playerPosition)
 			colStart = 0 ;
 		}
 
-		cout << colStart << " , " << colEnd << endl;
 		cout << rowStart << " , " << rowEnd << endl;
+		cout << colStart << " , " << colEnd << endl;
 
 		//save the parital map range
 		paritalLoadedMap_topLeft = glm::vec2(rowStart, colStart);

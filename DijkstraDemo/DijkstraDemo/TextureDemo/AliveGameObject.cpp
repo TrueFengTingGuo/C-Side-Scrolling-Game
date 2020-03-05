@@ -11,6 +11,19 @@ AliveGameObject::AliveGameObject(GameObjectHandler* h, glm::vec3& entityPos, GLu
 	damage = newDamage + newLevel * growingDamage;
 }
 
+void AliveGameObject::hurt(float d) {
+	if (damageTimer == 0) {
+		hp -= d;
+		damageTimer = damageCooldown;
+	}
+}
+
+void AliveGameObject::update(double deltaTime)
+{
+	if (damageTimer > 0) damageTimer--;
+	GameObject::update(deltaTime);
+}
+
 void AliveGameObject::addWeapon(Weapon* w) {
 	weapons.push_back(w);
 }

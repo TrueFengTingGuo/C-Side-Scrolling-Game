@@ -21,6 +21,7 @@
 #include "Store.h"
 #include "Map.h"
 #include "mapBlock.h"
+#include "Enemy.h"
 
 float mult = 2.75; //play with this if you want a bigger or smaller graph but still framed the same
 
@@ -157,7 +158,7 @@ int main(void){
 		gameObjectHandler = new GameObjectHandler(player);
 
 		//init Map
-
+		/*
 		for (int col = gameMap->getaLevelMap().size() - 1; col > 0; col--) {
 
 			for (int row = 0; row < gameMap->getaLevelMap()[col].size(); row++) {
@@ -171,12 +172,16 @@ int main(void){
 
 			}
 		}
-
+		*/
 
 		// test weapon
 		Weapon* testWeapon = new Weapon(gameObjectHandler, playerDefaultPosition, tex[0], 6, "Weapon", 60.0f, 5, 0, "TestBullet", player);
 		player->addWeapon(testWeapon);
 		gameObjectHandler->add(testWeapon);
+
+		// Test enemy
+		Enemy* testEnemy = new Enemy(gameObjectHandler, glm::vec3(2.0f, 1.0f, 0.0f), tex[1], 6, "Enemy", 1.0, 1, 0, 10.0f);
+		gameObjectHandler->add(testEnemy);
 
 
 		//
@@ -197,9 +202,9 @@ int main(void){
 
 			// Setup camera to focus on (0, 0)
 			glm::vec3 cameraPosition = player->getPosition();
-			cout << "Player is at " << cameraPosition.y << "  ,  " << cameraPosition.x << endl;
+			//cout << "Player is at " << cameraPosition.x << "  ,  " << cameraPosition.y << endl;
 
-			glm::mat4 cameraTranslatePos = glm::translate(glm::mat4(1.0f), cameraPosition);
+			glm::mat4 cameraTranslatePos = glm::translate(glm::mat4(1.0f), -cameraPosition);
 			glm::mat4 window_scale = glm::scale(glm::mat4(1.0f), glm::vec3(aspectRatio, 1.0f, 1.0f));
 			glm::mat4 camera_zoom = glm::scale(glm::mat4(1.0f), glm::vec3(cameraZoom, cameraZoom, cameraZoom));
 
@@ -217,7 +222,7 @@ int main(void){
 
 			//delete map block that should not display
 			
-			
+			/*
 			//create new map block again			
 			if (gameMap->loadPartialMap(player->getPosition())) {
 
@@ -225,7 +230,7 @@ int main(void){
 				
 				gameObjectHandler->deleteByType("mapBlock");
 
-				for (int col =0 ; col < gameMap->getPartialMap().size() - 1; col++) {
+				for (int col =0 ; col < gameMap->getPartialMap().size(); col++) {
 
 					for (int row = 0; row < gameMap->getPartialMap()[col].size(); row++) {
 
@@ -239,7 +244,7 @@ int main(void){
 					}
 				}
 			}
-
+			*/
 			
 			// Update and render all GameObjects
 			gameObjectHandler->update(deltaTime);

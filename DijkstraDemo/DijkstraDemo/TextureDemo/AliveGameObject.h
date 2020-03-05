@@ -18,11 +18,22 @@ public:
 		damage += newLevel * growingDamage;
 	}
 
+	virtual void update(double deltaTime) override;
+
 	void addWeapon(Weapon* w);
+	void hurt(float d);
+
+	// Getters
+	inline float getHealth() { return hp; }
+
+	// Setters
+	inline void setHealth(float newHp) { hp = newHp; }
 
 private:
 	float growingHealth = 17.0f;
 	float growingDamage = 2.0f;
+
+	int damageCooldown = 60, damageTimer = damageCooldown;
 
 protected:
 	
