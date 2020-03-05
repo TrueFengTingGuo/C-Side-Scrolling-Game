@@ -54,6 +54,5 @@ void PlayerGameObject::update(double deltaTime) {
 		}
 	}
 
-	// Call the parent's update method to move the object
-	GameObject::update(deltaTime);
+	AliveGameObject::update(deltaTime);
 }
