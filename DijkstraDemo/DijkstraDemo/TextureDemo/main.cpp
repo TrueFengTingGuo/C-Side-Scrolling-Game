@@ -156,11 +156,30 @@ int main(void){
 		//Store* gameStore = Store(glm::vec3(0.0f), tex[0], size, );
 		gameObjectHandler = new GameObjectHandler(player);
 
+		//init Map
+
+		for (int col = gameMap->getaLevelMap().size() - 1; col > 0; col--) {
+
+			for (int row = 0; row < gameMap->getaLevelMap()[col].size(); row++) {
+
+				//create map
+				//cout << gameMap->getPartialMap()[col][row];
+				if (gameMap->getaLevelMap()[col][row].compare("S") == 0) {
+					cout << "Start "<< row << " , " << col << endl;
+					player->setPosition(glm::vec3(row, - col, 0.0f));
+				}
+
+			}
+		}
+
+
 		// test weapon
 		Weapon* testWeapon = new Weapon(gameObjectHandler, playerDefaultPosition, tex[0], 6, "Weapon", 60.0f, 5, 0, "TestBullet", player);
 		player->addWeapon(testWeapon);
 		gameObjectHandler->add(testWeapon);
 
+
+		//
 		// Run the main loop
 		double lastTime = glfwGetTime();
 		while (!glfwWindowShouldClose(window.getWindow())) {
@@ -177,8 +196,10 @@ int main(void){
 			shader.enable();
 
 			// Setup camera to focus on (0, 0)
-			glm::mat4 cameraTranslatePos = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f));
+			glm::vec3 cameraPosition = player->getPosition();
+			cout << "Player is at " << cameraPosition.y << "  ,  " << cameraPosition.x << endl;
 
+			glm::mat4 cameraTranslatePos = glm::translate(glm::mat4(1.0f), cameraPosition);
 			glm::mat4 window_scale = glm::scale(glm::mat4(1.0f), glm::vec3(aspectRatio, 1.0f, 1.0f));
 			glm::mat4 camera_zoom = glm::scale(glm::mat4(1.0f), glm::vec3(cameraZoom, cameraZoom, cameraZoom));
 
@@ -195,23 +216,31 @@ int main(void){
 			//create the map base on player current position/////////
 
 			//delete map block that should not display
-			/*
+			
+			
 			//create new map block again			
-			vector<vector<string>> currentPartalMap = gameMap->loadPartialMap();
-			for (int col = 0; col < currentPartalMap.size(); col++) {
+			if (gameMap->loadPartialMap(player->getPosition())) {
 
-				for (int row = 0; row < currentPartalMap[col].size(); row++) {
+				//delete all map block
+				
+				gameObjectHandler->deleteByType("mapBlock");
 
-					//create map
-					if (currentPartalMap[col][row].compare("W") == 0) {
-						gameObjectHandler->add(new mapBlock(gameObjectHandler, glm::vec3(0.f), tex[0], 6, "mapBlock", row, col));
-						//cout << currentPartalMap[col][row];
+				for (int col =0 ; col < gameMap->getPartialMap().size() - 1; col++) {
+
+					for (int row = 0; row < gameMap->getPartialMap()[col].size(); row++) {
+
+						//create map
+						//cout << gameMap->getPartialMap()[col][row];
+						if (gameMap->getPartialMap()[col][row].compare("W") == 0) {
+							gameObjectHandler->add(new mapBlock(gameObjectHandler, glm::vec3(0.f), tex[0], 6, "mapBlock", row, -col));
+							
+						}
+
 					}
-
 				}
-				cout << endl;
 			}
-			*/
+
+			
 			// Update and render all GameObjects
 			gameObjectHandler->update(deltaTime);
 			gameObjectHandler->render(shader);

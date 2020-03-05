@@ -65,3 +65,16 @@ void GameObjectHandler::render(Shader& shader) {
 void GameObjectHandler::add(GameObject* go) {
 	gameObjects.push_back(go);
 }
+
+void GameObjectHandler::deleteByType(std::string type)
+{
+
+	for (int i = 0; i < gameObjects.size(); i++) {
+		GameObject* currentGameObject = gameObjects[i];
+		if (currentGameObject->getType().compare(type) == 0) {
+			currentGameObject->setActive(false);
+		}
+	}
+}
+
+

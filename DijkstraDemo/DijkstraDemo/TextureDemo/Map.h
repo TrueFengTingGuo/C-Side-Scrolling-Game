@@ -16,6 +16,7 @@ public:
 	Map();
 	bool loadPartialMap(glm::vec3 playerPosition);
 	vector<vector<string>> getPartialMap() { return twoDTemp; }
+	vector<vector<string>> getaLevelMap() { return aLevelMap; }
 	//getter
 
 private:

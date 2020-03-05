@@ -2,7 +2,7 @@
 #define GAMEOBJECTHANDLER_H
 
 #include <vector>
-
+#include <string>
 class PlayerGameObject;
 class GameObject;
 class Shader;
@@ -17,6 +17,8 @@ public:
 	
 	void add(GameObject* go);
 
+	void deleteByType(std::string type);
+	
 
 	// Getters
 	inline PlayerGameObject* getPlayer() { return player; }

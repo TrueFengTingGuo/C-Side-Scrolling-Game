@@ -36,7 +36,8 @@ public:
 	inline void setVelocity(glm::vec3& newVelocity) { velocity = newVelocity; }
 	inline void setRotation(glm::vec3& newRotation) { rotation = newRotation; }
 	inline void setOrientation(float newOrientation) { orientation = newOrientation; }
-	inline void setType(bool& newActive) { active = newActive; }
+	inline void setActive(bool newActive) { active = newActive; }
+
 
 protected:
 	GameObjectHandler* handler;
