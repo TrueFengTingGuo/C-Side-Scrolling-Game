@@ -3,3 +3,7 @@
 *.tlog
 DijkstraDemo/DijkstraDemo/.vs/DijkstraDemo/v16/Browse.VC.opendb
 
+*.db
+*.ipch
+*.obj
+*.tlog

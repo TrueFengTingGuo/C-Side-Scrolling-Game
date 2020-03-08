@@ -157,8 +157,7 @@ int main(void){
 		//Store* gameStore = Store(glm::vec3(0.0f), tex[0], size, );
 		gameObjectHandler = new GameObjectHandler(player);
 
-		//init Map
-		/*
+
 		for (int col = gameMap->getaLevelMap().size() - 1; col > 0; col--) {
 
 			for (int row = 0; row < gameMap->getaLevelMap()[col].size(); row++) {
@@ -172,7 +171,7 @@ int main(void){
 
 			}
 		}
-		*/
+		
 
 		// test weapon
 		Weapon* testWeapon = new Weapon(gameObjectHandler, playerDefaultPosition, tex[0], 6, "Weapon", 60.0f, 5, 0, "TestBullet", player);
@@ -221,30 +220,35 @@ int main(void){
 			//create the map base on player current position/////////
 
 			//delete map block that should not display
-			
-			/*
+					
 			//create new map block again			
 			if (gameMap->loadPartialMap(player->getPosition())) {
 
 				//delete all map block
-				
 				gameObjectHandler->deleteByType("mapBlock");
 
-				for (int col =0 ; col < gameMap->getPartialMap().size(); col++) {
+				cout << "main partial map" << endl;
+
+				for (int col = 0; col < gameMap->getPartialMap().size(); col++) {
 
 					for (int row = 0; row < gameMap->getPartialMap()[col].size(); row++) {
 
 						//create map
+						cout << gameMap->getPartialMap()[col][row];
 						//cout << gameMap->getPartialMap()[col][row];
 						if (gameMap->getPartialMap()[col][row].compare("W") == 0) {
-							gameObjectHandler->add(new mapBlock(gameObjectHandler, glm::vec3(0.f), tex[0], 6, "mapBlock", row, -col));
-							
+							gameObjectHandler->add(new mapBlock(gameObjectHandler, glm::vec3(0.f), tex[0], 6, "mapBlock", gameMap->getParitalLoadedMap_topLeft().x + row, -gameMap->getParitalLoadedMap_topLeft().y - col));
+							cout << gameMap->getParitalLoadedMap_topLeft().x + row << " , " << -gameMap->getParitalLoadedMap_topLeft().y - col;
 						}
 
+
 					}
+					cout << endl;
 				}
+
+
 			}
-			*/
+			
 			
 			// Update and render all GameObjects
 			gameObjectHandler->update(deltaTime);

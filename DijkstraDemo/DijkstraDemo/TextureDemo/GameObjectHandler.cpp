@@ -77,7 +77,7 @@ void GameObjectHandler::deleteByType(std::string type)
 	for (int i = 0; i < gameObjects.size(); i++) {
 		GameObject* currentGameObject = gameObjects[i];
 		if (currentGameObject->getType().compare(type) == 0) {
-			currentGameObject->setActive(false);
+			gameObjects.erase(gameObjects.begin() + i);
 		}
 	}
 }
