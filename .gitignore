@@ -5,3 +5,5 @@
 *.obj
 *.tlog
 *.obj
+*.opendb
+*.db
