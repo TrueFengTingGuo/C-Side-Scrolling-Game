@@ -6,6 +6,5 @@
 *.obj
 *.opendb
 *.db
-DijkstraDemo/DijkstraDemo/.vs/DijkstraDemo/v16/Browse.VC.db
 *.pdb
-*.obj
+
