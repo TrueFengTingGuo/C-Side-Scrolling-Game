@@ -7,6 +7,8 @@ class Bullet :
 public:
 	Bullet(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string newType, float d, std::string bt);
 
+	void render(Shader& shader) override;
+
 	// Getters
 	inline float getDamage() { return damage; }
 

@@ -22,7 +22,7 @@
     <ProjectGuid>{BE2D1B04-3AE2-4B22-AE9A-E8BFD49116EA}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>TextureDemo</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>DijkstraDemo</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

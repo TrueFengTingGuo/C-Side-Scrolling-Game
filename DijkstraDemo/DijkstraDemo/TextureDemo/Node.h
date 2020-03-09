@@ -17,7 +17,7 @@ public:
 
 	//connects two nodes with an edge of 'edgeCost'
 	void addNode(Node& n, int edgeCost);
-	
+
 	//determines the opposing node on an edge.
 	//if the edge does not contain the current node, it will return the current node
 	Node getOtherNode(Edge e);
@@ -33,7 +33,8 @@ public:
 	inline void setPrev(Node* n) { prev = n; }
 	inline void setOnPath(bool pathStatus) { onPath = pathStatus; }
 	static void resetNodeCount() { globalId = 0; };
-
+	inline void setBlock(bool blockedPath) { blocked = blockedPath; }
+	inline void setVisited(bool status) { visited = status; }
 	//getters
 	inline bool isOnPath() const { return onPath; }
 	inline int getId() const { return id; }
@@ -41,10 +42,12 @@ public:
 	inline float getY() const { return y; }
 	inline int getCost() const { return cost; }
 	inline Node* getPrev() { return prev; }
+	inline bool isBlock() { return blocked; }
 	inline std::vector<Edge> getEdges() { return edges; }
+	inline bool isVisited() { return visited; }
 
-	inline static bool sortByY(const Node* n1, const Node* n2){ return n1->getY() < n2->getY(); }
-	inline static bool sortByX(const Node* n1, const Node* n2){ return n1->getX() < n2->getX(); }
+	inline static bool sortByY(const Node* n1, const Node* n2) { return n1->getY() < n2->getY(); }
+	inline static bool sortByX(const Node* n1, const Node* n2) { return n1->getX() < n2->getX(); }
 
 
 
@@ -54,12 +57,14 @@ protected:
 	std::vector<Edge> edges;
 	//id used to compare nodes.
 	const int id;
-	
+
 	int cost;
 	bool onPath;
+	bool blocked = false;
+	bool visited = false;
 	float x, y;
 	Node* prev;
 
 	//static id, used when a new node is created.
 	static int globalId;
-}; 
+};

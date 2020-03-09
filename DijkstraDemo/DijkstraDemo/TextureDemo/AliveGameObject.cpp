@@ -30,6 +30,11 @@ void AliveGameObject::update(double deltaTime)
 	GameObject::update(deltaTime);
 }
 
+void AliveGameObject::render(Shader& shader)
+{
+	GameObject::render(shader);
+}
+
 void AliveGameObject::addWeapon(Weapon* w) {
 	weapons.push_back(w);
 }

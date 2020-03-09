@@ -84,8 +84,6 @@ bool Map::loadPartialMap(glm::vec3 playerPosition)
 
 
 		//limit all searching range
-
-
 		int colEnd = playerPositionOnTheTable.y + col_searching_range;
 		int colStart = playerPositionOnTheTable.y - col_searching_range;
 		//cout << "col before adding " << colStart << " , " << colEnd << endl;

@@ -20,7 +20,7 @@ public:
 	virtual void update(double deltaTime);
 
 	// Renders the GameObject using a shader
-	void render(Shader &shader);
+	virtual void render(Shader &shader);
 
 
 	// Getters

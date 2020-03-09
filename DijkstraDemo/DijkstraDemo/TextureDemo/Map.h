@@ -1,3 +1,5 @@
+#pragma once
+
 #include<iostream>
 #include<fstream>
 #include<string>
@@ -11,8 +13,8 @@ using namespace std;
 
 class Map
 {
-
 public:
+
 	Map();
 	bool loadPartialMap(glm::vec3 playerPosition);
 
@@ -26,8 +28,8 @@ public:
 
 private:
 	vector<vector<string>> aLevelMap;
-	int map_height; // table 
-	int map_width;// table 
+	int map_height= 0; // table 
+	int map_width = 0;// table 
 
 	//for partial map
 	vector<vector<string>> twoDTemp;

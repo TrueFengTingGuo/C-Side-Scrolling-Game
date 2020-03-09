@@ -22,6 +22,7 @@
 #include "Map.h"
 #include "mapBlock.h"
 #include "Enemy.h"
+#include "EnemyHelicopter.h"
 
 float mult = 2.75; //play with this if you want a bigger or smaller graph but still framed the same
 
@@ -108,11 +109,13 @@ void setthisTexture(GLuint w, char *fname){
 }
 
 void setallTexture(void){
-	glGenTextures(4, tex);
+	glGenTextures(5, tex);
 	setthisTexture(tex[0], "orb.png");
 	setthisTexture(tex[1], "helicopter.jpg");
 	setthisTexture(tex[2], "bullet.png");
 	setthisTexture(tex[3], "Brick_1.png");
+	setthisTexture(tex[4], "pistol.png");
+	setthisTexture(tex[5], "small_bullet.png");
 	glBindTexture(GL_TEXTURE_2D, tex[0]);
 }
 
@@ -135,9 +138,14 @@ void loadMap(Map* map) {
 
 			}
 			else if (map->getaLevelMap()[col][row].compare("H") == 0) {
-				Enemy* newEnemy = new Enemy(gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[1], 6, "Enemy", 1.0, 1, 0, 10.0f);
-				gameObjectHandler->add(newEnemy);
-				tempBlock.push_back(newEnemy);
+				EnemyHelicopter* newEnemyHelicopter = new EnemyHelicopter(map,gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[1], 6, "Enemy", 1.0, 1, 0, 10.0f);
+				Weapon* testWeapon = new Weapon(gameObjectHandler, newEnemyHelicopter->getPosition(), tex[4], 6, "Weapon", tex[6], 60.0f, 5, 0, "TestBullet", newEnemyHelicopter);
+				newEnemyHelicopter->addWeapon(testWeapon);
+
+				
+				gameObjectHandler->add(newEnemyHelicopter);
+				gameObjectHandler->add(testWeapon);
+				tempBlock.push_back(newEnemyHelicopter);
 			}
 			else {
 				tempBlock.push_back(NULL);
@@ -180,6 +188,8 @@ int main(void){
 		int wid = 4 * mod;
 		int height = 3 * mod;
 
+
+
 		////////////////////////////These will be implemented ////////////////////////////
 		Map *gameMap = new Map();
 		
@@ -187,7 +197,10 @@ int main(void){
 		PlayerGameObject* player = new PlayerGameObject(gameObjectHandler, playerDefaultPosition, tex[1], 6, "Player", 1, 1, 1);
 		//Store* gameStore = Store(glm::vec3(0.0f), tex[0], size, );
 		gameObjectHandler = new GameObjectHandler(player);
-
+		// test weapon
+		Weapon* testWeapon = new Weapon(gameObjectHandler, playerDefaultPosition, tex[4], 6, "Weapon", tex[6],60.0f, 100000, 0, "TestBullet", player);
+		player->addWeapon(testWeapon);
+		gameObjectHandler->add(testWeapon);
 
 		//set player location
 		for (int col = gameMap->getaLevelMap().size() - 1; col > 0; col--) {
@@ -203,12 +216,13 @@ int main(void){
 
 			}
 		}
+
+
 		loadMap(gameMap);
 
-		// test weapon
-		Weapon* testWeapon = new Weapon(gameObjectHandler, playerDefaultPosition, tex[0], 6, "Weapon", 60.0f, 5, 0, "TestBullet", player);
-		player->addWeapon(testWeapon);
-		gameObjectHandler->add(testWeapon);
+		
+
+
 
 
 		// Run the main loop

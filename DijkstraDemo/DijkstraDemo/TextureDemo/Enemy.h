@@ -6,14 +6,16 @@ class Enemy :public AliveGameObject
 {
 
 public:
-	Enemy(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string newType,float newHealth, float newDamage, int newLevel, float newSpottingRange);
+	Enemy(GameObjectHandler* newh, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string newType,float newHealth, float newDamage, int newLevel, float newSpottingRange);
 
 
 protected:
 	float spottingRange;
+	GameObjectHandler* h;
 	virtual void update(double deltaTime) override;
 
 private:
 	void targetPlayer();
+	
 };
 

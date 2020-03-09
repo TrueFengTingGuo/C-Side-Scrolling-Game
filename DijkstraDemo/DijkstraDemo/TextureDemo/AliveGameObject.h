@@ -19,6 +19,7 @@ public:
 	}
 
 	virtual void update(double deltaTime) override;
+	virtual void render(Shader& shader) override;
 
 	void addWeapon(Weapon* w);
 	void hurt(float d);

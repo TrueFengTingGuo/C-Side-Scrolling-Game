@@ -4,7 +4,7 @@
 #include <GL/glew.h> // window management library
 #include <GL/glfw3.h>
 
-using namespace std;
+
 
 extern int window_width_g;
 extern int window_height_g;
@@ -25,35 +25,42 @@ public:
 
 //main constructor
 //takes the width, height of graph, as well as a gameobject used to render each node.
-Graph::Graph(int nodeWidth, int nodeHeight, GameObject nodeSprite) : nodeObj(nodeSprite) {
+Graph::Graph(glm::vec3 playerPosition, std::vector<std::vector<string>> &map){
 	//initializes the 2d nodes array and nodeMap
 	Node::resetNodeCount();
+
 
 	std::vector<std::vector<Node*>*> nodes;
 	nodeMap = std::map<int, Node*>();
 	//data for setting node positions on screen.
 	float movementX = 1.0;
 	float movementY = -1.0f;
-	nodeWid = nodeWidth;
-	size = nodeWidth * nodeHeight - 1;
+	nodeWid = map[0].size();
+	int nodeHeight = map.size()-1;
+	size = nodeWid * nodeHeight - 1;
 
 	//sometimes missing nodes in center because of the rounding to nearest whole, this shouldn't be a problem in practice because you'll define your own graphs
 	// you could round these vals to fix it but then its not centered anymore, but you'll probably just change both of these to 0 for your project anyway.
-	start_x = (double)nodeWidth* movementX * -0.5 + 0.5f;   //0.0f
-	start_y = (double)nodeHeight * movementY * -0.5 - 0.5f; //0.0f
+
 	//fills the 2d nodes array with nodes.
 	for (int i = 0; i < nodeHeight; i++) {
 		std::vector<Node*>* nodeRow = new std::vector<Node*>();
 
-		for (int j = 0; j < nodeWidth; j++) {
+		for (int j = 0; j < nodeWid; j++) {
 			//creates each node, starting at (start_x, start_y), topLeft, going down, right
 
-			Node* newNode = new Node(start_x + j* movementX, start_y + i* movementY);
+			Node* newNode = new Node(j, i);
+			if (map[i][j].compare("W") == 0) {
+				newNode->setBlock(true);
+			}
+			
 			nodeRow->push_back(newNode);
 
 		}
 		nodes.push_back(nodeRow);
 	}
+
+
 	//connects node to each other to form a 4-connected graph with random edge weights
 	for (int i = 0; i < nodes.size(); i++) {
 		for (int j = 0; j < nodes.at(i)->size(); j++) {
@@ -62,8 +69,8 @@ Graph::Graph(int nodeWidth, int nodeHeight, GameObject nodeSprite) : nodeObj(nod
 			if (j + 1 < nodes.at(i)->size()) {
 				int randWeight = 10 + (rand() % 6);	//creates a random weight between 10-15
 
-				Node *n1 = nodes.at(i)->at(j);		//referncec to current node in graph.
-				Node *n2 = nodes.at(i)->at(j + 1);	//reference to node to the left of the current node.
+				Node* n1 = nodes.at(i)->at(j);		//referncec to current node in graph.
+				Node* n2 = nodes.at(i)->at(j + 1);	//reference to node to the left of the current node.
 
 				n1->addNode(*n2, randWeight);			//links both nodes together
 			}
@@ -72,8 +79,8 @@ Graph::Graph(int nodeWidth, int nodeHeight, GameObject nodeSprite) : nodeObj(nod
 			if (i + 1 < nodes.size()) {
 				int randWeight = 10 + (rand() % 6);	//creates a random weight between 10-15
 
-				Node *n1 = nodes.at(i)->at(j);		//referncec to current node in graph.
-				Node *n2 = nodes.at(i + 1)->at(j);	//node below the current node.
+				Node* n1 = nodes.at(i)->at(j);		//referncec to current node in graph.
+				Node* n2 = nodes.at(i + 1)->at(j);	//node below the current node.
 
 				n1->addNode(*n2, randWeight);			//links both nodes together
 			}
@@ -95,21 +102,18 @@ Graph::Graph(int nodeWidth, int nodeHeight, GameObject nodeSprite) : nodeObj(nod
 
 	formatNodes(tempVec);
 
-	//sets the start/end nodes to the top_left and bottom_right nodes.
-	setStart(0);
-	setEnd(nodeWidth * nodeHeight - 1);
-	pathfind();
+
 }
 
 
-Graph::Graph(std::vector<Node*>& nodes, GameObject nodeSprite) : nodeObj(nodeSprite) {
+Graph::Graph(std::vector<Node*>& nodes){
 	nodeMap = std::map<int, Node*>();
 	nodeVec = std::vector<std::vector<Node*>*>();
 
 	formatNodes(nodes);
 
 	setStart(0);
-	setEnd(nodeMap.size()-1);
+	setEnd(nodeMap.size() - 1);
 	pathfind();
 }
 
@@ -127,7 +131,7 @@ void Graph::formatNodes(std::vector<Node*>& nodes) {
 	minY = nodes.front()->getY();
 
 	float lastY = minY;
-	
+
 	Node* lastNode = NULL;
 	for (std::vector<Node*>::iterator it = nodes.begin(); it != nodes.end(); ++it) {
 		if ((*it)->getX() < minX) {
@@ -161,27 +165,27 @@ void Graph::formatNodes(std::vector<Node*>& nodes) {
 			}
 			++it;
 		}
-		
+
 		std::sort(tempVec->begin(), tempVec->end(), Node::sortByX);
 
 		//error checking
 		Node* n = NULL;
-		for(Node* ele : *tempVec) {
+		for (Node* ele : *tempVec) {
 			if (n != NULL && n->getX() == ele->getX()) {
-				std:: cout << "ERROR: NODES CANNOT SHARE COORDS: ID " << ele->getId() << " & " << n->getId();
+				std::cout << "ERROR: NODES CANNOT SHARE COORDS: ID " << ele->getId() << " & " << n->getId();
 				throw "ya done goof'd. Check console to see the problematic nodes ^.";
 			}
 			n = ele;
 		}
 		nodeVec.push_back(tempVec);
-		if (it == nodes.end()) { 
+		if (it == nodes.end()) {
 			break;
 		}
 	}
 }
 
 //these two searches are used to find the node the mouse is hovering on
-int Graph::binarySearchY(std::vector<std::vector<Node*>*> vec, int l, int r, int dist){
+int Graph::binarySearchY(std::vector<std::vector<Node*>*> vec, int l, int r, int dist) {
 	while (l <= r) {
 		int m = l + (r - l) / 2;
 		if (m < 0 || m >= vec.size()) {
@@ -206,7 +210,7 @@ int Graph::binarySearchY(std::vector<std::vector<Node*>*> vec, int l, int r, int
 	return -1;
 }
 
-int Graph::binarySearchX(std::vector<Node*>* vec, int l, int r, int dist){
+int Graph::binarySearchX(std::vector<Node*>* vec, int l, int r, int dist) {
 	while (l <= r) {
 		int m = l + (r - l) / 2;
 		if (m < 0 || m >= vec->size()) {
@@ -249,26 +253,11 @@ void Graph::update() {
 	glfwGetCursorPos(Window::getWindow(), &xpos, &ypos);
 	//std::cout << "mouse coords: (" << xpos << "," << ypos << ")" << std::endl; //uncomment if interested
 	//gets the node corresponding the mouseclick
+
 	int n = selectNode(xpos, ypos);
+
 	hover = n;
 
-	if (glfwGetMouseButton(Window::getWindow(), GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
-		
-		//set the start to selected node, if node exists and is not the end-node.
-		if (n != -1 && n != endNodeId) {
-			setStart(n);
-		}
-		pathfind();
-	}
-
-	if (glfwGetMouseButton(Window::getWindow(), GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
-
-		//set the start to selected node, if node exists and is not the start-node.
-		if (n != -1 && n != startNodeId) {
-			setEnd(n);
-		}
-		pathfind();
-	}
 }
 
 
@@ -279,76 +268,75 @@ int Graph::selectNode(double x, double y) {
 	glfwGetWindowSize(Window::getWindow(), &window_width_g, &window_height_g);
 	//if the mouse is outside the window, return -1
 	if (x < 0 || x > window_width_g || y < 0 || y > window_height_g) {
+
 		return -1;
 	}
 	else {
 		float cursor_x_pos = ((x + 0.5f) / (float)(window_width_g / 2.0f)) - 1.0f;
 		float cursor_y_pos = 1.0f - ((y + 0.5f) / (float)(window_height_g / 2.0f));
 
-		cursor_x_pos /= (cameraZoom*aspectRatio); //only x is scaled by using the aspect ratio atm.
+		cursor_x_pos /= (cameraZoom * aspectRatio); //only x is scaled by using the aspect ratio atm.
 		cursor_y_pos /= cameraZoom;	//transforms cursor position based on screen scale. used to be const 0.2
 
 		int x = round(cursor_x_pos - minX);
 		int y = round(cursor_y_pos - minY);
 
-		int yindex = binarySearchY(nodeVec, 0, nodeVec.size()-1, y);
+		int yindex = binarySearchY(nodeVec, 0, nodeVec.size() - 1, y);
 		if (yindex < 0 || yindex >= nodeVec.size()) {
 			return -1;
 		}
-		int xindex = binarySearchX(nodeVec.at(yindex), 0, nodeVec.at(yindex)->size()-1, x);
+		int xindex = binarySearchX(nodeVec.at(yindex), 0, nodeVec.at(yindex)->size() - 1, x);
 		if (xindex == -1) {
 			return -1;
 		}
 		int tryId = nodeVec.at(yindex)->at(xindex)->getId();
-		std::cout << "tryId: " << tryId << std::endl;
+		//std::cout << "tryId: " << tryId << std::endl;
 		return tryId;
 	}
 }
 
-//renders all the nodes in the graph
-void Graph::render(Shader &shader) {
+int Graph::selectNodeUsingGameCood(float x_axis, float y_axis) {
 
-	//goes through each node and renders it, using the provided gameObject
-	for (int j = 0; j < nodeVec.size(); j++) {
-		
-		if (nodeVec.size() == 0) {	//if there are no nodes, do nothing.
-			return;
-		}
+	int x = round(x_axis - minX);
+	int y = round(y_axis - minY);
 
-		//get the location of the color uniform
-		GLint color_loc = glGetUniformLocation(shader.getShaderID(), "colorMod");
-
-		for (int i = 0; i < nodeVec.at(j)->size(); i++) {
-			//gets the current node to draw
-			Node currentNode = *(nodeVec.at(j)->at(i));
-
-			//set the node 'pen' to the position of the current node.
-			nodeObj.setPosition(glm::vec3(currentNode.getX(), currentNode.getY(), 0.0f));
-			
-			//set the color of the node via the color uniform. Default is green
-			glUniform3f(color_loc, -0.15f, -0.15f, -0.15f);	//green
-
-			//change the color uniform depending on if the node is the start or end node.
-			if (currentNode.getId() == startNodeId) {
-				glUniform3f(color_loc, 1.0f, -1.0f, -1.0f);	//red = start
-			}
-			else if (currentNode.getId() == endNodeId) {
-				glUniform3f(color_loc, -1.0f, -1.0f, 1.0f); //blue = end
-			}else if (hover == currentNode.getId()) {
-				glUniform3f(color_loc, 1.0f, -0.4f, 1.0f);//pink = hovering over 
-			}
-			else if (currentNode.isOnPath()) {
-				glUniform3f(color_loc, -0.4f, -0.4f, -0.4f);//dark green = on path
-			}
-			
-			nodeObj.render(shader);
-		}
+	int yindex = binarySearchY(nodeVec, 0, nodeVec.size() - 1, y);
+	if (yindex < 0 || yindex >= nodeVec.size()) {
+		return -1;
 	}
+	int xindex = binarySearchX(nodeVec.at(yindex), 0, nodeVec.at(yindex)->size() - 1, x);
+	if (xindex == -1) {
+		return -1;
+	}
+	int tryId = nodeVec.at(yindex)->at(xindex)->getId();
+	//std::cout << "tryId: " << tryId << std::endl;
+	return tryId;
 }
 
+int Graph::selectNodeUsingTable(int row, float col) {
+	
+	//cout << endl<< "selectNodeUsingTable : select a node " << endl;
+	//cout << col << " , "  << row << endl;
+	int x = row;
+	int y = col;
+
+	int yindex = binarySearchY(nodeVec, 0, nodeVec.size() - 1, y);
+	if (yindex < 0 || yindex >= nodeVec.size()) {
+		return -1;
+	}
+	int xindex = binarySearchX(nodeVec.at(yindex), 0, nodeVec.at(yindex)->size() - 1, x);
+	if (xindex == -1) {
+		return -1;
+	}
+	int tryId = nodeVec.at(yindex)->at(xindex)->getId();
+	//std::cout << "tryId: " << tryId << std::endl;
+	//cout << yindex << " , "  << xindex << endl;
+
+	return tryId;
+}
 //returns a reference to the node with the supplied id.
 Node& Graph::getNode(int id) {
-	
+
 	//because we also store the graph as a map with the id as the key, we can easily reference each node.
 	return *nodeMap.at(id);
 }
@@ -365,22 +353,23 @@ std::vector<Node*> Graph::pathfind() {
 		for (int j = 0; j < nodeVec.at(i)->size(); j++) {
 			nodeVec.at(i)->at(j)->setCost(INT_MAX);
 			nodeVec.at(i)->at(j)->setOnPath(false);
+			nodeVec.at(i)->at(j)->setVisited(false);
 		}
 	}
 
 	//The startnode is added to the pq with cost 0
-	QNode startNode = {&getNode(startNodeId), 0};
+	QNode startNode = { &getNode(startNodeId), 0 };
 	pq.push(startNode);
-	
+
 	//now that the pq is setup, we can start the algorithm
 	//keep in mind that the as the QNode struct has a pointer to the corresponding node
 	//some function calls will use pointer syntax (->) 
-	
-	
+
+
 	while (!pq.empty()) {
 		//get the current lowest-cost node in pq
 		QNode lowest = pq.top();
-		
+
 		//if the current node is the end node, done!
 		if (lowest.node->getId() == endNodeId) {
 			break;
@@ -392,42 +381,61 @@ std::vector<Node*> Graph::pathfind() {
 
 			//compute cost to get to neighbouring node
 			//cost = the cost to get the corrent node + cost to traverse the edge
-			
-			Node *n = &getNode(lowest.node->getOtherNode(neighbours.at(i)).getId());
-			//Node *n = &(lowest.node->getOtherNode(neighbours.at(i)));
-			
-			int nodeCost = lowest.cost + neighbours.at(i).cost;
 
-			//if current node cost is higher than calculated, update node, and add QNode to queue			
-			if (n->getCost() > nodeCost) {
-				n->setCost(nodeCost);	
-				n->setPrev(lowest.node);
-				
-				QNode updatedNode = {n, nodeCost };
-				pq.push(updatedNode);
+			Node* n = &getNode(lowest.node->getOtherNode(neighbours.at(i)).getId());
+
+			//mark the node  is visited
+			n->setVisited(true);
+
+			if (n->isBlock()) {
+
+			}
+			else {
+				//Node *n = &(lowest.node->getOtherNode(neighbours.at(i)));
+
+				float dist = glm::abs(getNode(endNodeId).getX() - n->getX()) + glm::abs(getNode(endNodeId).getY() - n->getY());
+				int nodeCost = lowest.cost + dist * neighbours.at(i).cost; //node distance is also used for determine the cost
+
+				//if current node cost is higher than calculated, update node, and add QNode to queue			
+				if (n->getCost() > nodeCost) {
+					n->setCost(nodeCost);
+					n->setPrev(lowest.node);
+
+					QNode updatedNode = { n, nodeCost };
+					pq.push(updatedNode);
+				}
 			}
 		}
 
 		pq.pop();	//REMOVE NODE FROM QUEUE
+
 	}
 
 	//queue is done, go in reverse from END to START to determine path
 	Node* currentNode = getNode(endNodeId).getPrev();
-	
+
 	//while the current node isn't null, or the end, mark the current node as on the path
-	
-	pathNodes.push_back(&getNode(endNodeId));
-	while (currentNode != NULL && currentNode->getId() != startNodeId) {
+	if (pq.size() > 0) {
+
+		//if there is path, retrace it
+		pathNodes.push_back(&getNode(endNodeId));
+		while (currentNode != NULL && currentNode->getId() != startNodeId) { //the loop will not continue forever even if there is no path
+			pathNodes.push_back(currentNode);
+			currentNode->setOnPath(true);
+			currentNode = currentNode->getPrev();
+			//std::cout << currentNode->getId() <<std::endl;
+		}
 		pathNodes.push_back(currentNode);
-		currentNode->setOnPath(true);
-		currentNode = currentNode->getPrev();
+
 	}
-	pathNodes.push_back(currentNode);
+	else {
+		// if there is no path
+		pathNodes.push_back(&getNode(startNodeId));
+		std::cout << "no path is found";
+	}
+
 	std::reverse(pathNodes.begin(), pathNodes.end());
 	//remove this, just for you to see the ids in order on the path 
-	for (Node* ele : pathNodes) {
-		std::cout << "id:" << ele->getId() << std::endl;
-	}
 	return pathNodes;
 
 }
