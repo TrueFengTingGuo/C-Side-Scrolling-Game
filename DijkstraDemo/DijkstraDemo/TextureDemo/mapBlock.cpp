@@ -5,7 +5,7 @@ mapBlock::mapBlock(GameObjectHandler* h, glm::vec3& entityPosition, GLuint entit
 {
 	rowOrder = rowOrderInMap;
 	colOrder = colOrderInMap;
-	position = entityPosition + glm::vec3(rowOrder,colOrder,0.f);
+
 }
 
 void mapBlock::update(double deltaTime)

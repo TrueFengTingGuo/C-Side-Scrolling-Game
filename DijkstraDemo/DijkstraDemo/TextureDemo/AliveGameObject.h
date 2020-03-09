@@ -23,6 +23,8 @@ public:
 	void addWeapon(Weapon* w);
 	void hurt(float d);
 
+	//reverse the velocity and update the position
+	void reverseVelocity(double deltaTime);
 	// Getters
 	inline float getHealth() { return hp; }
 
@@ -41,6 +43,8 @@ protected:
 	float damage;
 	int level;
 	std::vector<Weapon*> weapons;
+
+	
 };
 
 #endif

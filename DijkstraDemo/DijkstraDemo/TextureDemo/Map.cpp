@@ -44,6 +44,7 @@ Map::Map()
 	else {
 		cout << "Unable to open file." << endl;
 	}
+	/*
 	for (int colCount = 0; colCount < aLevelMap.size(); colCount++) {
 		cout << colCount;
 		cout << "size: " << aLevelMap[colCount].size();
@@ -53,6 +54,7 @@ Map::Map()
 		cout << endl;
 	}
 	cout << aLevelMap.size() << " , " << aLevelMap[aLevelMap.size() - 1].size() << endl;
+	*/
 }
 
 //return true if a new map is created
@@ -60,9 +62,7 @@ bool Map::loadPartialMap(glm::vec3 playerPosition)
 {
 
 
-
 	int col_searching_range = 10;
-	int row_searching_range = 10;
 
 	glm::vec2 inGameWallSize = glm::vec2(1.0f, 1.0f);
 
@@ -74,8 +74,7 @@ bool Map::loadPartialMap(glm::vec3 playerPosition)
 
 	// if player is outside the map
 
-	if (playerPositionOnTheTable.x > paritalLoadedMap_botRight.x + 2 || playerPositionOnTheTable.x < paritalLoadedMap_topLeft.x - 2
-		|| playerPositionOnTheTable.y > paritalLoadedMap_botRight.y - 2 || playerPositionOnTheTable.y < paritalLoadedMap_topLeft.y + 2) {
+	if (playerPositionOnTheTable.y > paritalLoadedMap_colRange.y - 2 || playerPositionOnTheTable.y < paritalLoadedMap_colRange.x + 2) {
 
 		std::cout << "outside" << std::endl;
 		//empty the partial map vector and create a new one
@@ -85,50 +84,23 @@ bool Map::loadPartialMap(glm::vec3 playerPosition)
 
 
 		//limit all searching range
-		int rowStart = playerPositionOnTheTable.x - row_searching_range;
-		int rowEnd = playerPositionOnTheTable.x + row_searching_range;
 
-		cout << "row before adding " << rowStart << " , " << rowEnd << endl;
-		if (rowStart < 0) {
-			rowStart = 0;
-		}
-		if (rowEnd > aLevelMap[0].size()) {
-			rowEnd = aLevelMap[0].size();
-		}
 
 		int colEnd = playerPositionOnTheTable.y + col_searching_range;
 		int colStart = playerPositionOnTheTable.y - col_searching_range;
-		cout << "col before adding " << colStart << " , " << colEnd << endl;
-		if (colEnd > map_height - 1) {
-			colEnd = map_height - 1;
+		//cout << "col before adding " << colStart << " , " << colEnd << endl;
+		if (colEnd > map_height) {
+			colEnd = map_height;
 		}
 		if (colStart < 0) {
 			colStart = 0;
 		}
 
-
-		cout << rowStart << " , " << rowEnd << endl;
 		cout << colStart << " , " << colEnd << endl;
 
 
 		//save the parital map range
-		paritalLoadedMap_topLeft = glm::vec2(rowStart, colStart);
-		paritalLoadedMap_botRight = glm::vec2(rowEnd, colEnd);
-
-		//create a new partial map
-		for (int colCount = colStart; colCount < colEnd; colCount++) {
-			vector<string> temp;
-			for (int rowCount = rowStart; rowCount < rowEnd; rowCount++) {
-				//cout << colCount << " , " << rowCount ;
-				cout << aLevelMap[colCount][rowCount];
-
-				temp.push_back(aLevelMap[colCount][rowCount]);
-
-			}
-			twoDTemp.push_back(temp);
-			cout << endl;
-		}
-
+		paritalLoadedMap_colRange = glm::vec2(colStart, colEnd);
 
 		return true;
 

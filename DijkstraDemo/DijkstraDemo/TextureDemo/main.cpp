@@ -43,7 +43,7 @@ const glm::vec3 viewport_background_color_g(0.15, 0.17, 0.21);
 
 
 // Global texture info
-GLuint tex[3];
+GLuint tex[20];
 
 // Global game object info
 GameObjectHandler* gameObjectHandler;
@@ -108,15 +108,46 @@ void setthisTexture(GLuint w, char *fname){
 }
 
 void setallTexture(void){
-	glGenTextures(3, tex);
+	glGenTextures(4, tex);
 	setthisTexture(tex[0], "orb.png");
 	setthisTexture(tex[1], "helicopter.jpg");
 	setthisTexture(tex[2], "bullet.png");
-
+	setthisTexture(tex[3], "Brick_1.png");
 	glBindTexture(GL_TEXTURE_2D, tex[0]);
 }
 
+void loadMap(Map* map) {
 
+	//reset
+	gameObjectHandler->restMap();
+
+	for (int col = 0; col < map->getaLevelMap().size(); col++) {
+
+		std::vector<GameObject*> tempBlock;
+		for (int row = 0; row < map->getaLevelMap()[col].size(); row++) {
+
+
+			//create map
+			if (map->getaLevelMap()[col][row].compare("W") == 0) {
+				mapBlock* newBlock = new mapBlock(gameObjectHandler, glm::vec3(row, -col,0.f), tex[3], 6, "mapBlock", row, col);
+				gameObjectHandler->add(newBlock);
+				tempBlock.push_back(newBlock);
+
+			}
+			else if (map->getaLevelMap()[col][row].compare("H") == 0) {
+				Enemy* newEnemy = new Enemy(gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[1], 6, "Enemy", 1.0, 1, 0, 10.0f);
+				gameObjectHandler->add(newEnemy);
+				tempBlock.push_back(newEnemy);
+			}
+			else {
+				tempBlock.push_back(NULL);
+			}
+
+		}
+		gameObjectHandler->gameObjectInTableOrder.push_back(tempBlock);
+	}
+
+}
 // Main function that builds and runs the game
 int main(void){
 	try {
@@ -158,6 +189,7 @@ int main(void){
 		gameObjectHandler = new GameObjectHandler(player);
 
 
+		//set player location
 		for (int col = gameMap->getaLevelMap().size() - 1; col > 0; col--) {
 
 			for (int row = 0; row < gameMap->getaLevelMap()[col].size(); row++) {
@@ -165,25 +197,20 @@ int main(void){
 				//create map
 				//cout << gameMap->getPartialMap()[col][row];
 				if (gameMap->getaLevelMap()[col][row].compare("S") == 0) {
-					cout << "Start "<< row << " , " << col << endl;
+					//cout << "Start "<< row << " , " << col << endl;
 					player->setPosition(glm::vec3(row, - col, 0.0f));
 				}
 
 			}
 		}
-		
+		loadMap(gameMap);
 
 		// test weapon
 		Weapon* testWeapon = new Weapon(gameObjectHandler, playerDefaultPosition, tex[0], 6, "Weapon", 60.0f, 5, 0, "TestBullet", player);
 		player->addWeapon(testWeapon);
 		gameObjectHandler->add(testWeapon);
 
-		// Test enemy
-		Enemy* testEnemy = new Enemy(gameObjectHandler, glm::vec3(2.0f, 1.0f, 0.0f), tex[1], 6, "Enemy", 1.0, 1, 0, 10.0f);
-		gameObjectHandler->add(testEnemy);
 
-
-		//
 		// Run the main loop
 		double lastTime = glfwGetTime();
 		while (!glfwWindowShouldClose(window.getWindow())) {
@@ -215,37 +242,11 @@ int main(void){
 			mod = 13 / mult;  //allows you to play with the size of the graph by changing mult before running
 			wid = 4 * mod - 1;
 			height = 3 * mod - 1;
-
-
-			//create the map base on player current position/////////
-
-			//delete map block that should not display
 					
-			//create new map block again			
+			//only update the gameobjects that are colser to player		
 			if (gameMap->loadPartialMap(player->getPosition())) {
 
-				//delete all map block
-				gameObjectHandler->deleteByType("mapBlock");
-
-				cout << "main partial map" << endl;
-
-				for (int col = 0; col < gameMap->getPartialMap().size(); col++) {
-
-					for (int row = 0; row < gameMap->getPartialMap()[col].size(); row++) {
-
-						//create map
-						cout << gameMap->getPartialMap()[col][row];
-						//cout << gameMap->getPartialMap()[col][row];
-						if (gameMap->getPartialMap()[col][row].compare("W") == 0) {
-							gameObjectHandler->add(new mapBlock(gameObjectHandler, glm::vec3(0.f), tex[0], 6, "mapBlock", gameMap->getParitalLoadedMap_topLeft().x + row, -gameMap->getParitalLoadedMap_topLeft().y - col));
-							cout << gameMap->getParitalLoadedMap_topLeft().x + row << " , " << -gameMap->getParitalLoadedMap_topLeft().y - col;
-						}
-
-
-					}
-					cout << endl;
-				}
-
+				gameObjectHandler->setActiveByTableCol(gameMap,gameMap->getParitalLoadedMap_colRange().x, gameMap->getParitalLoadedMap_colRange().y);
 
 			}
 			

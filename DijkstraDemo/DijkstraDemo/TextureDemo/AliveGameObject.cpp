@@ -17,6 +17,12 @@ void AliveGameObject::hurt(float d) {
 		damageTimer = damageCooldown;
 	}
 }
+//reverse the velocity and update the position
+void AliveGameObject::reverseVelocity(double deltaTime)
+{
+	setVelocity(getVelocity() * (-1.0f));
+	GameObject::update(deltaTime);
+}
 
 void AliveGameObject::update(double deltaTime)
 {

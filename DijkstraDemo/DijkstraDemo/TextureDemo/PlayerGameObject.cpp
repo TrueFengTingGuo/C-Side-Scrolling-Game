@@ -18,21 +18,23 @@ PlayerGameObject::PlayerGameObject(GameObjectHandler* h, glm::vec3 &entityPos, G
 void PlayerGameObject::update(double deltaTime) {
 
 	// reset velocity
-	velocity[0] = 0;
-	velocity[1] = 0;
+	//velocity[0] = 0;
+	//velocity[1] = 0;
+	/////////////////////////////// we shouldn't reset it, cause we may setVelcoity some everyelse///////////////////////
+
 	// Checking for player input and changing velocity
 	if (glfwGetKey(Window::getWindow(), GLFW_KEY_W) == GLFW_PRESS) {
-		velocity[1] = 1.0f;
+		setVelocity(glm::vec3(0.0f, 0.5f, 0.0f));
 	}
 	if (glfwGetKey(Window::getWindow(), GLFW_KEY_S) == GLFW_PRESS) {
-		velocity[1] = -1.0f;
+		setVelocity(glm::vec3(0.0f, -0.5f, 0.0f));
 	}
 	if (glfwGetKey(Window::getWindow(), GLFW_KEY_D) == GLFW_PRESS) {
-		velocity[0] = 1.0f;
+		setVelocity(glm::vec3(0.5f, 0.0f, 0.0f));
 		// rotate player to face right
 	}
 	if (glfwGetKey(Window::getWindow(), GLFW_KEY_A) == GLFW_PRESS) {
-		velocity[0] = -1.0f;
+		setVelocity(glm::vec3(-0.5f, 0.0f, 0.0f));
 		// rotate player to face left
 	}
 

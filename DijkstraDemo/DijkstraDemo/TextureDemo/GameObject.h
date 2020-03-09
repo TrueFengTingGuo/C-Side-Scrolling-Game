@@ -25,7 +25,7 @@ public:
 
 	// Getters
 	inline glm::vec3& getPosition() { return position; }
-	inline glm::vec3& getVelocity() { return velocity; }
+	inline glm::vec3& getVelocity() { std::cout << type << std::endl; return velocity; }
 	inline glm::vec3& getRotation() { return rotation; }
 	inline float getOrientation() { return orientation; }
 	inline std::string& getType() { return type; }

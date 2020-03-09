@@ -15,9 +15,13 @@ class Map
 public:
 	Map();
 	bool loadPartialMap(glm::vec3 playerPosition);
+
 	vector<vector<string>> getPartialMap() { return twoDTemp; }
 	vector<vector<string>> getaLevelMap() { return aLevelMap; }
-	glm::vec2 getParitalLoadedMap_topLeft() { return paritalLoadedMap_topLeft; }
+
+	glm::vec2 getParitalLoadedMap_colRange() { return paritalLoadedMap_colRange; }
+
+
 	//getter
 
 private:
@@ -29,7 +33,7 @@ private:
 	vector<vector<string>> twoDTemp;
 
 
-	glm::vec2 paritalLoadedMap_topLeft = glm::vec2(-1.0f, -1.0f); //init value
-	glm::vec2 paritalLoadedMap_botRight = glm::vec2(-1.0f, -1.0f);//init value
+	glm::vec2 paritalLoadedMap_colRange = glm::vec2(-1.0f, -1.0f); //init value
+
 };
 
