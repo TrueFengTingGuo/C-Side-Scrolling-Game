@@ -4,9 +4,7 @@
 #include "Map.h"
 
 
-GameObjectHandler::GameObjectHandler(PlayerGameObject* p) {
-	player = p;
-	gameObjects.push_back(p);
+GameObjectHandler::GameObjectHandler() {
 }
 
 // Updates all game objects
@@ -74,6 +72,10 @@ void GameObjectHandler::render(Shader& shader) {
 }
 
 void GameObjectHandler::add(GameObject* go) {
+	if (go->getType().compare("Player") == 0){ 
+		player = ((PlayerGameObject*)go);
+		std::cout << "player added" << std::endl;
+	}
 	gameObjects.push_back(go);
 
 }

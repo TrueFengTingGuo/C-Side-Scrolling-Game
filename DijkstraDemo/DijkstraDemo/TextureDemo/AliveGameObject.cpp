@@ -6,7 +6,7 @@
 
 AliveGameObject::AliveGameObject(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements,std::string myType,float newHealth,float newDamage, int newLevel)
 	: GameObject(h, entityPos, entityTexture, entityNumElements, myType) {
-
+	level = newLevel;
 	hp = newHealth + newLevel * growingHealth;
 	damage = newDamage + newLevel * growingDamage;
 }
@@ -37,4 +37,5 @@ void AliveGameObject::render(Shader& shader)
 
 void AliveGameObject::addWeapon(Weapon* w) {
 	weapons.push_back(w);
+	handler->add(w);
 }

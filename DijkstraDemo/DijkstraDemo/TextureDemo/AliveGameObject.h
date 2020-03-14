@@ -42,7 +42,7 @@ protected:
 	
 	float hp;
 	float damage;
-	int level;
+	int level = 0;
 	std::vector<Weapon*> weapons;
 
 	

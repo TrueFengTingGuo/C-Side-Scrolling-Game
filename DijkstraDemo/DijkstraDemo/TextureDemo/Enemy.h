@@ -11,7 +11,6 @@ public:
 
 protected:
 	float spottingRange;
-	GameObjectHandler* h;
 	virtual void update(double deltaTime) override;
 
 private:

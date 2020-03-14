@@ -33,8 +33,8 @@ float mult = 2.75; //play with this if you want a bigger or smaller graph but st
 // Globals that define the OpenGL window and viewport
 const std::string window_title_g = "Pathfinding Demo";
 
-extern int window_width_g  = 800;
-extern int window_height_g = 600;
+extern int window_width_g  = 720;
+extern int window_height_g = 980;
 extern float cameraZoom    = mult * 0.05f;
 extern float aspectRatio   = (float)window_height_g / (float)window_width_g;
 //extern GLFWwindow* window;
@@ -140,11 +140,8 @@ void loadMap(Map* map) {
 			else if (map->getaLevelMap()[col][row].compare("H") == 0) {
 				EnemyHelicopter* newEnemyHelicopter = new EnemyHelicopter(map,gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[1], 6, "Enemy", 1.0, 1, 0, 10.0f);
 				Weapon* testWeapon = new Weapon(gameObjectHandler, newEnemyHelicopter->getPosition(), tex[4], 6, "Weapon", tex[6], 60.0f, 5, 0, "TestBullet", newEnemyHelicopter);
-				newEnemyHelicopter->addWeapon(testWeapon);
-
-				
 				gameObjectHandler->add(newEnemyHelicopter);
-				gameObjectHandler->add(testWeapon);
+				newEnemyHelicopter->addWeapon(testWeapon);
 				tempBlock.push_back(newEnemyHelicopter);
 			}
 			else {
@@ -152,7 +149,7 @@ void loadMap(Map* map) {
 			}
 
 		}
-		gameObjectHandler->gameObjectInTableOrder.push_back(tempBlock);
+		gameObjectHandler->gameObjectInTableOrder.push_back(tempBlock); // this will store all gameobject in the order of a table
 	}
 
 }
@@ -192,15 +189,18 @@ int main(void){
 
 		////////////////////////////These will be implemented ////////////////////////////
 		Map *gameMap = new Map();
-		
+		gameObjectHandler = new GameObjectHandler();
 		glm::vec3 playerDefaultPosition = glm::vec3(0.0f, 0.0f, 0.0f);
 		PlayerGameObject* player = new PlayerGameObject(gameObjectHandler, playerDefaultPosition, tex[1], 6, "Player", 1, 1, 1);
-		//Store* gameStore = Store(glm::vec3(0.0f), tex[0], size, );
-		gameObjectHandler = new GameObjectHandler(player);
+		gameObjectHandler->add(player);
 		// test weapon
-		Weapon* testWeapon = new Weapon(gameObjectHandler, playerDefaultPosition, tex[4], 6, "Weapon", tex[6],60.0f, 100000, 0, "TestBullet", player);
+		Weapon* testWeapon = new Weapon(gameObjectHandler, playerDefaultPosition, tex[4], 6, "Weapon", tex[6], 60.0f, 100000, 0, "TestBullet", player);
 		player->addWeapon(testWeapon);
-		gameObjectHandler->add(testWeapon);
+
+		loadMap(gameMap);
+
+
+		
 
 		//set player location
 		for (int col = gameMap->getaLevelMap().size() - 1; col > 0; col--) {
@@ -216,12 +216,6 @@ int main(void){
 
 			}
 		}
-
-
-		loadMap(gameMap);
-
-		
-
 
 
 

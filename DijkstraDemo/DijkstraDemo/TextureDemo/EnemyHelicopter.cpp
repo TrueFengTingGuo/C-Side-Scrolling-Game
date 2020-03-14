@@ -30,7 +30,7 @@ void EnemyHelicopter::update(double deltaTime)
 	//set path start ---- Endhere
 
 	//set path end
-	glm::vec3 playerPositionOnTheTable = h->getPlayer()->getPosition();
+	glm::vec3 playerPositionOnTheTable = handler->getPlayer()->getPosition();
 	playerPositionOnTheTable.x = round(playerPositionOnTheTable.x / inGameWallSize.x);
 	playerPositionOnTheTable.y = -round(playerPositionOnTheTable.y / inGameWallSize.y);
 

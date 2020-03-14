@@ -12,7 +12,7 @@ class mapBlock;
 
 class GameObjectHandler {
 public:
-	GameObjectHandler(PlayerGameObject* p);
+	GameObjectHandler();
 
 	void update(double deltaTime);
 

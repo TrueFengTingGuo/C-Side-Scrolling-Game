@@ -10,19 +10,19 @@ class Store :
 	public GameObject
 {
 public:
-	Store(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements,std::string newType, PlayerGameObject* playerReference);
+	Store(GLuint newStoredTex[],GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements,std::string newType);
 	
 	//getter
-	Weapon& buyWeapon(std::string& weaponName);
+	Weapon* buyWeapon(std::string weaponName);
 	//
 
 private:
-	std::vector<Weapon*> weaponCollection;
-	PlayerGameObject* playerGameObjectReference; // getcurrency, and position of player to move the store's position with player
-	
+	std::vector<Weapon> weaponCollection;
+	std::vector<std::string> weaponName;
 	void levelup();
 	void buyAmmo();
 	void update(double deltaTime) override;
+	GLuint *storedTex;
 
 };
 
