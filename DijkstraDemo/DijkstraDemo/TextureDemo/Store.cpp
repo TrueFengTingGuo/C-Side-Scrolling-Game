@@ -25,7 +25,7 @@ Store::Store(GLuint newStoredTex[], GameObjectHandler* h, glm::vec3& entityPos, 
 	//Adding All Weapons here!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//add Pistol
 	weaponCollection.push_back(Weapon(h, DefaultPosition, storedTex[4], 6, "Weapon","Pistol" ,storedTex[6], 60.0f, 5, 0, "TestBullet", h->getPlayer()));
-
+	weaponCollection.push_back(Weapon(h, DefaultPosition, storedTex[4], 6, "Weapon", "Pistol", storedTex[6], 60.0f, 5, 0, "TestBullet", h->getPlayer()));
 }
 
 //get a weapon base on the cursor location
@@ -51,12 +51,21 @@ Weapon* Store::buyWeapon(double x, double y)
 
 	//selecting a weapon base on the mouse location on the screen
 	for (int count = 0; count < weaponCollection.size(); count++) {
-		glm::vec3 iconStartFrom = weaponIconStartFrom + glm::vec3(0.0f, count * 1.0f, 0.0f);
-		if (abs(cursor_x_pos - iconStartFrom.x) < 0.5f && abs(cursor_y_pos - iconStartFrom.y) < 0.5f) {
-			std::cout << "Buy " << std::endl;
-			newWeapon = new Weapon(weaponCollection.at(count)); // used copy constructor
 
-		}	
+		glm::vec3 iconStartFrom = weaponIconStartFrom - glm::vec3(0.0f, count * 1.0f, 0.0f);
+		
+		if (abs(cursor_x_pos - iconStartFrom.x) < 0.4f && abs(cursor_y_pos - iconStartFrom.y) < 0.4f) {
+			
+			mouseOnTheIcon_number = count; // mouse is on an icon
+			if (glfwGetMouseButton(Window::getWindow(), GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+				newWeapon = new Weapon(weaponCollection.at(count)); // used copy constructor
+				std::cout << "Buy " << count << std::endl;
+			}
+			break;
+		}
+		else {
+			mouseOnTheIcon_number = -1; //mouse is not on any icon
+		}
 	}
 
 	return newWeapon;
@@ -77,23 +86,31 @@ void Store::update(double deltaTime)
 	double xpos, ypos;
 	glfwGetCursorPos(Window::getWindow(), &xpos, &ypos);
 
-	if (glfwGetMouseButton(Window::getWindow(), GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
-
-		buyWeapon(xpos, ypos);
-	}
+	buyWeapon(xpos, ypos);
 	
 }
 
 void Store::render(Shader& shader) {
-
+	std::cout << "mouse on " << mouseOnTheIcon_number << std::endl;
 	for (int count = 0; count < weaponCollection.size(); count++) {
 		// Bind the entities texture
 		glBindTexture(GL_TEXTURE_2D, weaponCollection.at(count).getTexture());
 		// Setup the transformation matrix for the shader
-		glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), handler->getPlayer()->getPosition() + weaponIconStartFrom  + glm::vec3(0.0f, count * 1.0f,0.0f));
+		glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), handler->getPlayer()->getPosition() + weaponIconStartFrom - glm::vec3(0.0f, count * 1.0f,0.0f));
 		glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), orientation, glm::vec3(0.0f, 0.0f, 1.0f));
 		glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.5f, 0.5f, 0.5f));
 
+		//animation on the weapon icons
+		if (mouseOnTheIcon_number == count) {
+			if (currentIconMovment < 0) {
+				currentIconMovment = 1.0f;
+			}
+			else {
+				currentIconMovment -= 0.01f;
+			}
+			//std::cout << "mouse on " << count << std::endl;
+			scaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.5f*(currentIconMovment /1), 0.5f * (currentIconMovment / 1), 0.5f));
+		}
 
 		// Set the transformation matrix in the shader
 		glm::mat4 transformationMatrix = translationMatrix * rotationMatrix * scaleMatrix;

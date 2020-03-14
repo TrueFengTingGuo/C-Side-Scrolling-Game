@@ -32,6 +32,7 @@ private:
 
 	GLuint *storedTex;
 	glm::vec3 weaponIconStartFrom;
-
+	float currentIconMovment = 1; //showing the movment of the icon
+	int mouseOnTheIcon_number; // record which icon is about to clicked
 };
 

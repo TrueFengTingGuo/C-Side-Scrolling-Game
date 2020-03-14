@@ -29,5 +29,7 @@ private:
 	std::string bulletType;
 	GLuint BulletTexture;
 	std::string weaponName;
+	
+	
 };
 

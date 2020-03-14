@@ -12,6 +12,7 @@ Weapon::Weapon(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture,
 	owner = o;
 	BulletTexture = newBulletTexture;
 	weaponName = newWeaponName;
+
 }
 
 //copy weapon object from store to player
