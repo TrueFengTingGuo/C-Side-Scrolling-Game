@@ -1,7 +1,7 @@
 #include "Weapon.h"
 #include "AliveGameObject.h"
 
-Weapon::Weapon(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string newType, GLuint newBulletTexture, float fr, int a, int c, std::string bt, AliveGameObject* o)
+Weapon::Weapon(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string newType, std::string newWeaponName,GLuint newBulletTexture, float fr, int a, int c, std::string bt, AliveGameObject* o)
 	: GameObject(h, entityPos, entityTexture, entityNumElements, newType)
 {
 	fireRate = fr;
@@ -11,6 +11,7 @@ Weapon::Weapon(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture,
 	bulletType = bt;
 	owner = o;
 	BulletTexture = newBulletTexture;
+	weaponName = newWeaponName;
 }
 
 //copy weapon object from store to player
@@ -21,6 +22,7 @@ Weapon::Weapon(Weapon& w)
 	ammo = w.ammo;
 	cost = w.cost;
 	bulletType = w.bulletType;
+	weaponName = w.weaponName;
 }
 
 void Weapon::update(double deltaTime) {

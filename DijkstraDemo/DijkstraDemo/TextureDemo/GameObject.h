@@ -30,7 +30,7 @@ public:
 	inline float getOrientation() { return orientation; }
 	inline std::string& getType() { return type; }
 	inline bool& getActive() { return active; }
-
+	inline GLuint& getTexture() { return texture; }
 	// Setters
 	inline void setPosition(glm::vec3& newPosition) { position = newPosition; }
 	inline void setVelocity(glm::vec3& newVelocity) { velocity = newVelocity; }

@@ -4,7 +4,15 @@
 #include "PlayerGameObject.h"
 #include <vector>
 #include "Weapon.h"
+#include "Window.h"
+#include <iostream>	//used for debug purposes
+#include <GL/glew.h> // window management library
+#include <GL/glfw3.h>
 
+extern int window_width_g;
+extern int window_height_g;
+extern float cameraZoom;
+extern float aspectRatio;
 
 class Store :
 	public GameObject
@@ -12,17 +20,18 @@ class Store :
 public:
 	Store(GLuint newStoredTex[],GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements,std::string newType);
 	
-	//getter
-	Weapon* buyWeapon(std::string weaponName);
+	
 	//
-
+	void render(Shader& shader) override;
+	void update(double deltaTime) override;
 private:
 	std::vector<Weapon> weaponCollection;
-	std::vector<std::string> weaponName;
 	void levelup();
 	void buyAmmo();
-	void update(double deltaTime) override;
+	Weapon* buyWeapon(double x, double y);
+
 	GLuint *storedTex;
+	glm::vec3 weaponIconStartFrom;
 
 };
 
