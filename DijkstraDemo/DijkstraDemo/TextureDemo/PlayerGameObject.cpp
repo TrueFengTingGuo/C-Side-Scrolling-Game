@@ -14,6 +14,14 @@ PlayerGameObject::PlayerGameObject(GameObjectHandler* h, glm::vec3 &entityPos, G
 	currency = 0;
 }
 
+//switch weapon
+void PlayerGameObject::switchWeapon() {
+	weapons[currentWeapon]->setActive(false);
+	currentWeapon = (currentWeapon + 1) % weapons.size();
+	weapons[currentWeapon]->setActive(true);
+}
+
+
 // Update function for moving the player object around
 void PlayerGameObject::update(double deltaTime) {
 
@@ -38,6 +46,10 @@ void PlayerGameObject::update(double deltaTime) {
 		// rotate player to face left
 	}
 
+	if (glfwGetKey(Window::getWindow(), GLFW_KEY_Q) == GLFW_PRESS) {
+		switchWeapon();
+	}
+
 	if (weapons.size() > 0) {
 		// Aim weapon
 		// get mouse input
@@ -54,10 +66,13 @@ void PlayerGameObject::update(double deltaTime) {
 		if (glfwGetKey(Window::getWindow(), GLFW_KEY_SPACE) == GLFW_PRESS) {
 			weapons[currentWeapon]->fire();
 		}
+
+		
 	}
 
 	AliveGameObject::update(deltaTime);
 }
+
 
 void PlayerGameObject::render(Shader& shader)
 {

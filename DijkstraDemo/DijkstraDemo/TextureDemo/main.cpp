@@ -191,16 +191,16 @@ int main(void){
 		Map *gameMap = new Map();	
 		gameObjectHandler = new GameObjectHandler();
 
-		//adding store
-		Store* gameStore = new Store(tex, gameObjectHandler, glm::vec3(0.0f, 0.0f, 0.0f),tex[0],6,"Store");
-		gameObjectHandler->add(gameStore);
-
 		//adding player
 		glm::vec3 playerDefaultPosition = glm::vec3(0.0f, 0.0f, 0.0f);
 		PlayerGameObject* player = new PlayerGameObject(gameObjectHandler, playerDefaultPosition, tex[1], 6, "Player", 1, 1, 1);
 		gameObjectHandler->add(player);
 		Weapon* testWeapon = new Weapon(gameObjectHandler, playerDefaultPosition, tex[4], 6, "Weapon", "Pistol", tex[6], 60.0f, 100000, 0, "TestBullet", player);
 		player->addWeapon(testWeapon);
+
+		//adding store (store must init after the player)
+		Store* gameStore = new Store(tex, gameObjectHandler, glm::vec3(0.0f, 0.0f, 0.0f), tex[0], 6, "Store");
+		gameObjectHandler->add(gameStore);
 
 		//loading map
 		loadMap(gameMap);

@@ -20,21 +20,29 @@ Weapon::Weapon(Weapon& w)
 	: GameObject(w.handler, w.position, w.texture, w.numElements,w.type)
 {
 	fireRate = w.fireRate;
+	cooldown = w.cooldown;
 	ammo = w.ammo;
 	cost = w.cost;
 	bulletType = w.bulletType;
+	owner = w.owner;
+	BulletTexture = w.BulletTexture;
 	weaponName = w.weaponName;
 }
 
 void Weapon::update(double deltaTime) {
+	if (getName().compare("RPistol") == 0) {
+		std::cout << "render RPistol " << std::endl;
+	}
 	if(cooldown > 0) cooldown--;
 	position = owner->getPosition();
+	
 }
 
 void Weapon::render(Shader &shader) {
 	// Bind the entities texture
 	glBindTexture(GL_TEXTURE_2D, texture);
 
+	
 	// Setup the transformation matrix for the shader
 	glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), position);
 	glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), orientation, glm::vec3(0.0f, 0.0f, 1.0f));

@@ -28,7 +28,7 @@ private:
 	std::vector<Weapon> weaponCollection;
 	void levelup();
 	void buyAmmo();
-	Weapon* buyWeapon(double x, double y);
+	void buyWeapon(double x, double y);
 
 	GLuint *storedTex;
 	glm::vec3 weaponIconStartFrom;

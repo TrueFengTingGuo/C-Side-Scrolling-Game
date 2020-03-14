@@ -19,9 +19,9 @@ public:
 
 		//getter
 		std::string getName() { return weaponName; }
-
+		AliveGameObject* owner;
 private:
-	AliveGameObject* owner;
+	
 	float fireRate;
 	float cooldown;
 	int ammo;

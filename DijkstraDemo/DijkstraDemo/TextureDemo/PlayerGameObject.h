@@ -12,10 +12,11 @@ public:
 
 	// Update function for moving the player object around
 	virtual void update(double deltaTime) override;
+	void switchWeapon();
 	void render(Shader& shader) override;
 
 private:
-	int currentWeapon;
+	
 	int experience;
 	int currency;
 };

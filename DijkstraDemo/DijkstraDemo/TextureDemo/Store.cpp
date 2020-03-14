@@ -17,7 +17,7 @@ Store::Store(GLuint newStoredTex[], GameObjectHandler* h, glm::vec3& entityPos, 
 
 	x_axis_max /= (cameraZoom * aspectRatio); //only x is scaled by using the aspect ratio atm.
 	y_axis_max /= cameraZoom;	//transforms cursor position based on screen scale. used to be const 0.2
-	std::cout << x_axis_max << " , " << y_axis_max << std::endl;
+	//std::cout << x_axis_max << " , " << y_axis_max << std::endl;
 
 	weaponIconStartFrom = glm::vec3(x_axis_max - 0.5, -y_axis_max - 0.5, 0.0f); // the staring localtion where all weapons will be displayed
 
@@ -25,20 +25,20 @@ Store::Store(GLuint newStoredTex[], GameObjectHandler* h, glm::vec3& entityPos, 
 	//Adding All Weapons here!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//add Pistol
 	weaponCollection.push_back(Weapon(h, DefaultPosition, storedTex[4], 6, "Weapon","Pistol" ,storedTex[6], 60.0f, 5, 0, "TestBullet", h->getPlayer()));
-	weaponCollection.push_back(Weapon(h, DefaultPosition, storedTex[4], 6, "Weapon", "Pistol", storedTex[6], 60.0f, 5, 0, "TestBullet", h->getPlayer()));
+	weaponCollection.push_back(Weapon(h, DefaultPosition, storedTex[3], 6, "Weapon", "RPistol", storedTex[6], 20.0f, 99999, 0, "TestBullet", h->getPlayer()));
 }
 
 //get a weapon base on the cursor location
-Weapon* Store::buyWeapon(double x, double y)
+void Store::buyWeapon(double x, double y)
 {	
 
-	Weapon *newWeapon = NULL;
+
 	glfwGetWindowSize(Window::getWindow(), &window_width_g, &window_height_g);
 
 	//calculating the position of the cursor  in the game world
 	if (x < 0 || x > window_width_g || y < 0 || y > window_height_g) {
 
-		return newWeapon;
+		return;
 	}
 
 	//cursor position before zooming out
@@ -58,8 +58,10 @@ Weapon* Store::buyWeapon(double x, double y)
 			
 			mouseOnTheIcon_number = count; // mouse is on an icon
 			if (glfwGetMouseButton(Window::getWindow(), GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
-				newWeapon = new Weapon(weaponCollection.at(count)); // used copy constructor
-				std::cout << "Buy " << count << std::endl;
+				Weapon *newWeapon = new Weapon(weaponCollection.at(count)); // used copy constructor
+				newWeapon->setActive(false);
+				handler->getPlayer()->addWeapon(newWeapon);
+				std::cout << "Buy " << newWeapon->owner->getType() << std::endl;
 			}
 			break;
 		}
@@ -68,7 +70,7 @@ Weapon* Store::buyWeapon(double x, double y)
 		}
 	}
 
-	return newWeapon;
+
 }
 
 void Store::levelup()
@@ -91,7 +93,7 @@ void Store::update(double deltaTime)
 }
 
 void Store::render(Shader& shader) {
-	std::cout << "mouse on " << mouseOnTheIcon_number << std::endl;
+	//std::cout << "mouse on " << mouseOnTheIcon_number << std::endl;
 	for (int count = 0; count < weaponCollection.size(); count++) {
 		// Bind the entities texture
 		glBindTexture(GL_TEXTURE_2D, weaponCollection.at(count).getTexture());

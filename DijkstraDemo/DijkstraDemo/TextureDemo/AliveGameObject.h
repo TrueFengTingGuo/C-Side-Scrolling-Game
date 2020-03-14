@@ -21,7 +21,7 @@ public:
 	virtual void update(double deltaTime) override;
 	virtual void render(Shader& shader) override;
 
-	void addWeapon(Weapon* w);
+	bool addWeapon(Weapon* w);
 	void hurt(float d);
 
 	//reverse the velocity and update the position
@@ -44,7 +44,7 @@ protected:
 	float damage;
 	int level = 0;
 	std::vector<Weapon*> weapons;
-
+	int currentWeapon;
 	
 };
 

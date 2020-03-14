@@ -35,7 +35,18 @@ void AliveGameObject::render(Shader& shader)
 	GameObject::render(shader);
 }
 
-void AliveGameObject::addWeapon(Weapon* w) {
+//fail when the weapon is not new
+bool AliveGameObject::addWeapon(Weapon* w) {
+	for (int count = 0; count < weapons.size(); count++) {
+		if (weapons.at(count)->getName().compare(w->getName()) == 0) {
+			
+			return false;// add weapon failed
+		}
+	}
+	//if there is no same weapon
 	weapons.push_back(w);
 	handler->add(w);
+	std::cout << "new Weapon added" << std::endl;
+	return true; // add weapon successed
+	
 }
