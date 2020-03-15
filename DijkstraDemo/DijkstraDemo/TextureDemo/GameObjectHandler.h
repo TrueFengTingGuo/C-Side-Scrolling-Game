@@ -25,6 +25,7 @@ public:
 	void deleteByType(std::string type);
 	void restMap();
 	void setActiveByTableCol(Map* map,int colStart, int colEnd);
+	
 	// Getters
 	inline PlayerGameObject* getPlayer() { return player; }
 
@@ -36,7 +37,7 @@ public:
 private:
 	PlayerGameObject* player;
 	std::vector<GameObject*> gameObjects;
-
+	void CleanOutOfRangeGameObject();
 };
 
 #endif

@@ -12,10 +12,8 @@ AliveGameObject::AliveGameObject(GameObjectHandler* h, glm::vec3& entityPos, GLu
 }
 
 void AliveGameObject::hurt(float d) {
-	if (damageTimer == 0) {
+
 		hp -= d;
-		damageTimer = damageCooldown;
-	}
 }
 //reverse the velocity and update the position
 void AliveGameObject::reverseVelocity(double deltaTime)
@@ -27,11 +25,27 @@ void AliveGameObject::reverseVelocity(double deltaTime)
 void AliveGameObject::update(double deltaTime)
 {
 	if (damageTimer > 0) damageTimer--;
+	
+	for each (Weapon* weapon in weapons)
+	{
+		if (weapon->getActive()) {
+			weapon->update(deltaTime);
+		}
+		
+	}
 	GameObject::update(deltaTime);
 }
 
 void AliveGameObject::render(Shader& shader)
 {
+	
+	for each (Weapon * weapon in weapons)
+	{
+		if (weapon->getActive()) {
+			weapon->render(shader);
+		}
+
+	}
 	GameObject::render(shader);
 }
 
@@ -45,8 +59,12 @@ bool AliveGameObject::addWeapon(Weapon* w) {
 	}
 	//if there is no same weapon
 	weapons.push_back(w);
-	handler->add(w);
 	std::cout << "new Weapon added" << std::endl;
 	return true; // add weapon successed
 	
+}
+
+void AliveGameObject::cleanWeapons() {
+
+	weapons.clear();
 }

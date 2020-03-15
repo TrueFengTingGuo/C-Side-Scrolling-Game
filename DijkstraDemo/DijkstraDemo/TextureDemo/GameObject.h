@@ -49,7 +49,7 @@ protected:
 	glm::vec3 rotation;
 	float orientation;
 	std::string  type;
-	bool active;
+	bool active = true;
 
 	// Object's details
 	GLint numElements;

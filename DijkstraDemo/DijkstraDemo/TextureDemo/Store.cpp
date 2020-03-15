@@ -24,8 +24,8 @@ Store::Store(GLuint newStoredTex[], GameObjectHandler* h, glm::vec3& entityPos, 
 
 	//Adding All Weapons here!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//add Pistol
-	weaponCollection.push_back(Weapon(h, DefaultPosition, storedTex[4], 6, "Weapon","Pistol" ,storedTex[6], 60.0f, 5, 0, "TestBullet", h->getPlayer()));
-	weaponCollection.push_back(Weapon(h, DefaultPosition, storedTex[3], 6, "Weapon", "RPistol", storedTex[6], 20.0f, 99999, 0, "TestBullet", h->getPlayer()));
+	weaponCollection.push_back(Weapon(h, DefaultPosition, storedTex[4], 6, "Weapon","Pistol" ,storedTex[6], 60.0f, 5, 0, "PlayerBullet", h->getPlayer()));
+	weaponCollection.push_back(Weapon(h, DefaultPosition, storedTex[3], 6, "Weapon", "RPistol", storedTex[6], 20.0f, 99999, 0, "PlayerBullet", h->getPlayer()));
 }
 
 //get a weapon base on the cursor location

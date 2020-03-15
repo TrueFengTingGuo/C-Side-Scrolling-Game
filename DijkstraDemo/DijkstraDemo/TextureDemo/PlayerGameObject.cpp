@@ -32,17 +32,17 @@ void PlayerGameObject::update(double deltaTime) {
 
 	// Checking for player input and changing velocity
 	if (glfwGetKey(Window::getWindow(), GLFW_KEY_W) == GLFW_PRESS) {
-		setVelocity(glm::vec3(0.0f, 1.0f, 0.0f));
+		setVelocity(glm::vec3(0.0f, 1.5f, 0.0f));
 	}
 	if (glfwGetKey(Window::getWindow(), GLFW_KEY_S) == GLFW_PRESS) {
-		setVelocity(glm::vec3(0.0f, -1.0f, 0.0f));
+		setVelocity(glm::vec3(0.0f, -1.5f, 0.0f));
 	}
 	if (glfwGetKey(Window::getWindow(), GLFW_KEY_D) == GLFW_PRESS) {
-		setVelocity(glm::vec3(1.0f, 0.0f, 0.0f));
+		setVelocity(glm::vec3(1.5f, 0.0f, 0.0f));
 		// rotate player to face right
 	}
 	if (glfwGetKey(Window::getWindow(), GLFW_KEY_A) == GLFW_PRESS) {
-		setVelocity(glm::vec3(-1.0f, 0.0f, 0.0f));
+		setVelocity(glm::vec3(-1.5f, 0.0f, 0.0f));
 		// rotate player to face left
 	}
 
@@ -76,5 +76,5 @@ void PlayerGameObject::update(double deltaTime) {
 
 void PlayerGameObject::render(Shader& shader)
 {
-	GameObject::render(shader);
+	AliveGameObject::render(shader);
 }

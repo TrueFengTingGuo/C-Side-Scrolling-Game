@@ -17,17 +17,16 @@ void EnemyHelicopter::update(double deltaTime)
 	enemyPositionOnTheTable.y = -round(enemyPositionOnTheTable.y / inGameWallSize.y);
 	int n = graph->selectNodeUsingTable(enemyPositionOnTheTable.x, enemyPositionOnTheTable.y);
 
-	graph->setStart(n);
+	graph->setStart(n);	//set path start
 
 	if (currenStartNodeId != graph->getStartId()) {
 		currenStartNodeId = graph->getStartId();
 		findPlayer();
 		if (graph->sizeOfPathNodes() > 0) {
-			nextDest = graph->popNodeFromPath();
+			nextDest = graph->popNodeFromPath(); //get next node
 		}
 
 	}
-	//set path start ---- Endhere
 
 	//set path end
 	glm::vec3 playerPositionOnTheTable = handler->getPlayer()->getPosition();
@@ -42,14 +41,14 @@ void EnemyHelicopter::update(double deltaTime)
 		findPlayer();
 		currenEndtNodeId = graph->getEndId();
 		if (graph->sizeOfPathNodes() > 0) {
-			nextDest = graph->popNodeFromPath();
+			nextDest = graph->popNodeFromPath(); //get the next position where the enemy should go
 		}
 
 	}
-	//set path end  --- end  here	
+	//set path end 
 
 	float distanceToNextNode = glm::length(position - nextDest);
-	if (distanceToNextNode > 0.1f) {
+	if (distanceToNextNode > 0.1f) { // if distance to the next node is far enough
 		//cout << "next  dest" << graph->getNode(graph->getEndId()).getX() << " ," << graph->getNode(graph->getEndId()).getY() << endl;
 		velocity = glm::normalize(nextDest - position) * 1.0f;
 	}
@@ -64,8 +63,17 @@ void EnemyHelicopter::update(double deltaTime)
 		}
 	}
 	
-	
-	GameObject::update(deltaTime);
+	weapons[currentWeapon]->setPosition(position);
+	//fire
+	glm::vec3 playerPosition = glm::vec3(handler->getPlayer()->getPosition().x, handler->getPlayer()->getPosition().y,0.0f);
+	float distanceToShoot = glm::length(position - playerPosition);
+	if (distanceToShoot < 2.0f) { // if distance to the next node is far enough
+		
+		weapons[currentWeapon]->setOrientation(-360.0f / 3.14159265 / 2.0f * atan2(position[1]- playerPosition.y , playerPosition.x - position[0]));
+		weapons[currentWeapon]->fire();
+	}
+
+	AliveGameObject::update(deltaTime);
 }
 
 void EnemyHelicopter::findPlayer()

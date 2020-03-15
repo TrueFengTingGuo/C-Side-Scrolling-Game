@@ -120,7 +120,7 @@ void setallTexture(void){
 }
 
 void loadMap(Map* map) {
-
+	//////////////////////////////must use EnemyBullet (collide with itself)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 	//reset
 	gameObjectHandler->restMap();
 
@@ -139,7 +139,7 @@ void loadMap(Map* map) {
 			}
 			else if (map->getaLevelMap()[col][row].compare("H") == 0) {
 				EnemyHelicopter* newEnemyHelicopter = new EnemyHelicopter(map,gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[1], 6, "Enemy", 1.0, 1, 0, 10.0f);
-				Weapon* testWeapon = new Weapon(gameObjectHandler, newEnemyHelicopter->getPosition(), tex[4], 6, "Weapon", "Pistol", tex[6], 60.0f, 5, 0, "TestBullet", newEnemyHelicopter);
+				Weapon* testWeapon = new Weapon(gameObjectHandler, newEnemyHelicopter->getPosition(), tex[4], 6, "Weapon", "Pistol", tex[6], 100.0f, 999999, 0, "EnemyBullet", newEnemyHelicopter);
 				gameObjectHandler->add(newEnemyHelicopter);
 				newEnemyHelicopter->addWeapon(testWeapon);
 				tempBlock.push_back(newEnemyHelicopter);
@@ -195,7 +195,7 @@ int main(void){
 		glm::vec3 playerDefaultPosition = glm::vec3(0.0f, 0.0f, 0.0f);
 		PlayerGameObject* player = new PlayerGameObject(gameObjectHandler, playerDefaultPosition, tex[1], 6, "Player", 1, 1, 1);
 		gameObjectHandler->add(player);
-		Weapon* testWeapon = new Weapon(gameObjectHandler, playerDefaultPosition, tex[4], 6, "Weapon", "Pistol", tex[6], 60.0f, 100000, 0, "TestBullet", player);
+		Weapon* testWeapon = new Weapon(gameObjectHandler, playerDefaultPosition, tex[4], 6, "Weapon", "Pistol", tex[6], 60.0f, 100000, 0, "PlayerBullet", player);
 		player->addWeapon(testWeapon);
 
 		//adding store (store must init after the player)

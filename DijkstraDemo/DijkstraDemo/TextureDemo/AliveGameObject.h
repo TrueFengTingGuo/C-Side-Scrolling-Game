@@ -22,6 +22,7 @@ public:
 	virtual void render(Shader& shader) override;
 
 	bool addWeapon(Weapon* w);
+	void cleanWeapons();
 	void hurt(float d);
 
 	//reverse the velocity and update the position
@@ -31,6 +32,7 @@ public:
 
 	// Setters
 	inline void setHealth(float newHp) { hp = newHp; }
+	inline void setCurrentWeaponActiveTo(bool change) { weapons[currentWeapon]->setActive(change);}
 
 private:
 	float growingHealth = 17.0f;

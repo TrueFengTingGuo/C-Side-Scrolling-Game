@@ -30,9 +30,7 @@ Weapon::Weapon(Weapon& w)
 }
 
 void Weapon::update(double deltaTime) {
-	if (getName().compare("RPistol") == 0) {
-		std::cout << "render RPistol " << std::endl;
-	}
+
 	if(cooldown > 0) cooldown--;
 	position = owner->getPosition();
 	
@@ -72,12 +70,12 @@ void Weapon::fire() {
 	int bulletDamage = 1; // temp bullet damage (same problem as texture)
 	glm::vec3 bulletPosition = glm::vec3(position + rotation);
 
-	Bullet* newBullet = new Bullet(handler, bulletPosition, BulletTexture, numElements, "Bullet", bulletDamage, bulletType);
+	Bullet* newBullet = new Bullet(handler, bulletPosition, BulletTexture, numElements, bulletType, bulletDamage, bulletType);
 
 	// Bullet velocity
-	float bulletSpeed = 10.0f;
+	float bulletSpeed = 2.0f;
 	newBullet->setVelocity(bulletSpeed * glm::vec3(cos(3.14159265 / 360 * 2 * orientation), sin(3.14159265 / 360 * 2 * orientation), 0.0f));
-
+	newBullet->setOrientation(orientation);
 	handler->add(newBullet);
 
 	cooldown = fireRate;

@@ -11,8 +11,9 @@ GameObjectHandler::GameObjectHandler() {
 void GameObjectHandler::update(double deltaTime) {
 
 	std::vector<int> inactiveObjectsIndex;
+	int gameObjectsListSize = gameObjects.size(); //size may change during the collision dectection
 
-	for (int i = 0; i < gameObjects.size(); i++) {
+	for (int i = 0; i < gameObjectsListSize; i++) {
 
 		// Get the current object
 		GameObject* currentGameObject = gameObjects[i];
@@ -28,11 +29,17 @@ void GameObjectHandler::update(double deltaTime) {
 			for (int j = 0; j < gameObjects.size(); j++) {
 				GameObject* otherGameObject = gameObjects[j];
 				float distance = glm::length(currentGameObject->getPosition() - otherGameObject->getPosition());
-				if (distance < 1.0f) {
-					if (currentGameObject->getType().compare("Bullet") == 0) {
+				if (distance < 0.8f) {
+					if (currentGameObject->getType().compare("PlayerBullet") == 0) {
+						if (otherGameObject->getType().compare("Enemy") == 0 && otherGameObject->getActive() == true) {
+							 gameObjects.erase(gameObjects.begin() + i); // remove bullet
 
-						if (otherGameObject->getType().compare("Enemy") == 0) {
-							((Enemy*)otherGameObject)->hurt(((Bullet*)currentGameObject)->getDamage());
+   							((Enemy*)otherGameObject)->hurt(((Bullet*)currentGameObject)->getDamage());
+							if (((AliveGameObject*)otherGameObject)->getHealth() <= 0) {
+								otherGameObject->setActive(false);
+							}
+							
+							break;
 						}
 					}
 					if (currentGameObject->getType().compare("Player") == 0) {
@@ -43,14 +50,31 @@ void GameObjectHandler::update(double deltaTime) {
 
 						}
 					}
+					if (currentGameObject->getType().compare("PlayerBullet") == 0) {
+						if (otherGameObject->getType().compare("mapBlock") == 0) {
+							
+							gameObjects.erase(gameObjects.begin() + i);
+							break;
+						}
+					}
+
+					if (currentGameObject->getType().compare("EnemyBullet") == 0) {
+						if (otherGameObject->getType().compare("mapBlock") == 0) {
+
+							gameObjects.erase(gameObjects.begin() + i);
+							break;
+						}
+					}
 
 				}
 
 			}
 		}
-		
+		gameObjectsListSize = gameObjects.size(); //refresh
 	}
 
+
+	CleanOutOfRangeGameObject();
 }
 
 // Renders all game objects
@@ -118,7 +142,7 @@ void GameObjectHandler::restMap()
 void GameObjectHandler::setActiveByTableCol(Map* map,int colStart, int colEnd)
 {
 	std::cout << map->getaLevelMap().size();
-	int activeCount = 0;
+
 	for (int col = 0; col < map->getaLevelMap().size(); col++) {
 		
 		for (int row = 0; row < map->getaLevelMap()[col].size(); row++) {
@@ -130,21 +154,41 @@ void GameObjectHandler::setActiveByTableCol(Map* map,int colStart, int colEnd)
 				
 				if (col > colStart && col < colEnd) {
 					gameObjectInTableOrder[col][row]->setActive(true);
-					activeCount += 1;
+					if (gameObjectInTableOrder[col][row]->getType().compare("Enemy") == 0) {
+						((Enemy*)gameObjectInTableOrder[col][row])->setCurrentWeaponActiveTo(true);
+						
+					}
+
 				}
 				else {
 					gameObjectInTableOrder[col][row]->setActive(false);
+					if (gameObjectInTableOrder[col][row]->getType().compare("Enemy") == 0) {
+						((Enemy*)gameObjectInTableOrder[col][row])->setCurrentWeaponActiveTo(false);
+						gameObjectInTableOrder[col][row]->setPosition(glm::vec3(row, -col, 0.0f));
+					}
 					//activeCount -= 1;
 				}
 			}
 		}
 		
-		//std::cout << activeCount <<" , " << map->getParitalLoadedMap_colRange().y<<  std::endl;
+
 		
 	}
 }
 
+void GameObjectHandler::CleanOutOfRangeGameObject() {
 
+	float max_x = gameObjectInTableOrder[1].size() + 2.0f;
+	float max_y = -1.0f *(gameObjectInTableOrder.size()) -2.0f;
+	
+
+	for (int count = 0; count < gameObjects.size(); count++) {
+		glm::vec3 gameobjectPosition = gameObjects[count]->getPosition();
+		if (gameobjectPosition.x < -2 || gameobjectPosition.x > max_x || gameobjectPosition.y < max_y || gameobjectPosition.y > 2) {//max_y is negative number
+			gameObjects.erase(gameObjects.begin() + count);
+		}
+	}
+}
 
 
 
