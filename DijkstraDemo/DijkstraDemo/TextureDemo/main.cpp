@@ -23,6 +23,7 @@
 #include "mapBlock.h"
 #include "Enemy.h"
 #include "EnemyHelicopter.h"
+#include "Boss.h"
 
 float mult = 2.75; //play with this if you want a bigger or smaller graph but still framed the same
 
@@ -143,6 +144,13 @@ void loadMap(Map* map) {
 				gameObjectHandler->add(newEnemyHelicopter);
 				newEnemyHelicopter->addWeapon(testWeapon);
 				tempBlock.push_back(newEnemyHelicopter);
+			}
+			else if (map->getaLevelMap()[col][row].compare("B") == 0) {
+				Boss* newBoss = new Boss(map, gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[1], 6, "Enemy", 1.0, 1, 30, 10.0f);
+				Weapon* testWeapon = new Weapon(gameObjectHandler, newBoss->getPosition(), tex[4], 6, "Weapon", "Pistol", tex[6], 100.0f, 999999, 0, "EnemyBullet", newBoss);
+				gameObjectHandler->add(newBoss);
+				newBoss->addWeapon(testWeapon);
+				tempBlock.push_back(newBoss);
 			}
 			else {
 				tempBlock.push_back(NULL);

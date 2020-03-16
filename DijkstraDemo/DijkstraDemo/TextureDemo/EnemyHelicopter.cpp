@@ -19,14 +19,14 @@ void EnemyHelicopter::update(double deltaTime)
 
 	graph->setStart(n);	//set path start
 
-	if (currenStartNodeId != graph->getStartId()) {
+	/*if (currenStartNodeId != graph->getStartId()) {
 		currenStartNodeId = graph->getStartId();
-		findPlayer();
 		if (graph->sizeOfPathNodes() > 0) {
 			nextDest = graph->popNodeFromPath(); //get next node
 		}
 
-	}
+	}*/
+	
 
 	//set path end
 	glm::vec3 playerPositionOnTheTable = handler->getPlayer()->getPosition();
@@ -40,7 +40,10 @@ void EnemyHelicopter::update(double deltaTime)
 	if (currenEndtNodeId != graph->getEndId()) {
 		findPlayer();
 		currenEndtNodeId = graph->getEndId();
-		if (graph->sizeOfPathNodes() > 0) {
+		if (graph->sizeOfPathNodes() > 0) {//take out the starting Node
+			nextDest = graph->popNodeFromPath(); //get the next position where the enemy should go
+		}
+		if (graph->sizeOfPathNodes() > 0) { 
 			nextDest = graph->popNodeFromPath(); //get the next position where the enemy should go
 		}
 
