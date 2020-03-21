@@ -4,6 +4,7 @@
 
 #include "GameObject.h"
 #include "Weapon.h"
+using namespace std;
 
 class AliveGameObject :
 	public GameObject
@@ -22,6 +23,7 @@ public:
 	virtual void render(Shader& shader) override;
 
 	bool addWeapon(Weapon* w);
+	Weapon* findAWeapon(string weaponName);
 	void cleanWeapons();
 	void hurt(float d);
 

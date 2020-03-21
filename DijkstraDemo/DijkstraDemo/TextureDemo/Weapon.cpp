@@ -1,7 +1,7 @@
 #include "Weapon.h"
 #include "AliveGameObject.h"
 
-Weapon::Weapon(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string newType, std::string newWeaponName,GLuint newBulletTexture, float fr, int a, int c, std::string bt, AliveGameObject* o)
+Weapon::Weapon(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string newType, std::string newWeaponName,GLuint newBulletTexture, float fr, int a, int c, std::string bt, float newBulletSpeed, AliveGameObject* o)
 	: GameObject(h, entityPos, entityTexture, entityNumElements, newType)
 {
 	fireRate = fr;
@@ -12,6 +12,7 @@ Weapon::Weapon(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture,
 	owner = o;
 	BulletTexture = newBulletTexture;
 	weaponName = newWeaponName;
+	bulletSpeed = newBulletSpeed;
 
 }
 
@@ -27,6 +28,7 @@ Weapon::Weapon(Weapon& w)
 	owner = w.owner;
 	BulletTexture = w.BulletTexture;
 	weaponName = w.weaponName;
+	bulletSpeed = w.bulletSpeed;
 }
 
 void Weapon::update(double deltaTime) {
@@ -44,7 +46,7 @@ void Weapon::render(Shader &shader) {
 	// Setup the transformation matrix for the shader
 	glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), position);
 	glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), orientation, glm::vec3(0.0f, 0.0f, 1.0f));
-	glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.5f, 0.5f, 0.5f));
+	glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 0.5f, 0.5f));
 
 
 	// Set the transformation matrix in the shader
@@ -67,13 +69,12 @@ void Weapon::fire() {
 	}
 	//std::cout << "Weapon fired." << std::endl;
 	// temp bullet texture (how will the weapon know which bullet texture to use? Maybe in Bullet, choose a texture based on the type?)
-	int bulletDamage = 1; // temp bullet damage (same problem as texture)
+	int bulletDamage = 2; // temp bullet damage (same problem as texture)
 	glm::vec3 bulletPosition = glm::vec3(position + rotation);
 
 	Bullet* newBullet = new Bullet(handler, bulletPosition, BulletTexture, numElements, bulletType, bulletDamage, bulletType);
 
 	// Bullet velocity
-	float bulletSpeed = 2.0f;
 	newBullet->setVelocity(bulletSpeed * glm::vec3(cos(3.14159265 / 360 * 2 * orientation), sin(3.14159265 / 360 * 2 * orientation), 0.0f));
 	newBullet->setOrientation(orientation);
 	handler->add(newBullet);

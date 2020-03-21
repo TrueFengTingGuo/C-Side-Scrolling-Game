@@ -4,9 +4,8 @@
 	// Add the new weapon in the construtor
 	//texture list is stored localy in the store class, just enter the order number of that textrue
 
-Store::Store(GLuint newStoredTex[], GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string myType)
+Store::Store(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string myType)
 	: GameObject(h, entityPos, entityTexture, entityNumElements, myType) {
-	storedTex = newStoredTex;
 	glm::vec3 DefaultPosition = glm::vec3(0.0f, 0.0f, 0.0f);
 
 
@@ -22,10 +21,6 @@ Store::Store(GLuint newStoredTex[], GameObjectHandler* h, glm::vec3& entityPos, 
 	weaponIconStartFrom = glm::vec3(x_axis_max - 0.5, -y_axis_max - 0.5, 0.0f); // the staring localtion where all weapons will be displayed
 
 
-	//Adding All Weapons here!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//add Pistol
-	weaponCollection.push_back(Weapon(h, DefaultPosition, storedTex[4], 6, "Weapon","Pistol" ,storedTex[6], 60.0f, 5, 0, "PlayerBullet", h->getPlayer()));
-	weaponCollection.push_back(Weapon(h, DefaultPosition, storedTex[3], 6, "Weapon", "RPistol", storedTex[6], 20.0f, 99999, 0, "PlayerBullet", h->getPlayer()));
 }
 
 //get a weapon base on the cursor location
@@ -58,10 +53,25 @@ void Store::buyWeapon(double x, double y)
 			
 			mouseOnTheIcon_number = count; // mouse is on an icon
 			if (glfwGetMouseButton(Window::getWindow(), GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
-				Weapon *newWeapon = new Weapon(weaponCollection.at(count)); // used copy constructor
-				newWeapon->setActive(false);
-				handler->getPlayer()->addWeapon(newWeapon);
-				std::cout << "Buy " << newWeapon->owner->getType() << std::endl;
+				Weapon* thisWeapon = handler->getPlayer()->findAWeapon(weaponCollection.at(count)->getName());
+
+				if (thisWeapon == NULL) {
+					if (handler->getPlayer()->getCurrency() > weaponCollection.at(count)->getCost()) {
+						Weapon* newWeapon = new Weapon(*weaponCollection.at(count)); // used copy constructor
+						newWeapon->setActive(false);
+						handler->getPlayer()->setCurrency(handler->getPlayer()->getCurrency() - weaponCollection.at(count)->getCost()); // cost money to buy the weapon
+						handler->getPlayer()->addWeapon(newWeapon);
+					}
+				}
+				else {
+					if (handler->getPlayer()->getCurrency() > int(weaponCollection.at(count)->getCost() * 0.2f)) {
+						handler->getPlayer()->setCurrency(handler->getPlayer()->getCurrency() - int(weaponCollection.at(count)->getCost() * 0.2f)); // cost money to ammo
+						thisWeapon->setAmmo(thisWeapon->getAmmo() + 10); // player have the weapon so buy ammo for it
+					}
+					
+				}
+			
+				
 			}
 			break;
 		}
@@ -82,6 +92,10 @@ void Store::buyAmmo()
 
 }
 
+void Store::addWeapon(Weapon* newWeapon) {
+	weaponCollection.push_back(newWeapon);
+
+}
 void Store::update(double deltaTime)
 {
 
@@ -96,11 +110,11 @@ void Store::render(Shader& shader) {
 	//std::cout << "mouse on " << mouseOnTheIcon_number << std::endl;
 	for (int count = 0; count < weaponCollection.size(); count++) {
 		// Bind the entities texture
-		glBindTexture(GL_TEXTURE_2D, weaponCollection.at(count).getTexture());
+		glBindTexture(GL_TEXTURE_2D, weaponCollection.at(count)->getTexture());
 		// Setup the transformation matrix for the shader
 		glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), handler->getPlayer()->getPosition() + weaponIconStartFrom - glm::vec3(0.0f, count * 1.0f,0.0f));
 		glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), orientation, glm::vec3(0.0f, 0.0f, 1.0f));
-		glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.5f, 0.5f, 0.5f));
+		glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 0.5f, 0.5f));
 
 		//animation on the weapon icons
 		if (mouseOnTheIcon_number == count) {

@@ -94,9 +94,8 @@ void PlayerGameObject::render(Shader& shader)
 {
 	AliveGameObject::render(shader);
 
-
+	//render currency
 	int tempCurrency = currency;
-	int digitCount = 0;
 	vector<int> intVec;
 
 	while (tempCurrency > 0) {
@@ -109,7 +108,7 @@ void PlayerGameObject::render(Shader& shader)
 	for (int count = 0; count < intVecSize; count++) {
 
 		// Bind the entities texture
-		glBindTexture(GL_TEXTURE_2D, storedTex[intVec.back()+ 6]);
+		glBindTexture(GL_TEXTURE_2D, storedTex[intVec.back() + 6]);
 
 		intVec.pop_back();//take out one digit
 
@@ -126,26 +125,40 @@ void PlayerGameObject::render(Shader& shader)
 
 		// Draw the entity
 		glDrawElements(GL_TRIANGLES, numElements, GL_UNSIGNED_INT, 0);
-		
+
 
 	}
-}
 
-void print_each_digit(int x)
-{
-	if (x >= 10)
-		print_each_digit(x / 10);
+	//render bullet ammo
+	int tempAmmo = weapons.at(currentWeapon)->getAmmo();
+	intVec.clear();
 
-	int digit = x % 10;
-
-}
-
-int countDigit(long long n)
-{
-	int count = 0;
-	while (n != 0) {
-		n = n / 10;
-		++count;
+	while (tempAmmo > 0) {
+		int digit = tempAmmo % 10;
+		tempAmmo = tempAmmo / 10;
+		intVec.push_back(digit);
 	}
-	return count;
+
+	intVecSize = intVec.size();
+	for (int count = 0; count < intVecSize; count++) {
+
+		// Bind the entities texture
+		glBindTexture(GL_TEXTURE_2D, storedTex[intVec.back() + 6]);
+
+		intVec.pop_back();//take out one digit
+
+		// Setup the transformation matrix for the shader
+		glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), handler->getPlayer()->getPosition() + displayIconStartFrom + glm::vec3(count * 0.5f, 0.5f, 0.0f));
+		glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), orientation, glm::vec3(0.0f, 0.0f, 1.0f));
+		glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.5f, 0.5f, 0.5f));
+
+
+		// Set the transformation matrix in the shader
+		glm::mat4 transformationMatrix = translationMatrix * rotationMatrix * scaleMatrix;
+		//transformationMatrix = rotationMatrix * translationMatrix  * scaleMatrix;
+		shader.setUniformMat4("transformationMatrix", transformationMatrix);
+
+		// Draw the entity
+		glDrawElements(GL_TRIANGLES, numElements, GL_UNSIGNED_INT, 0);
+	}
 }

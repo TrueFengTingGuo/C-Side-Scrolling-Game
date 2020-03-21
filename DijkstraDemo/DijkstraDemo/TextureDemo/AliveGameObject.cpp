@@ -1,7 +1,6 @@
 #include "AliveGameObject.h"
-
-
 #include "GameObject.h"
+using namespace std;
 
 
 AliveGameObject::AliveGameObject(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements,std::string myType,float newHealth,float newDamage, int newLevel)
@@ -9,6 +8,7 @@ AliveGameObject::AliveGameObject(GameObjectHandler* h, glm::vec3& entityPos, GLu
 	level = newLevel;
 	hp = newHealth + newLevel * growingHealth;
 	damage = newDamage + newLevel * growingDamage;
+	currentWeapon = 0;
 }
 
 void AliveGameObject::hurt(float d) {
@@ -62,6 +62,18 @@ bool AliveGameObject::addWeapon(Weapon* w) {
 	std::cout << "new Weapon added" << std::endl;
 	return true; // add weapon successed
 	
+}
+
+Weapon* AliveGameObject::findAWeapon(string weaponName) {
+
+	for each (Weapon* aWeapon in weapons)
+	{
+		if (weaponName.compare(aWeapon->getName()) == 0) {
+			return aWeapon;
+		}
+	}
+
+	return NULL;
 }
 
 void AliveGameObject::cleanWeapons() {

@@ -110,7 +110,7 @@ void setthisTexture(GLuint w, char *fname){
 }
 
 void setallTexture(void){
-	glGenTextures(15, tex);
+	glGenTextures(18, tex);
 	setthisTexture(tex[0], "orb.png");
 	setthisTexture(tex[1], "helicopter.jpg");
 	setthisTexture(tex[2], "bullet.png");
@@ -127,7 +127,8 @@ void setallTexture(void){
 	setthisTexture(tex[13], "number_png/7-Number-PNG.png");
 	setthisTexture(tex[14], "number_png/8-Number-PNG.png");
 	setthisTexture(tex[15], "number_png/9-Number-PNG.png");
-
+	setthisTexture(tex[16], "assaultrifle.png");
+	setthisTexture(tex[17], "smg.png");
 	glBindTexture(GL_TEXTURE_2D, tex[0]);
 }
 
@@ -151,14 +152,14 @@ void loadMap(Map* map) {
 			}
 			else if (map->getaLevelMap()[col][row].compare("H") == 0) {
 				EnemyHelicopter* newEnemyHelicopter = new EnemyHelicopter(map,gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[1], 6, "Enemy", 1.0, 1, 0, 10.0f);
-				Weapon* testWeapon = new Weapon(gameObjectHandler, newEnemyHelicopter->getPosition(), tex[4], 6, "Weapon", "Pistol", tex[6], 100.0f, 999999, 0, "EnemyBullet", newEnemyHelicopter);
+				Weapon* testWeapon = new Weapon(gameObjectHandler, newEnemyHelicopter->getPosition(), tex[4], 6, "Weapon", "Pistol", tex[6], 100.0f, 999999, 0, "EnemyBullet",2.0f, newEnemyHelicopter);
 				gameObjectHandler->add(newEnemyHelicopter);
 				newEnemyHelicopter->addWeapon(testWeapon);
 				tempBlock.push_back(newEnemyHelicopter);
 			}
 			else if (map->getaLevelMap()[col][row].compare("B") == 0) {
 				Boss* newBoss = new Boss(map, gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[1], 6, "Enemy", 1.0, 1, 30, 10.0f);
-				Weapon* testWeapon = new Weapon(gameObjectHandler, newBoss->getPosition(), tex[4], 6, "Weapon", "Pistol", tex[6], 100.0f, 999999, 0, "EnemyBullet", newBoss);
+				Weapon* testWeapon = new Weapon(gameObjectHandler, newBoss->getPosition(), tex[4], 6, "Weapon", "Pistol", tex[6], 100.0f, 999999, 0, "EnemyBullet",2.0f, newBoss);
 				gameObjectHandler->add(newBoss);
 				newBoss->addWeapon(testWeapon);
 				tempBlock.push_back(newBoss);
@@ -211,14 +212,19 @@ int main(void){
 		gameObjectHandler = new GameObjectHandler();
 
 		//adding player
-		glm::vec3 playerDefaultPosition = glm::vec3(0.0f, 0.0f, 0.0f);
-		PlayerGameObject* player = new PlayerGameObject(gameObjectHandler, playerDefaultPosition, tex[1], 6, tex, "Player", 1, 1, 1);
+		glm::vec3 DefaultPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+		PlayerGameObject* player = new PlayerGameObject(gameObjectHandler, DefaultPosition, tex[1], 6, tex, "Player", 1, 1, 1);
 		gameObjectHandler->add(player);
-		Weapon* testWeapon = new Weapon(gameObjectHandler, playerDefaultPosition, tex[4], 6, "Weapon", "Pistol", tex[5], 60.0f, 100000, 0, "PlayerBullet", player);
+		Weapon* testWeapon = new Weapon(gameObjectHandler, DefaultPosition, tex[4], 6, "Weapon", "Pistol", tex[5], 60.0f, 100000, 0, "PlayerBullet", 2.0f,player);
 		player->addWeapon(testWeapon);
 
 		//adding store (store must init after the player)
-		Store* gameStore = new Store(tex, gameObjectHandler, glm::vec3(0.0f, 0.0f, 0.0f), tex[0], 6, "Store");
+		Store* gameStore = new Store(gameObjectHandler, glm::vec3(0.0f, 0.0f, 0.0f), tex[0], 6, "Store");
+		
+		
+		//Adding All Weapons here!!!!!!!!!!!!!!!!!!!!!!!!!!
+		gameStore->addWeapon(new Weapon(gameObjectHandler, DefaultPosition, tex[16], 6, "Weapon", "Rifle", tex[6], 60.0f, 20,30, "PlayerBullet",10.0f, gameObjectHandler->getPlayer()));
+		gameStore->addWeapon(new Weapon(gameObjectHandler, DefaultPosition, tex[17], 6, "Weapon", "SMG", tex[6], 20.0f, 99999, 50, "PlayerBullet",3.0f, gameObjectHandler->getPlayer()));
 		gameObjectHandler->add(gameStore);
 
 		//loading map

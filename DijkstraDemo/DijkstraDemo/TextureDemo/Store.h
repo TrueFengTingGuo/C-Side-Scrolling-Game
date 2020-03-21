@@ -18,19 +18,20 @@ class Store :
 	public GameObject
 {
 public:
-	Store(GLuint newStoredTex[],GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements,std::string newType);
+	Store(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements,std::string newType);
 	
 	
-	//
+	void addWeapon(Weapon* newWeapon);
+
+
 	void render(Shader& shader) override;
 	void update(double deltaTime) override;
 private:
-	std::vector<Weapon> weaponCollection;
+	std::vector<Weapon*> weaponCollection;
 	void levelup();
 	void buyAmmo();
 	void buyWeapon(double x, double y);
 
-	GLuint *storedTex;
 	glm::vec3 weaponIconStartFrom;
 	float currentIconMovment = 1; //showing the movment of the icon
 	int mouseOnTheIcon_number; // record which icon is about to clicked
