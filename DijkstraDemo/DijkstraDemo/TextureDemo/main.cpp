@@ -110,13 +110,24 @@ void setthisTexture(GLuint w, char *fname){
 }
 
 void setallTexture(void){
-	glGenTextures(5, tex);
+	glGenTextures(15, tex);
 	setthisTexture(tex[0], "orb.png");
 	setthisTexture(tex[1], "helicopter.jpg");
 	setthisTexture(tex[2], "bullet.png");
 	setthisTexture(tex[3], "Brick_1.png");
 	setthisTexture(tex[4], "pistol.png");
 	setthisTexture(tex[5], "small_bullet.png");
+	setthisTexture(tex[6], "number_png/0-Number-PNG.png");
+	setthisTexture(tex[7], "number_png/1-Number-PNG.png");
+	setthisTexture(tex[8], "number_png/2-Number-PNG.png");
+	setthisTexture(tex[9], "number_png/3-Number-PNG.png");
+	setthisTexture(tex[10], "number_png/4-Number-PNG.png");
+	setthisTexture(tex[11], "number_png/5-Number-PNG.png");
+	setthisTexture(tex[12], "number_png/6-Number-PNG.png");
+	setthisTexture(tex[13], "number_png/7-Number-PNG.png");
+	setthisTexture(tex[14], "number_png/8-Number-PNG.png");
+	setthisTexture(tex[15], "number_png/9-Number-PNG.png");
+
 	glBindTexture(GL_TEXTURE_2D, tex[0]);
 }
 
@@ -201,9 +212,9 @@ int main(void){
 
 		//adding player
 		glm::vec3 playerDefaultPosition = glm::vec3(0.0f, 0.0f, 0.0f);
-		PlayerGameObject* player = new PlayerGameObject(gameObjectHandler, playerDefaultPosition, tex[1], 6, "Player", 1, 1, 1);
+		PlayerGameObject* player = new PlayerGameObject(gameObjectHandler, playerDefaultPosition, tex[1], 6, tex, "Player", 1, 1, 1);
 		gameObjectHandler->add(player);
-		Weapon* testWeapon = new Weapon(gameObjectHandler, playerDefaultPosition, tex[4], 6, "Weapon", "Pistol", tex[6], 60.0f, 100000, 0, "PlayerBullet", player);
+		Weapon* testWeapon = new Weapon(gameObjectHandler, playerDefaultPosition, tex[4], 6, "Weapon", "Pistol", tex[5], 60.0f, 100000, 0, "PlayerBullet", player);
 		player->addWeapon(testWeapon);
 
 		//adding store (store must init after the player)

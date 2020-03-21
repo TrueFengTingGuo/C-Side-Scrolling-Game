@@ -34,9 +34,11 @@ void GameObjectHandler::update(double deltaTime) {
 						if (otherGameObject->getType().compare("Enemy") == 0 && otherGameObject->getActive() == true) {
 							 gameObjects.erase(gameObjects.begin() + i); // remove bullet
 
+							 // enemy dies 
    							((Enemy*)otherGameObject)->hurt(((Bullet*)currentGameObject)->getDamage());
 							if (((AliveGameObject*)otherGameObject)->getHealth() <= 0) {
 								otherGameObject->setActive(false);
+								player->setCurrency(player->getCurrency() + 2); //earn money
 							}
 							
 							break;
