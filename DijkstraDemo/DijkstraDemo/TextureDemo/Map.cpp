@@ -1,10 +1,10 @@
 #include "Map.h"
 
-Map::Map()
+Map::Map(string fileName)
 {
 
 	ifstream inData;
-	inData.open("Map.csv");
+	inData.open(fileName);
 
 	map_height = 0;
 

@@ -1,6 +1,4 @@
-#ifndef ALIVEGAMEOBJECT_H
-#define ALIVEGAMEOBJECT_H
-
+#pragma once
 
 #include "GameObject.h"
 #include "Weapon.h"
@@ -52,4 +50,4 @@ protected:
 	
 };
 
-#endif
+

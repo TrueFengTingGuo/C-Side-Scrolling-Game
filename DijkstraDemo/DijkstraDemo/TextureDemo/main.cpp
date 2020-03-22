@@ -110,7 +110,7 @@ void setthisTexture(GLuint w, char *fname){
 }
 
 void setallTexture(void){
-	glGenTextures(18, tex);
+	glGenTextures(19, tex);
 	setthisTexture(tex[0], "orb.png");
 	setthisTexture(tex[1], "helicopter.jpg");
 	setthisTexture(tex[2], "bullet.png");
@@ -129,14 +129,18 @@ void setallTexture(void){
 	setthisTexture(tex[15], "number_png/9-Number-PNG.png");
 	setthisTexture(tex[16], "assaultrifle.png");
 	setthisTexture(tex[17], "smg.png");
+	setthisTexture(tex[18], "Brick_2.png");
 	glBindTexture(GL_TEXTURE_2D, tex[0]);
 }
 
-void loadMap(Map* map) {
+void loadMap(Map* map, PlayerGameObject* player, Store* playerStore) {
 	//////////////////////////////must use EnemyBullet (collide with itself)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+	
 	//reset
 	gameObjectHandler->restMap();
+	
 
+	//add new blocks
 	for (int col = 0; col < map->getaLevelMap().size(); col++) {
 
 		std::vector<GameObject*> tempBlock;
@@ -158,11 +162,16 @@ void loadMap(Map* map) {
 				tempBlock.push_back(newEnemyHelicopter);
 			}
 			else if (map->getaLevelMap()[col][row].compare("B") == 0) {
-				Boss* newBoss = new Boss(map, gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[1], 6, "Enemy", 1.0, 1, 30, 10.0f);
+				Boss* newBoss = new Boss(map, gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[1], 6, "Boss", 1.0, 1, 30, 10.0f);
 				Weapon* testWeapon = new Weapon(gameObjectHandler, newBoss->getPosition(), tex[4], 6, "Weapon", "Pistol", tex[6], 100.0f, 999999, 0, "EnemyBullet",2.0f, newBoss);
 				gameObjectHandler->add(newBoss);
 				newBoss->addWeapon(testWeapon);
 				tempBlock.push_back(newBoss);
+			}
+			else if (map->getaLevelMap()[col][row].compare("E") == 0) {
+				mapBlock* newBlock = new mapBlock(gameObjectHandler, glm::vec3(row, -col, 0.f), tex[18], 6, "endBlock", row, col);
+				gameObjectHandler->add(newBlock);
+				tempBlock.push_back(newBlock);
 			}
 			else {
 				tempBlock.push_back(NULL);
@@ -171,6 +180,24 @@ void loadMap(Map* map) {
 		}
 		gameObjectHandler->gameObjectInTableOrder.push_back(tempBlock); // this will store all gameobject in the order of a table
 	}
+
+	//set player location
+	for (int col = map->getaLevelMap().size() - 1; col > 0; col--) {
+
+		for (int row = 0; row < map->getaLevelMap()[col].size(); row++) {
+
+			//create map
+			//cout << gameMap->getPartialMap()[col][row];
+			if (map->getaLevelMap()[col][row].compare("S") == 0) {
+				cout << "Start "<< row << " , " << col << endl;
+				player->setPosition(glm::vec3(row, -col, 0.0f));
+			}
+
+		}
+	}
+
+	gameObjectHandler->add(playerStore);
+	gameObjectHandler->add(player);
 
 }
 // Main function that builds and runs the game
@@ -207,14 +234,15 @@ int main(void){
 
 
 
-		////////////////////////////These will be implemented ////////////////////////////
-		Map *gameMap = new Map();	
+		////////////////////////////These are implemented ////////////////////////////
+		Map *gameMap = new Map("Map_1.csv");	
 		gameObjectHandler = new GameObjectHandler();
 
 		//adding player
 		glm::vec3 DefaultPosition = glm::vec3(0.0f, 0.0f, 0.0f);
 		PlayerGameObject* player = new PlayerGameObject(gameObjectHandler, DefaultPosition, tex[1], 6, tex, "Player", 1, 1, 1);
 		gameObjectHandler->add(player);
+
 		Weapon* testWeapon = new Weapon(gameObjectHandler, DefaultPosition, tex[4], 6, "Weapon", "Pistol", tex[5], 60.0f, 100000, 0, "PlayerBullet", 2.0f,player);
 		player->addWeapon(testWeapon);
 
@@ -228,23 +256,8 @@ int main(void){
 		gameObjectHandler->add(gameStore);
 
 		//loading map
-		loadMap(gameMap);
-		
-
-		//set player location
-		for (int col = gameMap->getaLevelMap().size() - 1; col > 0; col--) {
-
-			for (int row = 0; row < gameMap->getaLevelMap()[col].size(); row++) {
-
-				//create map
-				//cout << gameMap->getPartialMap()[col][row];
-				if (gameMap->getaLevelMap()[col][row].compare("S") == 0) {
-					//cout << "Start "<< row << " , " << col << endl;
-					player->setPosition(glm::vec3(row, - col, 0.0f));
-				}
-
-			}
-		}
+		loadMap(gameMap, player, gameStore);
+		////////////////////////////These are implemented ////////////////////////////
 
 
 
@@ -280,6 +293,8 @@ int main(void){
 			wid = 4 * mod - 1;
 			height = 3 * mod - 1;
 					
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 			//only update the gameobjects that are colser to player		
 			if (gameMap->loadPartialMap(player->getPosition())) {
 
@@ -287,10 +302,35 @@ int main(void){
 
 			}
 			
-			
+			//load new map
+			if (gameObjectHandler->loadMapAgain) {
+
+				//cout << "load again" << endl;
+
+				//nextlevel
+				gameObjectHandler->mapLevel++; 
+
+				//RESET map
+				gameObjectHandler->loadMapAgain = false;
+
+				string mapFileName = "Map_";
+				mapFileName.append(to_string(gameObjectHandler->mapLevel)).append(".csv");
+
+				delete(gameMap);
+
+				gameMap = new Map(mapFileName);
+				loadMap(gameMap, player, gameStore);
+
+			}
+
+
 			// Update and render all GameObjects
 			gameObjectHandler->update(deltaTime);
 			gameObjectHandler->render(shader);
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 			// Update other events like input handling
 			glfwPollEvents();

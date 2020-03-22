@@ -4,7 +4,9 @@
 #include "Map.h"
 
 
+
 GameObjectHandler::GameObjectHandler() {
+
 }
 
 // Updates all game objects
@@ -17,7 +19,7 @@ void GameObjectHandler::update(double deltaTime) {
 
 		// Get the current object
 		GameObject* currentGameObject = gameObjects[i];
-
+		
 
 		//if current gameobject is active
 		if (currentGameObject->getActive()) {
@@ -31,16 +33,35 @@ void GameObjectHandler::update(double deltaTime) {
 				float distance = glm::length(currentGameObject->getPosition() - otherGameObject->getPosition());
 				if (distance < 0.8f) {
 					if (currentGameObject->getType().compare("PlayerBullet") == 0) {
+
+						//bullet vs Enemy
 						if (otherGameObject->getType().compare("Enemy") == 0 && otherGameObject->getActive() == true) {
 							 gameObjects.erase(gameObjects.begin() + i); // remove bullet
 
-							 // enemy dies 
    							((Enemy*)otherGameObject)->hurt(((Bullet*)currentGameObject)->getDamage());
+
+							// enemy dies 
 							if (((AliveGameObject*)otherGameObject)->getHealth() <= 0) {
 								otherGameObject->setActive(false);
 								player->setCurrency(player->getCurrency() + 2); //earn money
 							}
 							
+							break;
+						}
+
+						//bullet vs Boss
+						if (otherGameObject->getType().compare("Boss") == 0 && otherGameObject->getActive() == true) {
+							gameObjects.erase(gameObjects.begin() + i); // remove bullet
+
+							
+							((Enemy*)otherGameObject)->hurt(((Bullet*)currentGameObject)->getDamage());
+
+							// enemy dies 
+							if (((AliveGameObject*)otherGameObject)->getHealth() <= 0) {
+								otherGameObject->setActive(false);
+								player->setCurrency(player->getCurrency() + 2); //earn money
+							}
+
 							break;
 						}
 					}
@@ -52,6 +73,15 @@ void GameObjectHandler::update(double deltaTime) {
 
 						}
 					}
+
+					if (currentGameObject->getType().compare("Player") == 0) {
+						if (otherGameObject->getType().compare("endBlock") == 0) {
+
+							loadMapAgain = true;
+
+						}
+					}
+
 					if (currentGameObject->getType().compare("PlayerBullet") == 0) {
 						if (otherGameObject->getType().compare("mapBlock") == 0) {
 							
@@ -77,6 +107,7 @@ void GameObjectHandler::update(double deltaTime) {
 
 
 	CleanOutOfRangeGameObject();
+	
 }
 
 // Renders all game objects
@@ -101,6 +132,11 @@ void GameObjectHandler::add(GameObject* go) {
 	if (go->getType().compare("Player") == 0){ 
 		player = ((PlayerGameObject*)go);
 		std::cout << "player added" << std::endl;
+	}
+
+	if (go->getType().compare("Store") == 0) {
+		store = ((Store*)go);
+		std::cout << "store added" << std::endl;
 	}
 	gameObjects.push_back(go);
 
@@ -134,9 +170,9 @@ void GameObjectHandler::deleteByType(std::string type)
 
 void GameObjectHandler::restMap()
 {
-	deleteByType("mapBlock");
-	deleteByType("Enemy");
+	gameObjects.clear();
 	gameObjectInTableOrder.clear();
+	
 
 }
 
@@ -187,7 +223,13 @@ void GameObjectHandler::CleanOutOfRangeGameObject() {
 	for (int count = 0; count < gameObjects.size(); count++) {
 		glm::vec3 gameobjectPosition = gameObjects[count]->getPosition();
 		if (gameobjectPosition.x < -2 || gameobjectPosition.x > max_x || gameobjectPosition.y < max_y || gameobjectPosition.y > 2) {//max_y is negative number
-			gameObjects.erase(gameObjects.begin() + count);
+			if (gameObjects.at(count)->getType().compare("Player") == 0) {
+				
+			}
+			else {
+				gameObjects.erase(gameObjects.begin() + count);
+			}
+			
 		}
 	}
 }

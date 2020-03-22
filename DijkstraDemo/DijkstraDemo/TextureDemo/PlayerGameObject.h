@@ -1,5 +1,4 @@
-#ifndef PLAYERGAMEOBJECT_H
-#define PLAYERGAMEOBJECT_H
+#pragma once
 
 #include "AliveGameObject.h"
 
@@ -27,4 +26,3 @@ private:
 	glm::vec3 displayIconStartFrom; // (0,0) cood of the screen
 };
 
-#endif
