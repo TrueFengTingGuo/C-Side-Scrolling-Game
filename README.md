@@ -13,33 +13,33 @@ https://docs.google.com/document/d/1MYQRhG01lbmdbv0JwDMv04CwqyXXs7oZxnhU1E3xEHE/
 ## Schedule
 
 ### Feb 12:
-- [ ] UML
-- [ ] Plan more specifics
-- [ ] Find sprites for all entities
-- [ ] Map design/layout
+- [x] UML
+- [x] Plan more specifics
+- [x] Find sprites for all entities
+- [x] Map design/layout
 ### Feb 19:
-- [ ] Collision
-- [ ] Player class (movement, shooting bullets, dropping bombs, stats)
+- [x] Collision
+- [x] Player class (movement, shooting bullets, dropping bombs, stats)
 - [ ] Powerups
-- [ ] Enemy helicopter class
-- [ ] Wall object class
+- [x] Enemy helicopter class
+- [x] Wall object class
 ### Feb 26:
-- [ ] Implement first level of map
-- [ ] Implement enemy helicopters (basic movement and shooting)
-- [ ] UI
-- [ ] (Optional) Enemy helicopter behaviour
-- [ ] (Optional) Basic currency. A way to get it but not use it yet
+- [x] Implement first level of map
+- [x] Implement enemy helicopters (basic movement and shooting)
+- [x] UI
+- [x] (Optional) Enemy helicopter behaviour
+- [x] (Optional) Basic currency. A way to get it but not use it yet
 ### Mar 4 (Prototype):
-- [ ] Way to go from lvl1 to lvl2
-- [ ] (Optional) Ability to use currency? Upgrades
-- [ ] First stage of boss
+- [x] Way to go from lvl1 to lvl2
+- [x] (Optional) Ability to use currency? Upgrades
+- [x] First stage of boss
 ### Mar 11:
-- [ ] Loading in between levels
-- [ ] Add turrets to first level
+- [x] Loading in between levels
+- [x] Add turrets to first level
 - [ ] Second level + falling rocks
 - [ ] Finish first stage of boss and add second stage of boss
 ### Mar 18:
-- [ ] Add finite state machine to enemies
+- [x] Add finite state machine to enemies
 - [ ] Start third level
 - [ ] Final stage of boss
 ### Mar 25:
