@@ -1,7 +1,7 @@
 #include "Weapon.h"
 #include "AliveGameObject.h"
 
-Weapon::Weapon(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string newType, std::string newWeaponName,GLuint newBulletTexture, float fr, int a, int c, std::string bt, float newBulletSpeed, AliveGameObject* o)
+Weapon::Weapon(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string newType, std::string newWeaponName,GLuint newBulletTexture, float fr, int a, int c,int weaponDamage, std::string bt, float newBulletSpeed, AliveGameObject* o)
 	: GameObject(h, entityPos, entityTexture, entityNumElements, newType)
 {
 	fireRate = fr;
@@ -10,6 +10,7 @@ Weapon::Weapon(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture,
 	cost = c;
 	bulletType = bt;
 	owner = o;
+	bulletDamage = weaponDamage;
 	BulletTexture = newBulletTexture;
 	weaponName = newWeaponName;
 	bulletSpeed = newBulletSpeed;
@@ -26,6 +27,7 @@ Weapon::Weapon(Weapon& w)
 	cost = w.cost;
 	bulletType = w.bulletType;
 	owner = w.owner;
+	bulletDamage = w.bulletDamage;
 	BulletTexture = w.BulletTexture;
 	weaponName = w.weaponName;
 	bulletSpeed = w.bulletSpeed;
@@ -69,7 +71,7 @@ void Weapon::fire() {
 	}
 	//std::cout << "Weapon fired." << std::endl;
 	// temp bullet texture (how will the weapon know which bullet texture to use? Maybe in Bullet, choose a texture based on the type?)
-	int bulletDamage = 2; // temp bullet damage (same problem as texture)
+	 // temp bullet damage (same problem as texture)
 	glm::vec3 bulletPosition = glm::vec3(position + rotation);
 
 	Bullet* newBullet = new Bullet(handler, bulletPosition, BulletTexture, numElements, bulletType, bulletDamage, bulletType);

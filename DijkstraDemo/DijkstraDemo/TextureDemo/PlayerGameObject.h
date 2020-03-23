@@ -16,13 +16,22 @@ public:
 	
 	//getter
 	int getCurrency() { return currency; }
+
 	//setter
 	void setCurrency(int changes) {  currency = changes; }
+	void setSpeedBuffTime(float changes) { speedBuffTime = changes; }
+
 private:
 	
 	int experience;
 	int currency;
 	GLuint* storedTex; //stored textures
 	glm::vec3 displayIconStartFrom; // (0,0) cood of the screen
+
+	//power up buff
+	float speedBuffVolumn = 1.3f; //percentage
+	float currentSpeedBuffVolumn = 1.0f; //percentage
+	float speedBuffTime = 0.0f;
+
 };
 

@@ -167,6 +167,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="FileUtils.cpp" />
+    <ClCompile Include="Rock.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Store.cpp" />
     <ClCompile Include="Turret.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="PlayerGameObject.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="FileUtils.h" />
+    <ClInclude Include="Rock.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Store.h" />
     <ClInclude Include="Turret.h" />

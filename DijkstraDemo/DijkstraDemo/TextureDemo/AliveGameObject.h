@@ -35,8 +35,8 @@ public:
 	inline void setCurrentWeaponActiveTo(bool change) { weapons[currentWeapon]->setActive(change);}
 
 private:
-	float growingHealth = 17.0f;
-	float growingDamage = 2.0f;
+	float growingHealth = 5.0f;
+	float growingDamage = 1.0f;
 
 	int damageCooldown = 60, damageTimer = damageCooldown;
 

@@ -32,6 +32,8 @@ void GameObjectHandler::update(double deltaTime) {
 				GameObject* otherGameObject = gameObjects[j];
 				float distance = glm::length(currentGameObject->getPosition() - otherGameObject->getPosition());
 				if (distance < 0.8f) {
+
+					//player bullet
 					if (currentGameObject->getType().compare("PlayerBullet") == 0) {
 
 						//bullet vs Enemy
@@ -46,6 +48,21 @@ void GameObjectHandler::update(double deltaTime) {
 								player->setCurrency(player->getCurrency() + 2); //earn money
 							}
 							
+							break;
+						}
+
+						//bullet vs Rock
+						if (otherGameObject->getType().compare("Rock") == 0 && otherGameObject->getActive() == true) {
+							gameObjects.erase(gameObjects.begin() + i); // remove bullet
+
+							((Enemy*)otherGameObject)->hurt(((Bullet*)currentGameObject)->getDamage());
+
+							// enemy dies 
+							if (((AliveGameObject*)otherGameObject)->getHealth() <= 0) {
+								otherGameObject->setActive(false);
+								player->setCurrency(player->getCurrency() + 2); //earn money
+							}
+
 							break;
 						}
 
@@ -64,32 +81,45 @@ void GameObjectHandler::update(double deltaTime) {
 
 							break;
 						}
+
+						if (otherGameObject->getType().compare("mapBlock") == 0) {
+
+							gameObjects.erase(gameObjects.begin() + i);
+							break;
+						}
 					}
+
+					//all Player
 					if (currentGameObject->getType().compare("Player") == 0) {
+
 						if (otherGameObject->getType().compare("mapBlock") == 0) {
 
 							//set to reversed velcoity
 							((PlayerGameObject*)currentGameObject)->reverseVelocity(deltaTime);
 
 						}
-					}
 
-					if (currentGameObject->getType().compare("Player") == 0) {
 						if (otherGameObject->getType().compare("endBlock") == 0) {
 
 							loadMapAgain = true;
 
 						}
-					}
 
-					if (currentGameObject->getType().compare("PlayerBullet") == 0) {
-						if (otherGameObject->getType().compare("mapBlock") == 0) {
+						if (otherGameObject->getType().compare("powerUp") == 0) {
+
+							((PlayerGameObject*)currentGameObject)->setSpeedBuffTime(3.0f);
+
+						}
+
+						if (otherGameObject->getType().compare("Rock") == 0) {
+
 							
-							gameObjects.erase(gameObjects.begin() + i);
-							break;
+							
+
 						}
 					}
 
+					//all EnemyBullet
 					if (currentGameObject->getType().compare("EnemyBullet") == 0) {
 						if (otherGameObject->getType().compare("mapBlock") == 0) {
 

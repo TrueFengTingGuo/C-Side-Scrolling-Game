@@ -1,7 +1,22 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(459,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (TextureDemo.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Weapon.cpp
-C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\Weapon.cpp(75,98): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  GLM: rotate function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  main.cpp
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\main.cpp(149,24): warning C4018: '<': signed/unsigned mismatch
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\main.cpp(152,25): warning C4018: '<': signed/unsigned mismatch
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\main.cpp(212,25): warning C4018: '<': signed/unsigned mismatch
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\main.cpp(258,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\main.cpp(259,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\main.cpp(319,18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\main.cpp(320,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\main.cpp(327,134): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\main.cpp(327,91): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
   SOIL.lib(SOIL.obj) : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
 LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library

@@ -41,29 +41,58 @@ void PlayerGameObject::switchWeapon() {
 // Update function for moving the player object around
 void PlayerGameObject::update(double deltaTime) {
 
-	// reset velocity
-	velocity[0] *= 0.9998;
-	velocity[1] *= 0.9998;
+	// reduce velocity
+	velocity[0] *= 0.998;
+	velocity[1] *= 0.998;
 
-
-	// Checking for player input and changing velocity
-	if (glfwGetKey(Window::getWindow(), GLFW_KEY_W) == GLFW_PRESS) {
-		setVelocity(glm::vec3(0.0f, 1.5f, 0.0f));
+	if (glm::length(getVelocity()) < 1.0f * currentSpeedBuffVolumn) {
+		// Checking for player input and changing velocity
+		if (glfwGetKey(Window::getWindow(), GLFW_KEY_W) == GLFW_PRESS) {
+			setVelocity(getVelocity() + glm::vec3(0.0f, 1.5f * currentSpeedBuffVolumn, 0.0f));
+		}
+		if (glfwGetKey(Window::getWindow(), GLFW_KEY_S) == GLFW_PRESS) {
+			setVelocity(getVelocity() + glm::vec3(0.0f, -1.5f * currentSpeedBuffVolumn, 0.0f));
+		}
+		if (glfwGetKey(Window::getWindow(), GLFW_KEY_D) == GLFW_PRESS) {
+			setVelocity(getVelocity() + glm::vec3(1.5f * currentSpeedBuffVolumn, 0.0f, 0.0f));
+			// rotate player to face right
+		}
+		if (glfwGetKey(Window::getWindow(), GLFW_KEY_A) == GLFW_PRESS) {
+			setVelocity(getVelocity() + glm::vec3(-1.5f * currentSpeedBuffVolumn, 0.0f, 0.0f));
+			// rotate player to face left
+		}
 	}
-	if (glfwGetKey(Window::getWindow(), GLFW_KEY_S) == GLFW_PRESS) {
-		setVelocity(glm::vec3(0.0f, -1.5f, 0.0f));
+	else {
+		// Checking for player input and changing velocity
+		if (glfwGetKey(Window::getWindow(), GLFW_KEY_W) == GLFW_PRESS) {
+			setVelocity(glm::vec3(0.0f, 1.5f * currentSpeedBuffVolumn, 0.0f));
+		}
+		if (glfwGetKey(Window::getWindow(), GLFW_KEY_S) == GLFW_PRESS) {
+			setVelocity(glm::vec3(0.0f, -1.5f * currentSpeedBuffVolumn, 0.0f));
+		}
+		if (glfwGetKey(Window::getWindow(), GLFW_KEY_D) == GLFW_PRESS) {
+			setVelocity(glm::vec3(1.5f * currentSpeedBuffVolumn, 0.0f, 0.0f));
+			// rotate player to face right
+		}
+		if (glfwGetKey(Window::getWindow(), GLFW_KEY_A) == GLFW_PRESS) {
+			setVelocity(glm::vec3(-1.5f * currentSpeedBuffVolumn, 0.0f, 0.0f));
+			// rotate player to face left
+		}
+	
 	}
-	if (glfwGetKey(Window::getWindow(), GLFW_KEY_D) == GLFW_PRESS) {
-		setVelocity(glm::vec3(1.5f, 0.0f, 0.0f));
-		// rotate player to face right
-	}
-	if (glfwGetKey(Window::getWindow(), GLFW_KEY_A) == GLFW_PRESS) {
-		setVelocity(glm::vec3(-1.5f, 0.0f, 0.0f));
-		// rotate player to face left
-	}
-
 	if (glfwGetKey(Window::getWindow(), GLFW_KEY_Q) == GLFW_PRESS) {
 		switchWeapon();
+	}
+
+	//power up
+	if (speedBuffTime > 0) {
+	
+		currentSpeedBuffVolumn = speedBuffVolumn;
+		speedBuffTime -= deltaTime;
+
+	}
+	else {
+		currentSpeedBuffVolumn = 1.0f;
 	}
 
 	if (weapons.size() > 0) {
