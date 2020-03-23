@@ -16,6 +16,7 @@ class Map
 public:
 
 	Map(string fileName_number);
+	~Map();
 	bool loadPartialMap(glm::vec3 playerPosition);
 
 	vector<vector<string>> getPartialMap() { return twoDTemp; }

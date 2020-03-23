@@ -42,9 +42,9 @@ void PlayerGameObject::switchWeapon() {
 void PlayerGameObject::update(double deltaTime) {
 
 	// reset velocity
-	//velocity[0] = 0;
-	//velocity[1] = 0;
-	/////////////////////////////// we shouldn't reset it, cause we may setVelcoity some everyelse///////////////////////
+	velocity[0] *= 0.9998;
+	velocity[1] *= 0.9998;
+
 
 	// Checking for player input and changing velocity
 	if (glfwGetKey(Window::getWindow(), GLFW_KEY_W) == GLFW_PRESS) {

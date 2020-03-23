@@ -11,8 +11,7 @@ public:
 
 protected:
 	float spottingRange;
-	virtual void update(double deltaTime) override;
-
+	void update(double deltaTime) override;
 private:
 	void targetPlayer();
 	

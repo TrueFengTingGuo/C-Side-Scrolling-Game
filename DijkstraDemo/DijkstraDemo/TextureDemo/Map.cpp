@@ -57,6 +57,12 @@ Map::Map(string fileName)
 	*/
 }
 
+Map::~Map()
+{
+	aLevelMap.clear();
+	twoDTemp.clear();
+}
+
 //return true if a new map is created
 bool Map::loadPartialMap(glm::vec3 playerPosition)
 {

@@ -24,6 +24,7 @@
 #include "Enemy.h"
 #include "EnemyHelicopter.h"
 #include "Boss.h"
+#include "Turret.h"
 
 float mult = 2.75; //play with this if you want a bigger or smaller graph but still framed the same
 
@@ -45,7 +46,7 @@ const glm::vec3 viewport_background_color_g(0.15, 0.17, 0.21);
 
 
 // Global texture info
-GLuint tex[20];
+GLuint tex[30];
 
 // Global game object info
 GameObjectHandler* gameObjectHandler;
@@ -110,7 +111,7 @@ void setthisTexture(GLuint w, char *fname){
 }
 
 void setallTexture(void){
-	glGenTextures(19, tex);
+	glGenTextures(21, tex);
 	setthisTexture(tex[0], "orb.png");
 	setthisTexture(tex[1], "helicopter.jpg");
 	setthisTexture(tex[2], "bullet.png");
@@ -130,6 +131,8 @@ void setallTexture(void){
 	setthisTexture(tex[16], "assaultrifle.png");
 	setthisTexture(tex[17], "smg.png");
 	setthisTexture(tex[18], "Brick_2.png");
+	setthisTexture(tex[19], "turrent_base.png");
+	setthisTexture(tex[20], "turrent_cannon.png");
 	glBindTexture(GL_TEXTURE_2D, tex[0]);
 }
 
@@ -156,14 +159,14 @@ void loadMap(Map* map, PlayerGameObject* player, Store* playerStore) {
 			}
 			else if (map->getaLevelMap()[col][row].compare("H") == 0) {
 				EnemyHelicopter* newEnemyHelicopter = new EnemyHelicopter(map,gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[1], 6, "Enemy", 1.0, 1, 0, 10.0f);
-				Weapon* testWeapon = new Weapon(gameObjectHandler, newEnemyHelicopter->getPosition(), tex[4], 6, "Weapon", "Pistol", tex[6], 100.0f, 999999, 0, "EnemyBullet",2.0f, newEnemyHelicopter);
+				Weapon* testWeapon = new Weapon(gameObjectHandler, newEnemyHelicopter->getPosition(), tex[4], 6, "Weapon", "Pistol", tex[5], 1000.0f, 999999, 0, "EnemyBullet",2.0f, newEnemyHelicopter);
 				gameObjectHandler->add(newEnemyHelicopter);
 				newEnemyHelicopter->addWeapon(testWeapon);
 				tempBlock.push_back(newEnemyHelicopter);
 			}
 			else if (map->getaLevelMap()[col][row].compare("B") == 0) {
 				Boss* newBoss = new Boss(map, gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[1], 6, "Boss", 1.0, 1, 30, 10.0f);
-				Weapon* testWeapon = new Weapon(gameObjectHandler, newBoss->getPosition(), tex[4], 6, "Weapon", "Pistol", tex[6], 100.0f, 999999, 0, "EnemyBullet",2.0f, newBoss);
+				Weapon* testWeapon = new Weapon(gameObjectHandler, newBoss->getPosition(), tex[4], 6, "Weapon", "Pistol", tex[5], 100.0f, 999999, 0, "EnemyBullet",2.0f, newBoss);
 				gameObjectHandler->add(newBoss);
 				newBoss->addWeapon(testWeapon);
 				tempBlock.push_back(newBoss);
@@ -172,6 +175,13 @@ void loadMap(Map* map, PlayerGameObject* player, Store* playerStore) {
 				mapBlock* newBlock = new mapBlock(gameObjectHandler, glm::vec3(row, -col, 0.f), tex[18], 6, "endBlock", row, col);
 				gameObjectHandler->add(newBlock);
 				tempBlock.push_back(newBlock);
+			}
+			else if (map->getaLevelMap()[col][row].compare("T") == 0) {
+				Turret* newTurret = new Turret(map, gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[19], 6, "Enemy", 1.0, 1, 0, 10.0f);
+				Weapon* testWeapon = new Weapon(gameObjectHandler, newTurret->getPosition(), tex[20], 6, "Weapon", "Pistol", tex[5], 1000.0f, 999999, 0, "EnemyBullet", 2.0f, newTurret);
+				gameObjectHandler->add(newTurret);
+				newTurret->addWeapon(testWeapon);
+				tempBlock.push_back(newTurret);
 			}
 			else {
 				tempBlock.push_back(NULL);
@@ -189,13 +199,14 @@ void loadMap(Map* map, PlayerGameObject* player, Store* playerStore) {
 			//create map
 			//cout << gameMap->getPartialMap()[col][row];
 			if (map->getaLevelMap()[col][row].compare("S") == 0) {
-				cout << "Start "<< row << " , " << col << endl;
 				player->setPosition(glm::vec3(row, -col, 0.0f));
+				//cout << "Start " << player->getPosition().x << " , " << player->getPosition().y<< endl;
 			}
 
 		}
 	}
 
+	player->setVelocity(glm::vec3(0.0f));
 	gameObjectHandler->add(playerStore);
 	gameObjectHandler->add(player);
 
