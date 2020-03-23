@@ -36,8 +36,8 @@ https://docs.google.com/document/d/1MYQRhG01lbmdbv0JwDMv04CwqyXXs7oZxnhU1E3xEHE/
 ### Mar 11:
 - [x] Loading in between levels
 - [x] Add turrets to first level
-- [ ] Second level + falling rocks
-- [ ] Finish first stage of boss and add second stage of boss
+- [x] Second level + falling rocks
+- [x] Finish first stage of boss and add second stage of boss
 ### Mar 18:
 - [x] Add finite state machine to enemies
 - [ ] Start third level
