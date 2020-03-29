@@ -128,6 +128,16 @@ void GameObjectHandler::update(double deltaTime) {
 						}
 					}
 
+					//all boss
+					if (currentGameObject->getType().compare("Boss") == 0) {
+						if (otherGameObject->getType().compare("mapBlock") == 0) {
+
+							//set to reversed velcoity
+							((PlayerGameObject*)currentGameObject)->reverseVelocity(deltaTime);
+						}
+					}
+						
+
 				}
 
 			}

@@ -61,7 +61,10 @@ void Boss::update(double deltaTime)
 	//fire
 	glm::vec3 playerPosition = glm::vec3(handler->getPlayer()->getPosition().x, handler->getPlayer()->getPosition().y, 0.0f);
 	float distanceToShoot = glm::length(position - playerPosition);
-	if (distanceToShoot < 3.0f) { // if distance to the next node is far enough
+
+
+	//ability one/////////////
+	if (distanceToShoot < 10.0f) { // if distance to the next node is far enough
 
 		//ability one
 		if (contiuneShootingCurrentCD < 0 && contiuneShootingTimeCurrent > 0) {
@@ -75,9 +78,42 @@ void Boss::update(double deltaTime)
 				contiuneShootingCurrentCD = contiuneShootingCD;
 				contiuneShootingTimeCurrent = contiuneShootingTime;
 			}
+
+			//ability two/////////////
+			for each (GameObject * aGameObject in handler->getGameobjects())
+			{
+				if (aGameObject->getType().compare("PlayerBullet") == 0) {
+
+					glm::vec3 directionToDodge = aGameObject->getPosition() - position;
+					float distanceToDodge = glm::length(aGameObject->getPosition() - position);
+					float speedToDodgeBasedOnDistance = -1.0f * (distanceToDodge - 0.2f);
+					if (distanceToDodge < 4.0f) {
+
+						velocity += directionToDodge * (-10.0f) * glm::abs((glm::pow(2.0f, speedToDodgeBasedOnDistance)));
+
+					}
+
+				}
+
+				if (aGameObject->getType().compare("mapBlock") == 0 || aGameObject->getType().compare("endBlock") == 0) {
+
+					glm::vec3 directionToDodge = aGameObject->getPosition() - position;
+					float distanceToDodge = glm::length(aGameObject->getPosition() - position);
+					float speedToDodgeBasedOnDistance = -1.0f * (distanceToDodge - 0.2f);
+					if (distanceToDodge < 2.0f) {
+
+						velocity += directionToDodge * (-5.0f) * glm::abs((glm::pow(2.0f, speedToDodgeBasedOnDistance)));
+
+					}
+
+				}
+			}
+
 		}
 		
 	}
+	
+	
 
 	AliveGameObject::update(deltaTime);
 }

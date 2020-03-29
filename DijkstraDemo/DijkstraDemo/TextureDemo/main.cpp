@@ -269,7 +269,7 @@ int main(void){
 		PlayerGameObject* player = new PlayerGameObject(gameObjectHandler, DefaultPosition, tex[1], 6, tex, "Player", 1, 1, 1);
 		gameObjectHandler->add(player);
 
-		Weapon* testWeapon = new Weapon(gameObjectHandler, DefaultPosition, tex[4], 6, "Weapon", "Pistol", tex[5], 100.0f, 100000, 0, 1,"PlayerBullet", 2.0f,player);
+		Weapon* testWeapon = new Weapon(gameObjectHandler, DefaultPosition, tex[4], 6, "Weapon", "Pistol", tex[5], 100.0f, 100000, 0, 1,"PlayerBullet", 5.0f,player);
 		player->addWeapon(testWeapon);
 
 		//adding store (store must init after the player)
@@ -278,7 +278,7 @@ int main(void){
 		
 		//Adding All Weapons here!!!!!!!!!!!!!!!!!!!!!!!!!!
 		gameStore->addWeapon(new Weapon(gameObjectHandler, DefaultPosition, tex[16], 6, "Weapon", "Rifle", tex[5], 70.0f, 20,20,3, "PlayerBullet",10.0f, gameObjectHandler->getPlayer()));
-		gameStore->addWeapon(new Weapon(gameObjectHandler, DefaultPosition, tex[17], 6, "Weapon", "SMG", tex[5], 50.0f, 50, 30,1, "PlayerBullet",3.0f, gameObjectHandler->getPlayer()));
+		gameStore->addWeapon(new Weapon(gameObjectHandler, DefaultPosition, tex[17], 6, "Weapon", "SMG", tex[5], 50.0f, 50, 30,1, "PlayerBullet",7.0f, gameObjectHandler->getPlayer()));
 		gameObjectHandler->add(gameStore);
 
 		//loading map

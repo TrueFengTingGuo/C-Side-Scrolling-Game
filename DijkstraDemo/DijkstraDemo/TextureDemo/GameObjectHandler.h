@@ -26,6 +26,7 @@ public:
 	
 	// Getters
 	inline PlayerGameObject* getPlayer() { return player; }
+	inline std::vector<GameObject*> getGameobjects() {	return  gameObjects;}
 
 	//this store all gameobbject in the map table
 	std::vector<std::vector<GameObject*>> gameObjectInTableOrder;
