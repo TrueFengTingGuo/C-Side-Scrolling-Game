@@ -20,7 +20,7 @@ https://docs.google.com/document/d/1MYQRhG01lbmdbv0JwDMv04CwqyXXs7oZxnhU1E3xEHE/
 ### Feb 19:
 - [x] Collision
 - [x] Player class (movement, shooting bullets, dropping bombs, stats)
-- [ ] Powerups
+- [x] Powerups
 - [x] Enemy helicopter class
 - [x] Wall object class
 ### Feb 26:
