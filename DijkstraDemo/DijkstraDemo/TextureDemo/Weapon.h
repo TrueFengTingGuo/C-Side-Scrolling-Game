@@ -21,15 +21,17 @@ public:
 		std::string getName() { return weaponName; }
 		int getCost() { return cost; }
 		int getAmmo() { return ammo; }
+		float getFireRate() { return fireRate; }
 
 		//setter
 		void setAmmo(int newAmmo) { ammo = newAmmo; }
-
+		void setFireRateAmp(float newFireRate) { fireRateAmp = newFireRate; }
 
 		AliveGameObject* owner;
 private:
 	
 	float fireRate;
+	float fireRateAmp = 1;
 	float bulletSpeed;
 	float cooldown;
 	int bulletDamage = 2;

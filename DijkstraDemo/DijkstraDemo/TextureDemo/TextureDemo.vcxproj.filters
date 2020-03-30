@@ -78,6 +78,9 @@
     <ClCompile Include="Rock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Partical.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -140,12 +143,18 @@
     <ClInclude Include="Rock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Partical.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader.vert">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="shader.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="ps_shader.vert">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

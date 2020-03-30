@@ -163,6 +163,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="mapBlock.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="Partical.cpp" />
     <ClCompile Include="PlayerGameObject.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="mapBlock.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="Partical.h" />
     <ClInclude Include="PlayerGameObject.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="FileUtils.h" />
@@ -197,6 +199,7 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ps_shader.vert" />
     <None Include="shader.frag" />
     <None Include="shader.vert" />
   </ItemGroup>

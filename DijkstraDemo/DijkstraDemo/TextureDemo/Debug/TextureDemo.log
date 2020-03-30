@@ -1,19 +1,32 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(459,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (TextureDemo.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Boss.cpp
-C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\Boss.cpp(17,61): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+  GameObjectHandler.cpp
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\GameObjectHandler.cpp(31,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\GameObjectHandler.cpp(168,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\GameObjectHandler.cpp(186,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\GameObjectHandler.cpp(214,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\GameObjectHandler.cpp(225,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\GameObjectHandler.cpp(249,24): warning C4018: '<': signed/unsigned mismatch
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\GameObjectHandler.cpp(251,25): warning C4018: '<': signed/unsigned mismatch
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\GameObjectHandler.cpp(288,28): warning C4018: '<': signed/unsigned mismatch
+  main.cpp
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\main.cpp(152,24): warning C4018: '<': signed/unsigned mismatch
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\main.cpp(155,25): warning C4018: '<': signed/unsigned mismatch
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\main.cpp(215,25): warning C4018: '<': signed/unsigned mismatch
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\main.cpp(262,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\main.cpp(263,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\main.cpp(327,18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\main.cpp(328,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\main.cpp(335,134): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\Boss.cpp(26,58): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\main.cpp(335,91): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\Boss.cpp(71,71): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\Boss.cpp(73,44): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\Boss.cpp(76,42): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\Graph.h(77): warning C4715: 'Graph::popNodeFromPath': not all control paths return a value
+  Generating Code...
   SOIL.lib(SOIL.obj) : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
 LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
@@ -24,6 +37,9 @@ LINK : warning LNK4286: symbol '___glewGetUniformLocation' defined in 'glew32s.l
 LINK : warning LNK4286: symbol '___glewGetUniformLocation' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'
 LINK : warning LNK4286: symbol '___glewUniform3f' defined in 'glew32s.lib(glew.obj)' is imported by 'GameObjectHandler.obj'
 LINK : warning LNK4286: symbol '___glewUniform3f' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'
+LINK : warning LNK4286: symbol '___glewBindBuffer' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'
+LINK : warning LNK4286: symbol '___glewBufferData' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'
+LINK : warning LNK4286: symbol '___glewGenBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'
 LINK : warning LNK4286: symbol '___glewAttachShader' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'
 LINK : warning LNK4286: symbol '___glewCompileShader' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'
 LINK : warning LNK4286: symbol '___glewCreateProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'

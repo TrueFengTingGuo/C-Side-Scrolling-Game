@@ -28,8 +28,12 @@ void GameObject::update(double deltaTime) {
 
 // Renders the GameObject using a shader
 void GameObject::render(Shader &shader) {
+
 	// Bind the entities texture
 	glBindTexture(GL_TEXTURE_2D, texture);
+
+	shader.enable();
+	shader.SetAttributes_sprite();
 
 	// Setup the transformation matrix for the shader
 	glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), position);

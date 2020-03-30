@@ -112,7 +112,7 @@ void setthisTexture(GLuint w, char *fname){
 }
 
 void setallTexture(void){
-	glGenTextures(22, tex);
+	glGenTextures(25, tex);
 	setthisTexture(tex[0], "orb.png");
 	setthisTexture(tex[1], "helicopter.jpg");
 	setthisTexture(tex[2], "bullet.png");
@@ -135,6 +135,9 @@ void setallTexture(void){
 	setthisTexture(tex[19], "turrent_base.png");
 	setthisTexture(tex[20], "turrent_cannon.png");
 	setthisTexture(tex[21], "rock.png");
+	setthisTexture(tex[22], "Brick_1_Frag.png");
+	setthisTexture(tex[23], "redOrb.png");
+	setthisTexture(tex[24], "turrent_base_frag.png");
 	glBindTexture(GL_TEXTURE_2D, tex[0]);
 }
 
@@ -160,7 +163,7 @@ void loadMap(Map* map, PlayerGameObject* player, Store* playerStore) {
 
 			}
 			else if (map->getaLevelMap()[col][row].compare("H") == 0) {
-				EnemyHelicopter* newEnemyHelicopter = new EnemyHelicopter(map,gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[1], 6, "Enemy", 1.0, 1, 1, 10.0f);
+				EnemyHelicopter* newEnemyHelicopter = new EnemyHelicopter(map,gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[1], 6, "EnemyHelicopter", 1.0, 1, 1, 10.0f);
 				Weapon* testWeapon = new Weapon(gameObjectHandler, newEnemyHelicopter->getPosition(), tex[4], 6, "Weapon", "Pistol", tex[5], 1000.0f, 999999, 0,1, "EnemyBullet",2.0f, newEnemyHelicopter);
 				gameObjectHandler->add(newEnemyHelicopter);
 				newEnemyHelicopter->addWeapon(testWeapon);
@@ -179,7 +182,7 @@ void loadMap(Map* map, PlayerGameObject* player, Store* playerStore) {
 				tempBlock.push_back(newBlock);
 			}
 			else if (map->getaLevelMap()[col][row].compare("T") == 0) {
-				Turret* newTurret = new Turret(map, gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[19], 6, "Enemy", 1.0, 1, 2, 10.0f);
+				Turret* newTurret = new Turret(map, gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[19], 6, "Turret", 1.0, 1, 2, 10.0f);
 				Weapon* testWeapon = new Weapon(gameObjectHandler, newTurret->getPosition(), tex[20], 6, "Weapon", "Pistol", tex[5], 1000.0f, 999999, 0, 1,"EnemyBullet", 2.0f, newTurret);
 				gameObjectHandler->add(newTurret);
 				newTurret->addWeapon(testWeapon);
@@ -205,7 +208,7 @@ void loadMap(Map* map, PlayerGameObject* player, Store* playerStore) {
 		gameObjectHandler->gameObjectInTableOrder.push_back(tempBlock); // this will store all gameobject in the order of a table
 	}
 
-	player->setVelocity(glm::vec3(0.0f));
+	
 	//set player location
 	for (int col = map->getaLevelMap().size() - 1; col > 0; col--) {
 
@@ -214,6 +217,7 @@ void loadMap(Map* map, PlayerGameObject* player, Store* playerStore) {
 			//create map
 			//cout << gameMap->getPartialMap()[col][row];
 			if (map->getaLevelMap()[col][row].compare("S") == 0) {
+				player->setVelocity(glm::vec3(0.0f));
 				player->setPosition(glm::vec3(row, -col, 0.0f));
 				//cout << "Start " << player->getPosition().x << " , " << player->getPosition().y<< endl;
 			}
@@ -221,7 +225,7 @@ void loadMap(Map* map, PlayerGameObject* player, Store* playerStore) {
 		}
 	}
 
-	
+	player->setActive(true);
 	gameObjectHandler->add(playerStore);
 	gameObjectHandler->add(player);
 
@@ -235,6 +239,9 @@ int main(void){
 		// Setup window
 		Window window(window_width_g, window_height_g, window_title_g);
 
+		// Set up shaders
+		Shader shader("shader.vert", "shader.frag", true);
+		Shader pss("ps_shader.vert", "shader.frag", true);
 
 		// Set up z-buffer for rendering
 		glEnable(GL_DEPTH_TEST);
@@ -246,9 +253,6 @@ int main(void){
 
 		// Create geometry of the square
 		int size = CreateSquare();
-
-		// Set up shaders
-		Shader shader("shader.vert", "shader.frag");
 
 		// Set up the textures
 		setallTexture();
@@ -262,7 +266,7 @@ int main(void){
 
 		////////////////////////////These are implemented ////////////////////////////
 		Map *gameMap = new Map("Map_1.csv");	
-		gameObjectHandler = new GameObjectHandler();
+		gameObjectHandler = new GameObjectHandler(tex);
 
 		//adding player
 		glm::vec3 DefaultPosition = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -299,9 +303,6 @@ int main(void){
 			double deltaTime = currentTime - lastTime;
 			lastTime = currentTime;
 
-			// Select proper shader program to use
-			shader.enable();
-
 			// Setup camera to focus on (0, 0)
 			glm::vec3 cameraPosition = player->getPosition();
 			//cout << "Player is at " << cameraPosition.x << "  ,  " << cameraPosition.y << endl;
@@ -311,8 +312,15 @@ int main(void){
 			glm::mat4 camera_zoom = glm::scale(glm::mat4(1.0f), glm::vec3(cameraZoom, cameraZoom, cameraZoom));
 
 			glm::mat4 viewMatrix = window_scale * camera_zoom * cameraTranslatePos;
+
+
+			// Select proper shader program to use
+			shader.enable();
 			shader.setUniformMat4("viewMatrix", viewMatrix);
-			//user input
+
+			pss.enable();
+			pss.setUniformMat4("viewMatrix", viewMatrix);
+
 
 			cameraZoom = mult * 0.05f;
 			mod = 13 / mult;  //allows you to play with the size of the graph by changing mult before running
@@ -352,9 +360,10 @@ int main(void){
 
 			// Update and render all GameObjects
 			gameObjectHandler->update(deltaTime);
+
+			
+			gameObjectHandler->renderPSS(pss, deltaTime);
 			gameObjectHandler->render(shader);
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 

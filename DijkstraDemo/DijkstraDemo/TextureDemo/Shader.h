@@ -11,11 +11,20 @@
 
 class Shader {
 public:
-	Shader(const char *vertPath, const char *fragPath);
+	Shader(const char *vertPath, const char *fragPath, bool isSprite);
 	~Shader();
 
 	void enable();
 	void disable();
+
+	void makeSprite();
+	void makeParticles();
+
+	void createProgram(const char *vertPath, const char *fragPath);
+
+	void SetAttributes_sprite();
+
+	void SetAttributes_particle();
 
 	// Sets a uniform integer variable in your shader program to a value
 	void setUniform1i(const GLchar *name, int value);
@@ -37,6 +46,11 @@ public:
 
 	// Getters
 	inline GLuint getShaderID() { return shaderProgram; }
-private:
+protected:
 	GLuint shaderProgram;
+	static GLuint vbo_sprite;
+	static GLuint ebo_sprite;
+	static GLuint vbo_particle;
+	static GLuint ebo_particle;
+	static bool setupSprite;
 };

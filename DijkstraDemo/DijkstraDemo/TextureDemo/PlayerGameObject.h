@@ -29,7 +29,7 @@ private:
 	glm::vec3 displayIconStartFrom; // (0,0) cood of the screen
 
 	//power up buff
-	float speedBuffVolumn = 1.3f; //percentage
+	float speedBuffVolumn = 1.9f; //percentage
 	float currentSpeedBuffVolumn = 1.0f; //percentage
 	float speedBuffTime = 0.0f;
 

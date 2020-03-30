@@ -45,6 +45,10 @@ void PlayerGameObject::update(double deltaTime) {
 	velocity[0] *= 0.998;
 	velocity[1] *= 0.998;
 
+	// speed up current weapon fire rate
+	weapons.at(currentWeapon)->setFireRateAmp(1.0f/currentSpeedBuffVolumn);
+
+	//player controller
 	if (glm::length(getVelocity()) < 1.0f * currentSpeedBuffVolumn) {
 		// Checking for player input and changing velocity
 		if (glfwGetKey(Window::getWindow(), GLFW_KEY_W) == GLFW_PRESS) {
@@ -138,6 +142,9 @@ void PlayerGameObject::render(Shader& shader)
 
 		// Bind the entities texture
 		glBindTexture(GL_TEXTURE_2D, storedTex[intVec.back() + 6]);
+		
+		shader.enable();
+		shader.SetAttributes_sprite();
 
 		intVec.pop_back();//take out one digit
 

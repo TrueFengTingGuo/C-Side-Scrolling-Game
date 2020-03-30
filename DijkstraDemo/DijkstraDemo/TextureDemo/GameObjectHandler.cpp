@@ -2,11 +2,11 @@
 #include "PlayerGameObject.h"
 #include "Enemy.h"
 #include "Map.h"
+#include "Partical.h"
 
 
-
-GameObjectHandler::GameObjectHandler() {
-
+GameObjectHandler::GameObjectHandler(GLuint newSavedTex[]) {
+	savedTex = newSavedTex;
 }
 
 // Updates all game objects
@@ -37,10 +37,12 @@ void GameObjectHandler::update(double deltaTime) {
 					if (currentGameObject->getType().compare("PlayerBullet") == 0) {
 
 						//bullet vs Enemy
-						if (otherGameObject->getType().compare("Enemy") == 0 && otherGameObject->getActive() == true) {
+						if ((otherGameObject->getType().compare("EnemyHelicopter") == 0|| otherGameObject->getType().compare("Turret") == 0) && otherGameObject->getActive() == true) {
 							 gameObjects.erase(gameObjects.begin() + i); // remove bullet
 
    							((Enemy*)otherGameObject)->hurt(((Bullet*)currentGameObject)->getDamage());
+							particals.push_back(new Partical(this, currentGameObject->getPosition(), savedTex[24], 6, "Partical", glm::vec4(0.2f, 1.0f, 1.0f, 1.0f)));
+							
 
 							// enemy dies 
 							if (((AliveGameObject*)otherGameObject)->getHealth() <= 0) {
@@ -85,6 +87,7 @@ void GameObjectHandler::update(double deltaTime) {
 						if (otherGameObject->getType().compare("mapBlock") == 0) {
 
 							gameObjects.erase(gameObjects.begin() + i);
+							particals.push_back(new Partical(this, currentGameObject->getPosition(), savedTex[22], 6, "Partical", glm::vec4(0.2f, 1.0f, 1.0f, 1.0f)));
 							break;
 						}
 					}
@@ -96,11 +99,12 @@ void GameObjectHandler::update(double deltaTime) {
 
 							//set to reversed velcoity
 							((PlayerGameObject*)currentGameObject)->reverseVelocity(deltaTime);
-
+							
 						}
 
 						if (otherGameObject->getType().compare("endBlock") == 0) {
 
+							currentGameObject->setActive(false);
 							loadMapAgain = true;
 
 						}
@@ -124,6 +128,14 @@ void GameObjectHandler::update(double deltaTime) {
 						if (otherGameObject->getType().compare("mapBlock") == 0) {
 
 							gameObjects.erase(gameObjects.begin() + i);
+							
+							break;
+						}
+
+						if (otherGameObject->getType().compare("Player") == 0) {
+
+							gameObjects.erase(gameObjects.begin() + i);
+							particals.push_back(new Partical(this, currentGameObject->getPosition(), savedTex[23], 6, "Partical", glm::vec4(0.2f, 1.0f, 1.0f, 1.0f)));
 							break;
 						}
 					}
@@ -168,6 +180,19 @@ void GameObjectHandler::render(Shader& shader) {
 	}
 }
 
+// Renders all game objects
+void GameObjectHandler::renderPSS(Shader& shader, double deltaTime) {
+
+	for (int i = 0; i < particals.size(); i++) {
+		// Get the current object
+		Partical* currentGameObject = particals[i];
+
+
+		// Render game objects
+		currentGameObject->render(shader, deltaTime);
+
+	}
+}
 void GameObjectHandler::add(GameObject* go) {
 	if (go->getType().compare("Player") == 0){ 
 		player = ((PlayerGameObject*)go);
