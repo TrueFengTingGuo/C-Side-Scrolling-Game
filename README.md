@@ -43,8 +43,7 @@ https://docs.google.com/document/d/1MYQRhG01lbmdbv0JwDMv04CwqyXXs7oZxnhU1E3xEHE/
 - [ ] Start third level
 - [ ] Final stage of boss
 ### Mar 25:
-- [ ] Add special effects
-- [ ] Add notification to the UI (“Final boss approaching”)
+- [x] Add special effects
 - [ ] Secret tunnel
 - [ ] Finish third level
 ### April 1 (Done):
