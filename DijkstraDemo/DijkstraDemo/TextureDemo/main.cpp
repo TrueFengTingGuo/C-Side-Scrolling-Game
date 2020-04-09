@@ -37,7 +37,7 @@ float mult = 2.75; //play with this if you want a bigger or smaller graph but st
 const std::string window_title_g = "Pathfinding Demo";
 
 extern int window_width_g  = 720;
-extern int window_height_g = 980;
+extern int window_height_g = 800;
 extern float cameraZoom    = mult * 0.05f;
 extern float aspectRatio   = (float)window_height_g / (float)window_width_g;
 //extern GLFWwindow* window;
@@ -112,7 +112,7 @@ void setthisTexture(GLuint w, char *fname){
 }
 
 void setallTexture(void){
-	glGenTextures(25, tex);
+	glGenTextures(26, tex);
 	setthisTexture(tex[0], "orb.png");
 	setthisTexture(tex[1], "helicopter.jpg");
 	setthisTexture(tex[2], "bullet.png");
@@ -138,6 +138,7 @@ void setallTexture(void){
 	setthisTexture(tex[22], "Brick_1_Frag.png");
 	setthisTexture(tex[23], "redOrb.png");
 	setthisTexture(tex[24], "turrent_base_frag.png");
+	setthisTexture(tex[25], "Boss_pic.png");
 	glBindTexture(GL_TEXTURE_2D, tex[0]);
 }
 
@@ -170,7 +171,7 @@ void loadMap(Map* map, PlayerGameObject* player, Store* playerStore) {
 				tempBlock.push_back(newEnemyHelicopter);
 			}
 			else if (map->getaLevelMap()[col][row].compare("B") == 0) {
-				Boss* newBoss = new Boss(map, gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[1], 6, "Boss",20.0f,1.0, 1, 10, 10.0f);
+				Boss* newBoss = new Boss(map, gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[25], 6, "Boss",20.0f,1.0, 1, 10, 10.0f);
 				Weapon* testWeapon = new Weapon(gameObjectHandler, newBoss->getPosition(), tex[4], 6, "Weapon", 0.0f, "Pistol", tex[5], 100.0f, 999999, 0,1, "EnemyBullet",2.0f, newBoss);
 				gameObjectHandler->add(newBoss);
 				newBoss->addWeapon(testWeapon);

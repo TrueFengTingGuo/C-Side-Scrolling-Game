@@ -54,7 +54,7 @@ void EnemyHelicopter::update(double deltaTime)
 	float distanceToNextNode = glm::length(position - nextDest);
 	if (distanceToNextNode > 0.1f) { // if distance to the next node is far enough
 		//cout << "next  dest" << graph->getNode(graph->getEndId()).getX() << " ," << graph->getNode(graph->getEndId()).getY() << endl;
-		velocity = glm::normalize(nextDest - position) * 1.0f;
+		velocity += glm::normalize(nextDest - position) * (float)deltaTime;
 	}
 	else {
 		if (graph->sizeOfPathNodes() > 0) {

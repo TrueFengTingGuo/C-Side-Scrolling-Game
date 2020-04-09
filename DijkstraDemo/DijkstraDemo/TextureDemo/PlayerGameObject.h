@@ -11,8 +11,11 @@ public:
 
 	// Update function for moving the player object around
 	virtual void update(double deltaTime) override;
-	void switchWeapon();
 	void render(Shader& shader) override;
+
+	void switchWeapon();
+	void addExperience(int tempExperience);
+
 	
 	//getter
 	int getCurrency() { return currency; }
@@ -24,6 +27,7 @@ public:
 private:
 	
 	int experience;
+	int neededExperience = 5;
 	int currency;
 	GLuint* storedTex; //stored textures
 	glm::vec3 displayIconStartFrom; // (0,0) cood of the screen

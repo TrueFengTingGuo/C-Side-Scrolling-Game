@@ -49,6 +49,7 @@ void GameObjectHandler::update(double deltaTime) {
 							if (((AliveGameObject*)otherGameObject)->getHealth() <= 0) {
 								otherGameObject->setActive(false);
 								player->setCurrency(player->getCurrency() + 2); //earn money
+								player->addExperience(10); //earn Experience
 							}
 							
 							break;
@@ -63,7 +64,8 @@ void GameObjectHandler::update(double deltaTime) {
 							// enemy dies 
 							if (((AliveGameObject*)otherGameObject)->getHealth() <= 0) {
 								otherGameObject->setActive(false);
-								player->setCurrency(player->getCurrency() + 2); //earn money
+								player->setCurrency(player->getCurrency() + 10); //earn money
+								player->addExperience(10); //earn Experience
 							}
 
 							break;
@@ -79,7 +81,8 @@ void GameObjectHandler::update(double deltaTime) {
 							// enemy dies 
 							if (((AliveGameObject*)otherGameObject)->getHealth() <= 0) {
 								otherGameObject->setActive(false);
-								player->setCurrency(player->getCurrency() + 2); //earn money
+								player->setCurrency(player->getCurrency() + 15); //earn money
+								player->addExperience(10); //earn Experience
 							}
 
 							break;
@@ -117,11 +120,9 @@ void GameObjectHandler::update(double deltaTime) {
 
 						}
 
-						if (otherGameObject->getType().compare("Rock") == 0) {
+						if (otherGameObject->getType().compare("Rock") == 0|| otherGameObject->getType().compare("EnemyHelicopter") == 0 || otherGameObject->getType().compare("Turret") == 0) {
 
-							
-							
-
+							collisionReslove(currentGameObject, otherGameObject);
 						}
 					}
 
@@ -139,6 +140,13 @@ void GameObjectHandler::update(double deltaTime) {
 							collisionReslove(currentGameObject, otherGameObject);
 							gameObjects.erase(gameObjects.begin() + i);
 							particals.push_back(new Partical(this, currentGameObject->getPosition(), savedTex[23], 6, "Partical",0.0f, glm::vec4(0.2f, 1.0f, 1.0f, 1.0f)));
+							
+							((AliveGameObject*)otherGameObject)->hurt(((Bullet*)currentGameObject)->getDamage());
+							// Player dies 
+							if (((AliveGameObject*)otherGameObject)->getHealth() <= 0) {
+								otherGameObject->setActive(false);
+								exit(0);
+							}
 							break;
 						}
 					}
@@ -151,7 +159,15 @@ void GameObjectHandler::update(double deltaTime) {
 							collisionReslove(currentGameObject, otherGameObject);
 						}
 					}
-						
+					
+					//all Enmey
+					if (currentGameObject->getType().compare("EnemyHelicopter") == 0 || currentGameObject->getType().compare("Turret") == 0){
+						if (otherGameObject->getType().compare("mapBlock") == 0) {
+
+							//set to reversed velcoity
+							collisionReslove(currentGameObject, otherGameObject);
+						}
+					}
 
 				}
 
@@ -247,8 +263,7 @@ void GameObjectHandler::restMap()
 
 void GameObjectHandler::setActiveByTableCol(Map* map,int colStart, int colEnd)
 {
-	std::cout << map->getaLevelMap().size();
-
+	
 	for (int col = 0; col < map->getaLevelMap().size(); col++) {
 		
 		for (int row = 0; row < map->getaLevelMap()[col].size(); row++) {
@@ -259,18 +274,25 @@ void GameObjectHandler::setActiveByTableCol(Map* map,int colStart, int colEnd)
 			else {
 				
 				if (col > colStart && col < colEnd) {
-					gameObjectInTableOrder[col][row]->setActive(true);
-					if (gameObjectInTableOrder[col][row]->getType().compare("Enemy") == 0) {
-						((Enemy*)gameObjectInTableOrder[col][row])->setCurrentWeaponActiveTo(true);
-						
+					GameObject* tempGameObject = gameObjectInTableOrder[col][row];
+					
+					tempGameObject->setActive(true);
+					
+					if (tempGameObject->getType().compare("EnemyHelicopter") == 0|| tempGameObject->getType().compare("Boss") == 0|| tempGameObject->getType().compare("Turret") == 0) {
+						Enemy* tempEnemy = ((Enemy*)tempGameObject);
+						tempEnemy->setCurrentWeaponActiveTo(true);
+						tempEnemy->setHealth(tempEnemy->getInitHP());
 					}
 
 				}
 				else {
-					gameObjectInTableOrder[col][row]->setActive(false);
-					if (gameObjectInTableOrder[col][row]->getType().compare("Enemy") == 0) {
-						((Enemy*)gameObjectInTableOrder[col][row])->setCurrentWeaponActiveTo(false);
-						gameObjectInTableOrder[col][row]->setPosition(glm::vec3(row, -col, 0.0f));
+					GameObject* tempGameObject = gameObjectInTableOrder[col][row];
+					
+					tempGameObject->setActive(false);
+					if (tempGameObject->getType().compare("EnemyHelicopter") == 0 || tempGameObject->getType().compare("Boss") == 0 || tempGameObject->getType().compare("Turret") == 0) {
+						Enemy* tempEnemy = ((Enemy*)tempGameObject);
+						tempEnemy->setCurrentWeaponActiveTo(false);
+						tempEnemy->setPosition(glm::vec3(row, -col, 0.0f));
 					}
 					//activeCount -= 1;
 				}
@@ -280,6 +302,7 @@ void GameObjectHandler::setActiveByTableCol(Map* map,int colStart, int colEnd)
 
 		
 	}
+
 }
 
 void GameObjectHandler::CleanOutOfRangeGameObject() {
@@ -329,7 +352,6 @@ float GameObjectHandler::collisionReslove(GameObject* objectA, GameObject* objec
 	objectA->setVelocity(objectA->getVelocity() - impluse * objectA_reverseMass);
 	objectB->setVelocity(objectB->getVelocity() + impluse * objectB_reverseMass);
 
-	std::cout << j << std::endl;
 	return j;
 }
 

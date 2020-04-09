@@ -112,6 +112,9 @@ void PlayerGameObject::update(double deltaTime) {
 
 void PlayerGameObject::render(Shader& shader)
 {
+	shader.enable();
+	shader.SetAttributes_sprite();
+
 	AliveGameObject::render(shader);
 
 	//render currency
@@ -129,9 +132,6 @@ void PlayerGameObject::render(Shader& shader)
 
 		// Bind the entities texture
 		glBindTexture(GL_TEXTURE_2D, storedTex[intVec.back() + 6]);
-		
-		shader.enable();
-		shader.SetAttributes_sprite();
 
 		intVec.pop_back();//take out one digit
 
@@ -183,5 +183,18 @@ void PlayerGameObject::render(Shader& shader)
 
 		// Draw the entity
 		glDrawElements(GL_TRIANGLES, numElements, GL_UNSIGNED_INT, 0);
+	}
+
+	
+}
+
+
+void PlayerGameObject::addExperience(int tempExperience)
+{
+	experience += tempExperience;
+	if (neededExperience < experience) {
+		hp = level * getGrowingHealth();
+		level += 1;
+		neededExperience += level * 10;
 	}
 }

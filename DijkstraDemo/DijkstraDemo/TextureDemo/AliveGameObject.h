@@ -29,7 +29,8 @@ public:
 	void reverseVelocity(double deltaTime);
 	// Getters
 	inline float getHealth() { return hp; }
-
+	inline float getGrowingHealth() { return growingHealth; }
+	inline float getInitHP() { return initHP; }
 	// Setters
 	inline void setHealth(float newHp) { hp = newHp; }
 	inline void setCurrentWeaponActiveTo(bool change) { weapons[currentWeapon]->setActive(change);}
@@ -43,6 +44,7 @@ private:
 protected:
 	
 	float hp;
+	float initHP;
 	float damage;
 	int level = 0;
 	std::vector<Weapon*> weapons;
