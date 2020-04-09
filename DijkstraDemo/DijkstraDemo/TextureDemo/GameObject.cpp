@@ -5,7 +5,7 @@
 	The update method is virtual, so you can inherit from GameObject and override the update functionality (see PlayerGameObject for reference)
 */
 
-GameObject::GameObject(GameObjectHandler* h, glm::vec3 &entityPosition, GLuint entityTexture, GLint entityNumElements, std::string newType) {
+GameObject::GameObject(GameObjectHandler* h, glm::vec3 &entityPosition, GLuint entityTexture, GLint entityNumElements, std::string newType, float newMass) {
 
 	handler = h;
 
@@ -13,6 +13,16 @@ GameObject::GameObject(GameObjectHandler* h, glm::vec3 &entityPosition, GLuint e
 	texture = entityTexture;
 	numElements = entityNumElements;
 	velocity = glm::vec3(0.0f, 0.0f, 0.0f);
+	mass = newMass;
+
+	//calcualting reverseMass
+	if (mass == 0) {
+		reverseMass = 0;
+	}
+	else {
+		reverseMass = 1 / mass;
+	}
+
 
 	type = newType;
 
@@ -48,4 +58,17 @@ void GameObject::render(Shader &shader) {
 
 	// Draw the entity
 	glDrawElements(GL_TRIANGLES, numElements, GL_UNSIGNED_INT, 0);
+}
+
+bool GameObject::isCollided(GameObject* comparedObject)
+{
+
+	float distance = glm::length(comparedObject->getPosition() - getPosition());
+	if (distance < comparedObject->getObjectRadius() + getObjectRadius()) {
+		return true;
+	}
+	return false;
+
+
+	
 }

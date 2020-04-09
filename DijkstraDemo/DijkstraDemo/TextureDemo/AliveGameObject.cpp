@@ -3,8 +3,8 @@
 using namespace std;
 
 
-AliveGameObject::AliveGameObject(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements,std::string myType,float newHealth,float newDamage, int newLevel)
-	: GameObject(h, entityPos, entityTexture, entityNumElements, myType) {
+AliveGameObject::AliveGameObject(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements,std::string myType,float newMass,float newHealth,float newDamage, int newLevel)
+	: GameObject(h, entityPos, entityTexture, entityNumElements, myType,newMass) {
 	level = newLevel;
 	hp = newHealth + newLevel * growingHealth;
 	damage = newDamage + newLevel * growingDamage;

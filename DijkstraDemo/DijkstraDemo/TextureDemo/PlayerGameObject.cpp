@@ -8,12 +8,14 @@ using namespace std;
 	It overrides GameObject's update method, so that you can check for input to change the velocity of the player
 */
 
-PlayerGameObject::PlayerGameObject(GameObjectHandler* h, glm::vec3 &entityPos, GLuint entityTexture, GLint entityNumElements, GLuint allStoredTex[], std::string newType,float newHealth, float newDamage, int newLevel)
-	: AliveGameObject(h, entityPos, entityTexture, entityNumElements,newType,newHealth,newDamage,newLevel) {
+PlayerGameObject::PlayerGameObject(GameObjectHandler* h, glm::vec3 &entityPos, GLuint entityTexture, GLint entityNumElements, GLuint allStoredTex[], std::string newType, float newMass,float newHealth, float newDamage, int newLevel)
+	: AliveGameObject(h, entityPos, entityTexture, entityNumElements,newType, newMass,newHealth,newDamage,newLevel) {
 	storedTex = allStoredTex;
 	currentWeapon = 0;
 	experience = 0;
 	currency = 20;
+
+	objectRadius = 0.5f;
 
 	//determine the window size
 	glfwGetWindowSize(Window::getWindow(), &window_width_g, &window_height_g);
@@ -41,49 +43,34 @@ void PlayerGameObject::switchWeapon() {
 // Update function for moving the player object around
 void PlayerGameObject::update(double deltaTime) {
 
+	/*
+	//gravity
+	glm::vec3 Accel = glm::vec3(0.0f, -0.98f, 0.0f);
+	glm::vec3 newVel = getVelocity() + Accel * (float)deltaTime;
+	setVelocity(newVel);
+	*/
+
 	// reduce velocity
 	velocity[0] *= 0.998;
 	velocity[1] *= 0.998;
 
-	// speed up current weapon fire rate
-	weapons.at(currentWeapon)->setFireRateAmp(1.0f/currentSpeedBuffVolumn);
-
 	//player controller
-	if (glm::length(getVelocity()) < 1.0f * currentSpeedBuffVolumn) {
-		// Checking for player input and changing velocity
-		if (glfwGetKey(Window::getWindow(), GLFW_KEY_W) == GLFW_PRESS) {
-			setVelocity(getVelocity() + glm::vec3(0.0f, 1.5f * currentSpeedBuffVolumn, 0.0f));
-		}
-		if (glfwGetKey(Window::getWindow(), GLFW_KEY_S) == GLFW_PRESS) {
-			setVelocity(getVelocity() + glm::vec3(0.0f, -1.5f * currentSpeedBuffVolumn, 0.0f));
-		}
-		if (glfwGetKey(Window::getWindow(), GLFW_KEY_D) == GLFW_PRESS) {
-			setVelocity(getVelocity() + glm::vec3(1.5f * currentSpeedBuffVolumn, 0.0f, 0.0f));
-			// rotate player to face right
-		}
-		if (glfwGetKey(Window::getWindow(), GLFW_KEY_A) == GLFW_PRESS) {
-			setVelocity(getVelocity() + glm::vec3(-1.5f * currentSpeedBuffVolumn, 0.0f, 0.0f));
-			// rotate player to face left
-		}
+	// Checking for player input and changing velocity
+	if (glfwGetKey(Window::getWindow(), GLFW_KEY_W) == GLFW_PRESS) {
+		setVelocity(getVelocity() + glm::vec3(0.0f, 2.0f* currentSpeedBuffVolumn, 0.0f) * (float)deltaTime);
 	}
-	else {
-		// Checking for player input and changing velocity
-		if (glfwGetKey(Window::getWindow(), GLFW_KEY_W) == GLFW_PRESS) {
-			setVelocity(glm::vec3(0.0f, 1.5f * currentSpeedBuffVolumn, 0.0f));
-		}
-		if (glfwGetKey(Window::getWindow(), GLFW_KEY_S) == GLFW_PRESS) {
-			setVelocity(glm::vec3(0.0f, -1.5f * currentSpeedBuffVolumn, 0.0f));
-		}
-		if (glfwGetKey(Window::getWindow(), GLFW_KEY_D) == GLFW_PRESS) {
-			setVelocity(glm::vec3(1.5f * currentSpeedBuffVolumn, 0.0f, 0.0f));
-			// rotate player to face right
-		}
-		if (glfwGetKey(Window::getWindow(), GLFW_KEY_A) == GLFW_PRESS) {
-			setVelocity(glm::vec3(-1.5f * currentSpeedBuffVolumn, 0.0f, 0.0f));
-			// rotate player to face left
-		}
-	
+	if (glfwGetKey(Window::getWindow(), GLFW_KEY_S) == GLFW_PRESS) {
+		setVelocity(getVelocity() + glm::vec3(0.0f, -2.0f * currentSpeedBuffVolumn, 0.0f) * (float)deltaTime);
 	}
+	if (glfwGetKey(Window::getWindow(), GLFW_KEY_D) == GLFW_PRESS) {
+		setVelocity(getVelocity() + glm::vec3(2.0f * currentSpeedBuffVolumn, 0.0f, 0.0f) * (float)deltaTime);
+		// rotate player to face right
+	}
+	if (glfwGetKey(Window::getWindow(), GLFW_KEY_A) == GLFW_PRESS) {
+		setVelocity(getVelocity() + glm::vec3(-2.0f * currentSpeedBuffVolumn, 0.0f, 0.0f) * (float)deltaTime);
+		// rotate player to face left
+	}
+
 	if (glfwGetKey(Window::getWindow(), GLFW_KEY_Q) == GLFW_PRESS) {
 		switchWeapon();
 	}

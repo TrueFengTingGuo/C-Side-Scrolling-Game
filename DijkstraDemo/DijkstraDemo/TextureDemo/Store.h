@@ -18,7 +18,7 @@ class Store :
 	public GameObject
 {
 public:
-	Store(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements,std::string newType);
+	Store(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements,std::string newType, float newMass);
 	
 	
 	void addWeapon(Weapon* newWeapon);

@@ -157,45 +157,45 @@ void loadMap(Map* map, PlayerGameObject* player, Store* playerStore) {
 
 			//create map
 			if (map->getaLevelMap()[col][row].compare("W") == 0) {
-				mapBlock* newBlock = new mapBlock(gameObjectHandler, glm::vec3(row, -col,0.f), tex[3], 6, "mapBlock", row, col);
+				mapBlock* newBlock = new mapBlock(gameObjectHandler, glm::vec3(row, -col, 0.f), tex[3], 6, "mapBlock", 0.0f, row, col);
 				gameObjectHandler->add(newBlock);
 				tempBlock.push_back(newBlock);
 
 			}
 			else if (map->getaLevelMap()[col][row].compare("H") == 0) {
-				EnemyHelicopter* newEnemyHelicopter = new EnemyHelicopter(map,gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[1], 6, "EnemyHelicopter", 1.0, 1, 1, 10.0f);
-				Weapon* testWeapon = new Weapon(gameObjectHandler, newEnemyHelicopter->getPosition(), tex[4], 6, "Weapon", "Pistol", tex[5], 1000.0f, 999999, 0,1, "EnemyBullet",2.0f, newEnemyHelicopter);
+				EnemyHelicopter* newEnemyHelicopter = new EnemyHelicopter(map, gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[1], 6, "EnemyHelicopter", 3.0f, 1.0, 1, 1, 10.0f);
+				Weapon* testWeapon = new Weapon(gameObjectHandler, newEnemyHelicopter->getPosition(), tex[4], 6, "Weapon", 0.0f, "Pistol", tex[23], 500.0f, 999999, 0, 1, "EnemyBullet", 2.0f, newEnemyHelicopter);
 				gameObjectHandler->add(newEnemyHelicopter);
 				newEnemyHelicopter->addWeapon(testWeapon);
 				tempBlock.push_back(newEnemyHelicopter);
 			}
 			else if (map->getaLevelMap()[col][row].compare("B") == 0) {
-				Boss* newBoss = new Boss(map, gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[1], 6, "Boss", 1.0, 1, 10, 10.0f);
-				Weapon* testWeapon = new Weapon(gameObjectHandler, newBoss->getPosition(), tex[4], 6, "Weapon", "Pistol", tex[5], 100.0f, 999999, 0,1, "EnemyBullet",2.0f, newBoss);
+				Boss* newBoss = new Boss(map, gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[1], 6, "Boss",20.0f,1.0, 1, 10, 10.0f);
+				Weapon* testWeapon = new Weapon(gameObjectHandler, newBoss->getPosition(), tex[4], 6, "Weapon", 0.0f, "Pistol", tex[5], 100.0f, 999999, 0,1, "EnemyBullet",2.0f, newBoss);
 				gameObjectHandler->add(newBoss);
 				newBoss->addWeapon(testWeapon);
 				tempBlock.push_back(newBoss);
 			}
 			else if (map->getaLevelMap()[col][row].compare("E") == 0) {
-				mapBlock* newBlock = new mapBlock(gameObjectHandler, glm::vec3(row, -col, 0.f), tex[18], 6, "endBlock", row, col);
+				mapBlock* newBlock = new mapBlock(gameObjectHandler, glm::vec3(row, -col, 0.f), tex[18], 6, "endBlock",0.0f, row, col);
 				gameObjectHandler->add(newBlock);
 				tempBlock.push_back(newBlock);
 			}
 			else if (map->getaLevelMap()[col][row].compare("T") == 0) {
-				Turret* newTurret = new Turret(map, gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[19], 6, "Turret", 1.0, 1, 2, 10.0f);
-				Weapon* testWeapon = new Weapon(gameObjectHandler, newTurret->getPosition(), tex[20], 6, "Weapon", "Pistol", tex[5], 1000.0f, 999999, 0, 1,"EnemyBullet", 2.0f, newTurret);
+				Turret* newTurret = new Turret(map, gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[19], 6, "Turret", 0.0f, 1.0, 1, 2, 10.0f);
+				Weapon* testWeapon = new Weapon(gameObjectHandler, newTurret->getPosition(), tex[20], 6, "Weapon", 0.0f, "Pistol", tex[23], 500.0f, 999999, 0, 1, "EnemyBullet", 2.0f, newTurret);
 				gameObjectHandler->add(newTurret);
 				newTurret->addWeapon(testWeapon);
 				tempBlock.push_back(newTurret);
 			}
 			else if (map->getaLevelMap()[col][row].compare("P") == 0) {
-				GameObject* powerup = new GameObject(gameObjectHandler, glm::vec3(row, -col, 0.f), tex[0], 6, "powerUp");
+				GameObject* powerup = new GameObject(gameObjectHandler, glm::vec3(row, -col, 0.f), tex[0], 6, "powerUp",0.0f);
 				gameObjectHandler->add(powerup);
 				tempBlock.push_back(powerup);
 			}
 			else if (map->getaLevelMap()[col][row].compare("F") == 0) {
-				Rock* newRock = new Rock(map, gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[21], 6, "Rock", 1.0, 1, 5, 10.0f);
-				Weapon* testWeapon = new Weapon(gameObjectHandler, newRock->getPosition(), tex[20], 6, "Weapon", "Pistol", tex[5], 1000.0f, 999999, 0,1, "EnemyBullet", 2.0f, newRock);
+				Rock* newRock = new Rock(gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[21], 6, "Rock", 15.0f, 1.0, 1, 2, 10.0f);
+				Weapon* testWeapon = new Weapon(gameObjectHandler, newRock->getPosition(), tex[20], 6, "Weapon", 0.0f, "Pistol", tex[5], 1000.0f, 999999, 0, 1, "EnemyBullet", 2.0f, newRock);
 				newRock->addWeapon(testWeapon);
 				gameObjectHandler->add(newRock);
 				tempBlock.push_back(newRock);
@@ -270,19 +270,19 @@ int main(void){
 
 		//adding player
 		glm::vec3 DefaultPosition = glm::vec3(0.0f, 0.0f, 0.0f);
-		PlayerGameObject* player = new PlayerGameObject(gameObjectHandler, DefaultPosition, tex[1], 6, tex, "Player", 1, 1, 1);
+		PlayerGameObject* player = new PlayerGameObject(gameObjectHandler, DefaultPosition, tex[1], 6, tex, "Player", 2.0f, 1, 1, 1);
 		gameObjectHandler->add(player);
 
-		Weapon* testWeapon = new Weapon(gameObjectHandler, DefaultPosition, tex[4], 6, "Weapon", "Pistol", tex[5], 100.0f, 100000, 0, 1,"PlayerBullet", 5.0f,player);
-		player->addWeapon(testWeapon);
+		Weapon* basicWeapon = new Weapon(gameObjectHandler, DefaultPosition, tex[4], 6, "Weapon", 0.0f, "Pistol", tex[0], 100.0f, 100000, 0, 1, "PlayerBullet", 5.0f, player);
+		player->addWeapon(basicWeapon);
 
 		//adding store (store must init after the player)
-		Store* gameStore = new Store(gameObjectHandler, glm::vec3(0.0f, 0.0f, 0.0f), tex[0], 6, "Store");
+		Store* gameStore = new Store(gameObjectHandler, glm::vec3(0.0f, 0.0f, 0.0f), tex[0], 6, "Store",0.0f);
 		
 		
 		//Adding All Weapons here!!!!!!!!!!!!!!!!!!!!!!!!!!
-		gameStore->addWeapon(new Weapon(gameObjectHandler, DefaultPosition, tex[16], 6, "Weapon", "Rifle", tex[5], 70.0f, 20,20,3, "PlayerBullet",10.0f, gameObjectHandler->getPlayer()));
-		gameStore->addWeapon(new Weapon(gameObjectHandler, DefaultPosition, tex[17], 6, "Weapon", "SMG", tex[5], 50.0f, 50, 30,1, "PlayerBullet",7.0f, gameObjectHandler->getPlayer()));
+		gameStore->addWeapon(new Weapon(gameObjectHandler, DefaultPosition, tex[16], 6, "Weapon", 0.0f, "Rifle", tex[5], 70.0f, 20,20,3, "PlayerBullet",10.0f, gameObjectHandler->getPlayer()));
+		gameStore->addWeapon(new Weapon(gameObjectHandler, DefaultPosition, tex[17], 6, "Weapon", 0.0f, "SMG", tex[5], 50.0f, 50, 30,1, "PlayerBullet",7.0f, gameObjectHandler->getPlayer()));
 		gameObjectHandler->add(gameStore);
 
 		//loading map

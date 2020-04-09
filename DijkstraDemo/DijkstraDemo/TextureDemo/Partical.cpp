@@ -1,7 +1,7 @@
 #include "Partical.h"
 
-Partical::Partical(GameObjectHandler* h, glm::vec3& entityPosition, GLuint entityTexture, GLint entityNumElements, std::string newType, glm::vec4 newps_color)
-	: GameObject(h, entityPosition, entityTexture, entityNumElements, newType) {
+Partical::Partical(GameObjectHandler* h, glm::vec3& entityPosition, GLuint entityTexture, GLint entityNumElements, std::string newType, float newMass, glm::vec4 newps_color)
+	: GameObject(h, entityPosition, entityTexture, entityNumElements, newType, newMass) {
 
 	ps_color = newps_color;
 }

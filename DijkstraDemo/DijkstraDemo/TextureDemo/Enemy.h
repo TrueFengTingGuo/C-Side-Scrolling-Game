@@ -6,7 +6,7 @@ class Enemy :public AliveGameObject
 {
 
 public:
-	Enemy(GameObjectHandler* newh, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string newType,float newHealth, float newDamage, int newLevel, float newSpottingRange);
+	Enemy(GameObjectHandler* newh, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string newType, float newMass,float newHealth, float newDamage, int newLevel, float newSpottingRange);
 
 
 protected:

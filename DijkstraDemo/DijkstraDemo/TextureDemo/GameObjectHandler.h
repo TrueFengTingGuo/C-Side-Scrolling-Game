@@ -55,5 +55,7 @@ private:
 	std::vector<GameObject*> gameObjects;
 	std::vector<Partical*> particals;
 	void CleanOutOfRangeGameObject();
+
+	float collisionReslove(GameObject* objectA, GameObject* objectB);
 	
 };

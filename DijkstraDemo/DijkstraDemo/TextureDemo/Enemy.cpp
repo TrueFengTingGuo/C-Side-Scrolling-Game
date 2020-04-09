@@ -2,8 +2,8 @@
 #include "Window.h"
 
 
-Enemy::Enemy(GameObjectHandler* newh, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string myType,float newHealth, float newDamage, int newLevel,float newSpottingRange)
-	: AliveGameObject(newh, entityPos, entityTexture, entityNumElements, myType, newHealth, newDamage, newLevel) {
+Enemy::Enemy(GameObjectHandler* newh, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string myType, float newMass,float newHealth, float newDamage, int newLevel,float newSpottingRange)
+	: AliveGameObject(newh, entityPos, entityTexture, entityNumElements, myType,newMass, newHealth, newDamage, newLevel) {
 	
 	spottingRange = newSpottingRange;
 }

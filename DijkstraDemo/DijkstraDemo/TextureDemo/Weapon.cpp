@@ -1,8 +1,8 @@
 #include "Weapon.h"
 #include "AliveGameObject.h"
 
-Weapon::Weapon(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string newType, std::string newWeaponName,GLuint newBulletTexture, float fr, int a, int c,int weaponDamage, std::string bt, float newBulletSpeed, AliveGameObject* o)
-	: GameObject(h, entityPos, entityTexture, entityNumElements, newType)
+Weapon::Weapon(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string newType, float newMass, std::string newWeaponName,GLuint newBulletTexture, float fr, int a, int c,int weaponDamage, std::string bt, float newBulletSpeed, AliveGameObject* o)
+	: GameObject(h, entityPos, entityTexture, entityNumElements, newType,newMass)
 {
 	fireRate = fr;
 	cooldown = fr;
@@ -19,7 +19,7 @@ Weapon::Weapon(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture,
 
 //copy weapon object from store to player
 Weapon::Weapon(Weapon& w)
-	: GameObject(w.handler, w.position, w.texture, w.numElements,w.type)
+	: GameObject(w.handler, w.position, w.texture, w.numElements,w.type, w.mass)
 {
 	fireRate = w.fireRate;
 	cooldown = w.cooldown;
@@ -76,10 +76,15 @@ void Weapon::fire() {
 	 // temp bullet damage (same problem as texture)
 	glm::vec3 bulletPosition = glm::vec3(position + rotation);
 
-	Bullet* newBullet = new Bullet(handler, bulletPosition, BulletTexture, numElements, bulletType, bulletDamage, bulletType);
+	Bullet* newBullet = new Bullet(handler, bulletPosition, BulletTexture, numElements, bulletType,20.0f,bulletDamage, bulletType);
 
 	// Bullet velocity
 	newBullet->setVelocity(bulletSpeed * glm::vec3(cos(3.14159265 / 360 * 2 * orientation), sin(3.14159265 / 360 * 2 * orientation), 0.0f));
+	
+	//set impluse to owner
+	float objectA_reverseMass = owner->getReverseMass() * 0.1f;
+	owner->setVelocity(owner->getVelocity() - objectA_reverseMass * newBullet->getVelocity());
+
 	newBullet->setOrientation(orientation);
 	handler->add(newBullet);
 

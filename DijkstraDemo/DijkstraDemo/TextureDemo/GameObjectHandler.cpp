@@ -38,10 +38,11 @@ void GameObjectHandler::update(double deltaTime) {
 
 						//bullet vs Enemy
 						if ((otherGameObject->getType().compare("EnemyHelicopter") == 0|| otherGameObject->getType().compare("Turret") == 0) && otherGameObject->getActive() == true) {
-							 gameObjects.erase(gameObjects.begin() + i); // remove bullet
-
+							
+							gameObjects.erase(gameObjects.begin() + i); // remove bullet
+							 collisionReslove(currentGameObject, otherGameObject);
    							((Enemy*)otherGameObject)->hurt(((Bullet*)currentGameObject)->getDamage());
-							particals.push_back(new Partical(this, currentGameObject->getPosition(), savedTex[24], 6, "Partical", glm::vec4(0.2f, 1.0f, 1.0f, 1.0f)));
+							particals.push_back(new Partical(this, currentGameObject->getPosition(), savedTex[24], 6, "Partical",0.0f, glm::vec4(0.2f, 1.0f, 1.0f, 1.0f)));
 							
 
 							// enemy dies 
@@ -72,7 +73,7 @@ void GameObjectHandler::update(double deltaTime) {
 						if (otherGameObject->getType().compare("Boss") == 0 && otherGameObject->getActive() == true) {
 							gameObjects.erase(gameObjects.begin() + i); // remove bullet
 
-							
+							collisionReslove(currentGameObject, otherGameObject);
 							((Enemy*)otherGameObject)->hurt(((Bullet*)currentGameObject)->getDamage());
 
 							// enemy dies 
@@ -87,7 +88,7 @@ void GameObjectHandler::update(double deltaTime) {
 						if (otherGameObject->getType().compare("mapBlock") == 0) {
 
 							gameObjects.erase(gameObjects.begin() + i);
-							particals.push_back(new Partical(this, currentGameObject->getPosition(), savedTex[22], 6, "Partical", glm::vec4(0.2f, 1.0f, 1.0f, 1.0f)));
+							particals.push_back(new Partical(this, currentGameObject->getPosition(), savedTex[22], 6, "Partical",0.0f, glm::vec4(0.2f, 1.0f, 1.0f, 1.0f)));
 							break;
 						}
 					}
@@ -98,7 +99,8 @@ void GameObjectHandler::update(double deltaTime) {
 						if (otherGameObject->getType().compare("mapBlock") == 0) {
 
 							//set to reversed velcoity
-							((PlayerGameObject*)currentGameObject)->reverseVelocity(deltaTime);
+							collisionReslove(currentGameObject, otherGameObject);
+							//((PlayerGameObject*)currentGameObject)->reverseVelocity(deltaTime);
 							
 						}
 
@@ -111,7 +113,7 @@ void GameObjectHandler::update(double deltaTime) {
 
 						if (otherGameObject->getType().compare("powerUp") == 0) {
 
-							((PlayerGameObject*)currentGameObject)->setSpeedBuffTime(3.0f);
+							((PlayerGameObject*)currentGameObject)->setSpeedBuffTime(1.0f);
 
 						}
 
@@ -134,8 +136,9 @@ void GameObjectHandler::update(double deltaTime) {
 
 						if (otherGameObject->getType().compare("Player") == 0) {
 
+							collisionReslove(currentGameObject, otherGameObject);
 							gameObjects.erase(gameObjects.begin() + i);
-							particals.push_back(new Partical(this, currentGameObject->getPosition(), savedTex[23], 6, "Partical", glm::vec4(0.2f, 1.0f, 1.0f, 1.0f)));
+							particals.push_back(new Partical(this, currentGameObject->getPosition(), savedTex[23], 6, "Partical",0.0f, glm::vec4(0.2f, 1.0f, 1.0f, 1.0f)));
 							break;
 						}
 					}
@@ -145,7 +148,7 @@ void GameObjectHandler::update(double deltaTime) {
 						if (otherGameObject->getType().compare("mapBlock") == 0) {
 
 							//set to reversed velcoity
-							((PlayerGameObject*)currentGameObject)->reverseVelocity(deltaTime);
+							collisionReslove(currentGameObject, otherGameObject);
 						}
 					}
 						
@@ -299,6 +302,36 @@ void GameObjectHandler::CleanOutOfRangeGameObject() {
 	}
 }
 
+float GameObjectHandler::collisionReslove(GameObject* objectA, GameObject* objectB) {
+
+	glm::vec3 relativeV = objectB->getVelocity() - objectA->getVelocity();
+	glm::vec3 normal = objectB->getPosition() - objectA->getPosition();
+	float velN = glm::dot(relativeV, normal);
+
+
+	if (velN > 0.0f) {
+		return 0;
+	}
+
+	float e = glm::min(objectA->getRestitution(), objectB->getRestitution());
+	//float e = objectA->getRestitution()+ objectB->getRestitution();
+	float j = -(1 + e) * velN;
+
+	float objectA_reverseMass = objectA->getReverseMass();
+	float objectB_reverseMass = objectB->getReverseMass();
+
+	float sumOfReverseMass = objectA_reverseMass + objectB_reverseMass;
+	if (sumOfReverseMass != 0) {
+		j /= sumOfReverseMass;
+	}
+
+	glm::vec3 impluse = j * normal;
+	objectA->setVelocity(objectA->getVelocity() - impluse * objectA_reverseMass);
+	objectB->setVelocity(objectB->getVelocity() + impluse * objectB_reverseMass);
+
+	std::cout << j << std::endl;
+	return j;
+}
 
 
 

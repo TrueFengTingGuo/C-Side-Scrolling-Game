@@ -4,8 +4,8 @@
 	// Add the new weapon in the construtor
 	//texture list is stored localy in the store class, just enter the order number of that textrue
 
-Store::Store(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string myType)
-	: GameObject(h, entityPos, entityTexture, entityNumElements, myType) {
+Store::Store(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string myType, float newMass)
+	: GameObject(h, entityPos, entityTexture, entityNumElements, myType, newMass) {
 	glm::vec3 DefaultPosition = glm::vec3(0.0f, 0.0f, 0.0f);
 
 

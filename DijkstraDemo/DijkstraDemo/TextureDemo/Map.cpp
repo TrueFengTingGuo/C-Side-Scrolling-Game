@@ -78,8 +78,7 @@ bool Map::loadPartialMap(glm::vec3 playerPosition)
 	playerPositionOnTheTable.y = -round(playerPositionOnTheTable.y / inGameWallSize.y);
 
 
-	// if player is outside the map
-
+	// if player is outside the partial map
 	if (playerPositionOnTheTable.y > paritalLoadedMap_colRange.y - 2 || playerPositionOnTheTable.y < paritalLoadedMap_colRange.x + 2) {
 
 		std::cout << "outside" << std::endl;
@@ -87,7 +86,6 @@ bool Map::loadPartialMap(glm::vec3 playerPosition)
 
 
 		twoDTemp.clear();
-
 
 		//limit all searching range
 		int colEnd = playerPositionOnTheTable.y + col_searching_range;

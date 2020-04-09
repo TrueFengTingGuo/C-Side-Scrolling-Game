@@ -8,7 +8,7 @@ class Weapon :
 	public GameObject
 {
 public:
-		Weapon(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string newType, std::string newWeaponName, GLuint newBulletTexture, float fr, int a, int c, int weaponDamage,std::string bt,float newBulletSpeed, AliveGameObject* o);
+		Weapon(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string newType, float newMass, std::string newWeaponName, GLuint newBulletTexture, float fr, int a, int c, int weaponDamage,std::string bt,float newBulletSpeed, AliveGameObject* o);
 		Weapon(Weapon& w);
 
 		virtual void update(double deltaTime) override;

@@ -1,11 +1,11 @@
 #include "Turret.h"
 
 
-Turret::Turret(Map* map, GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string myType, float newHealth, float newDamage, int newLevel, float newSpottingRange)
-	: Enemy(h, entityPos, entityTexture, entityNumElements, myType, newHealth, newDamage, newLevel, newSpottingRange) {
+Turret::Turret(Map* map, GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string myType, float newMass, float newHealth, float newDamage, int newLevel, float newSpottingRange)
+	: Enemy(h, entityPos, entityTexture, entityNumElements, myType, newMass, newHealth, newDamage, newLevel, newSpottingRange) {
 
 	graph = new Graph(h->getPlayer()->getPosition(), map->getaLevelMap());
-
+	objectRadius = 0.5f;
 }
 
 void Turret::update(double deltaTime)
