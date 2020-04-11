@@ -290,8 +290,9 @@ int main(void){
 		
 		
 		//Adding All Weapons here!!!!!!!!!!!!!!!!!!!!!!!!!!
-		gameStore->addWeapon(new Weapon(gameObjectHandler, DefaultPosition, tex[16], 6, "Weapon", 0.0f, "Rifle", tex[5], 1.2f, 20,5,3, "PlayerBullet",10.0f, gameObjectHandler->getPlayer()));
-		gameStore->addWeapon(new Weapon(gameObjectHandler, DefaultPosition, tex[17], 6, "Weapon", 0.0f, "SMG", tex[5], 0.3f, 50, 5,1, "PlayerBullet",6.0f, gameObjectHandler->getPlayer()));
+		gameStore->addWeapon(new Weapon(gameObjectHandler, DefaultPosition, tex[17], 6, "Weapon", 0.0f, "SMG", tex[5], 0.3f, 50, 20, 1, "PlayerBullet", 6.0f, gameObjectHandler->getPlayer()));
+		gameStore->addWeapon(new Weapon(gameObjectHandler, DefaultPosition, tex[16], 6, "Weapon", 0.0f, "Rifle", tex[5], 1.2f, 20,25,3, "PlayerBullet",10.0f, gameObjectHandler->getPlayer()));
+		
 		gameObjectHandler->add(gameStore);
 
 		//loading map

@@ -83,7 +83,7 @@ void Weapon::fire() {
 	newBullet->setVelocity(bulletSpeed * glm::vec3(cos(3.14159265 / 360 * 2 * orientation), sin(3.14159265 / 360 * 2 * orientation), 0.0f));
 	
 	//set impluse to owner
-	float objectA_reverseMass = owner->getReverseMass() * 0.2f * fireRateAmp;
+	float objectA_reverseMass = owner->getReverseMass() * 0.5f * fireRateAmp;
 	owner->setVelocity(owner->getVelocity() - objectA_reverseMass * newBullet->getVelocity());
 
 	newBullet->setOrientation(orientation);

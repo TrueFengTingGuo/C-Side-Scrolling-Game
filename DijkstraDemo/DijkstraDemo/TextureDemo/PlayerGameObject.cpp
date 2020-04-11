@@ -13,7 +13,7 @@ PlayerGameObject::PlayerGameObject(GameObjectHandler* h, glm::vec3 &entityPos, G
 	storedTex = allStoredTex;
 	currentWeapon = 0;
 	experience = 0;
-	currency = 20;
+	currency = 10;
 
 	objectRadius = 0.5f;
 
