@@ -37,5 +37,13 @@ private:
 	float currentSpeedBuffVolumn = 1.0f; //percentage
 	float speedBuffTime = 0.0f;
 
+	//switchWeapon cd
+	float switchWeaponCD = 0.1f;
+	float cuurentSwitchWeaponCD = 0.0f;
+
+
+	//dodge cd
+	float dodgeCD = 1.0f;
+	float currentdodgeCD = 0.0f;
 };
 

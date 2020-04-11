@@ -35,6 +35,8 @@ public:
 	inline void setHealth(float newHp) { hp = newHp; }
 	inline void setCurrentWeaponActiveTo(bool change) { weapons[currentWeapon]->setActive(change);}
 
+
+
 private:
 	float growingHealth = 5.0f;
 	float growingDamage = 1.0f;

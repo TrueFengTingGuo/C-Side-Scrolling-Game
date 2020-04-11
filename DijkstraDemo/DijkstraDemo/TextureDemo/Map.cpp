@@ -64,10 +64,10 @@ Map::~Map()
 }
 
 //return true if a new map is created
-bool Map::loadPartialMap(glm::vec3 playerPosition)
+bool Map::loadPartialMap(PlayerGameObject* player)
 {
 
-
+	glm::vec3 playerPosition = player->getPosition();
 	int col_searching_range = 10;
 
 	glm::vec2 inGameWallSize = glm::vec2(1.0f, 1.0f);
@@ -79,9 +79,9 @@ bool Map::loadPartialMap(glm::vec3 playerPosition)
 
 
 	// if player is outside the partial map
-	if (playerPositionOnTheTable.y > paritalLoadedMap_colRange.y - 2 || playerPositionOnTheTable.y < paritalLoadedMap_colRange.x + 2) {
+	if (playerPositionOnTheTable.y > paritalLoadedMap_colRange.y - 2 ) {
 
-		std::cout << "outside" << std::endl;
+		std::cout << "bottom outside" << std::endl;
 		//empty the partial map vector and create a new one
 
 
@@ -89,11 +89,23 @@ bool Map::loadPartialMap(glm::vec3 playerPosition)
 
 		//limit all searching range
 		int colEnd = playerPositionOnTheTable.y + col_searching_range;
-		int colStart = playerPositionOnTheTable.y - col_searching_range;
+		int colStart = playerPositionOnTheTable.y - 2;
+		
+		
 		//cout << "col before adding " << colStart << " , " << colEnd << endl;
 		if (colEnd > map_height) {
 			colEnd = map_height;
 		}
+		if (colStart < 0) {
+			colStart = 0;
+		}
+
+		int makeUpRange = 15 - (colEnd - colStart); //if range is too short
+		if (makeUpRange > 0) {
+			colStart -= makeUpRange;
+		}
+
+
 		if (colStart < 0) {
 			colStart = 0;
 		}
@@ -103,10 +115,51 @@ bool Map::loadPartialMap(glm::vec3 playerPosition)
 
 		//save the parital map range
 		paritalLoadedMap_colRange = glm::vec2(colStart, colEnd);
-
+		player->setVelocity(player->getVelocity() * 0.3f);
 		return true;
 
 	}
+	else if ( playerPositionOnTheTable.y < paritalLoadedMap_colRange.x + 2) {
+
+		std::cout << "top outside" << std::endl;
+		//empty the partial map vector and create a new one
+
+		twoDTemp.clear();
+
+		//limit all searching range
+
+		int colEnd = playerPositionOnTheTable.y + 2;
+		int colStart = playerPositionOnTheTable.y - col_searching_range;
+		
+
+		//cout << "col before adding " << colStart << " , " << colEnd << endl;
+		if (colEnd > map_height) {
+			colEnd = map_height;
+		}
+		if (colStart < 0) {
+			colStart = 0;
+		}
+
+		int makeUpRange = 15- (colEnd - colStart); //if range is too short
+
+		if (makeUpRange > 0) {
+			colEnd += makeUpRange;
+		}
+
+		if (colEnd > map_height) {
+			colEnd = map_height;
+		}
+
+		cout << colStart << " , " << colEnd << endl;
+
+
+		//save the parital map range
+		paritalLoadedMap_colRange = glm::vec2(colStart, colEnd);
+		player->setVelocity(player->getVelocity() * 0.0f);
+		return true;
+
+	}
+
 	else {
 		return false;
 	}

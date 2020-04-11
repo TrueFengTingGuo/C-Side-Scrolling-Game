@@ -58,13 +58,13 @@ protected:
 	glm::vec3 rotation;
 	float mass;
 	float reverseMass;
-	float restitution = 0.3f;
+	float restitution = 0.5f;
 	float objectRadius = 0.0f;
 	float orientation;
 	std::string  type;
 
 	bool active = true;
-	
+
 
 	// Object's details
 	GLint numElements;

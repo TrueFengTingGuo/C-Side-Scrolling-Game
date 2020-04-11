@@ -11,8 +11,11 @@ public:
 
 	void update(double deltaTime) override;
 	void render(Shader& shader) override;
+	void restPosition(float DeltaTime);
+
+	float RockDouncingTime= 0;
 private:
-	glm::vec3 nextDest;
+	glm::vec3 orignLocation;
 	int currenEndtNodeId = 0;
 	int currenStartNodeId = 0;
 	float rockMass = 0.07f;

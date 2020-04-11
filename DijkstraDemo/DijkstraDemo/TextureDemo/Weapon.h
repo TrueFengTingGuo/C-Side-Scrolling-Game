@@ -22,7 +22,7 @@ public:
 		int getCost() { return cost; }
 		int getAmmo() { return ammo; }
 		float getFireRate() { return fireRate; }
-
+		float getFireCooldown() { return cooldown; }
 		//setter
 		void setAmmo(int newAmmo) { ammo = newAmmo; }
 		void setFireRateAmp(float newFireRate) { fireRateAmp = newFireRate; }

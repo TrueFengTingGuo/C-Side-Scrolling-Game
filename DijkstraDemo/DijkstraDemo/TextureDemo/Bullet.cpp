@@ -35,7 +35,7 @@ void Bullet::render(Shader& shader) {
 void Bullet::update(double deltaTime)
 {
 	//gravity
-	glm::vec3 Accel = glm::vec3(0.0f, -0.98f, 0.0f);
+	glm::vec3 Accel = glm::vec3(0.0f, -0.38f, 0.0f);
 	glm::vec3 newVel = getVelocity() + Accel * (float)deltaTime;
 	setVelocity(newVel);
 	GameObject::update(deltaTime);

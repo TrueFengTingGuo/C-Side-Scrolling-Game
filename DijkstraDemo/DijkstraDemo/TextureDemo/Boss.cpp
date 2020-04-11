@@ -9,6 +9,9 @@ Boss::Boss(Map* map, GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTe
 
 void Boss::update(double deltaTime)
 {
+	velocity[0] *= 0.998;
+	velocity[1] *= 0.998;
+
 	//set path start
 	glm::vec2 inGameWallSize = glm::vec2(1.0f, 1.0f);
 	glm::vec3 enemyPositionOnTheTable = getPosition();
@@ -44,7 +47,7 @@ void Boss::update(double deltaTime)
 	float distanceToNextNode = glm::length(position - nextDest);
 	if (distanceToNextNode > 0.1f) { // if distance to the next node is far enough
 		//cout << "next  dest" << graph->getNode(graph->getEndId()).getX() << " ," << graph->getNode(graph->getEndId()).getY() << endl;
-		velocity = glm::normalize(nextDest - position) * 0.5f;
+		velocity += glm::normalize(nextDest - position) * (float)deltaTime;
 	}
 	else {
 		if (graph->sizeOfPathNodes() > 0) {
@@ -89,20 +92,20 @@ void Boss::update(double deltaTime)
 					float speedToDodgeBasedOnDistance = -1.0f * (distanceToDodge - 0.2f);
 					if (distanceToDodge < 4.0f) {
 
-						velocity += directionToDodge * (-10.0f) * glm::abs((glm::pow(2.0f, speedToDodgeBasedOnDistance)));
+						velocity += directionToDodge * (-5.0f) * glm::abs((glm::pow(2.0f, speedToDodgeBasedOnDistance)))* (float)deltaTime;
 
 					}
 
 				}
 
-				if (aGameObject->getType().compare("mapBlock") == 0 || aGameObject->getType().compare("endBlock") == 0) {
+				if (aGameObject->getType().compare("mapBlock") == 0 ||aGameObject->getType().compare("endBlock") == 0) {
 
 					glm::vec3 directionToDodge = aGameObject->getPosition() - position;
 					float distanceToDodge = glm::length(aGameObject->getPosition() - position);
 					float speedToDodgeBasedOnDistance = -1.0f * (distanceToDodge - 0.2f);
-					if (distanceToDodge < 2.0f) {
+					if (distanceToDodge < 1.5f) {
 
-						velocity += directionToDodge * (-5.0f) * glm::abs((glm::pow(2.0f, speedToDodgeBasedOnDistance)));
+						velocity += directionToDodge * (-0.8f) * glm::abs((glm::pow(2.0f, speedToDodgeBasedOnDistance))) * (float)deltaTime;
 
 					}
 

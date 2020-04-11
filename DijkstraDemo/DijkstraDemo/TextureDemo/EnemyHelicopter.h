@@ -10,6 +10,7 @@ public:
 	EnemyHelicopter(Map* map,GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture, GLint entityNumElements, std::string newType, float newMass, float newHealth, float newDamage, int newLevel, float newSpottingRange);
 	
 	void update(double deltaTime) override;
+	void render(Shader& shader)override;
 	void findPlayer();
 
 private:

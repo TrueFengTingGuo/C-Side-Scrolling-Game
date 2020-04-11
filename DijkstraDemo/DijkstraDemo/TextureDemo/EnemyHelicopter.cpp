@@ -71,15 +71,62 @@ void EnemyHelicopter::update(double deltaTime)
 	//fire
 	glm::vec3 playerPosition = glm::vec3(handler->getPlayer()->getPosition().x, handler->getPlayer()->getPosition().y, 0.0f);
 	float distanceToShoot = glm::length(position - playerPosition);
-	if (distanceToShoot < 2.0f) { // if distance to the next node is far enough
+	if (distanceToShoot < 4.0f) { // if distance to the next node is far enough
 
 		weapons[currentWeapon]->setOrientation(-360.0f / 3.14159265 / 2.0f * atan2(position[1] - playerPosition.y, playerPosition.x - position[0]));
 		weapons[currentWeapon]->fire();
 	}
 
+	//ability one/////////////
+	for each (GameObject * aGameObject in handler->getGameobjects())
+	{
+
+		if (aGameObject->getType().compare("mapBlock") == 0 || aGameObject->getType().compare("endBlock") == 0) {
+
+			glm::vec3 directionToDodge = aGameObject->getPosition() - position;
+			float distanceToDodge = glm::length(aGameObject->getPosition() - position);
+			float speedToDodgeBasedOnDistance = -1.0f * (distanceToDodge - 0.2f);
+			if (distanceToDodge < 2.0f) {
+
+				velocity += directionToDodge * (-0.5f) * glm::abs((glm::pow(2.0f, speedToDodgeBasedOnDistance))) * (float)deltaTime;
+
+			}
+
+		}
+	}
 	AliveGameObject::update(deltaTime);
 }
 
+
+void EnemyHelicopter::render(Shader& shader)
+{
+	if(weapons[currentWeapon]->getFireCooldown() < 0.5f) {
+
+		shader.enable();
+		shader.SetAttributes_sprite();
+
+		// Bind the entities texture
+		glBindTexture(GL_TEXTURE_2D, handler->savedTex[26]);
+
+		// Setup the transformation matrix for the shader
+		glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), getPosition());
+		glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), orientation, glm::vec3(0.0f, 0.0f, 1.0f));
+		glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.5f, 0.5f, 0.5f));
+
+
+		// Set the transformation matrix in the shader
+		glm::mat4 transformationMatrix = translationMatrix * rotationMatrix * scaleMatrix;
+		//transformationMatrix = rotationMatrix * translationMatrix  * scaleMatrix;
+		shader.setUniformMat4("transformationMatrix", transformationMatrix);
+
+		// Draw the entity
+		glDrawElements(GL_TRIANGLES, numElements, GL_UNSIGNED_INT, 0);
+
+	}
+	
+	AliveGameObject::render(shader);
+
+}
 void EnemyHelicopter::findPlayer()
 {
 

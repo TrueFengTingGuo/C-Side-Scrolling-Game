@@ -35,18 +35,19 @@ Weapon::Weapon(Weapon& w)
 
 void Weapon::update(double deltaTime) {
 
-	if(cooldown > 0) cooldown--;
+	if(cooldown > 0) cooldown-=float(deltaTime);
 	position = owner->getPosition();
 	
 }
 
 void Weapon::render(Shader &shader) {
-	// Bind the entities texture
-	glBindTexture(GL_TEXTURE_2D, texture);
 
 	shader.enable();
 	shader.SetAttributes_sprite();
-	
+
+	// Bind the entities texture
+	glBindTexture(GL_TEXTURE_2D, texture);
+
 	// Setup the transformation matrix for the shader
 	glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), position);
 	glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), orientation, glm::vec3(0.0f, 0.0f, 1.0f));
@@ -76,13 +77,13 @@ void Weapon::fire() {
 	 // temp bullet damage (same problem as texture)
 	glm::vec3 bulletPosition = glm::vec3(position + rotation);
 
-	Bullet* newBullet = new Bullet(handler, bulletPosition, BulletTexture, numElements, bulletType,20.0f,bulletDamage, bulletType);
+	Bullet* newBullet = new Bullet(handler, bulletPosition, BulletTexture, numElements, bulletType,10.0f,bulletDamage, bulletType);
 
 	// Bullet velocity
 	newBullet->setVelocity(bulletSpeed * glm::vec3(cos(3.14159265 / 360 * 2 * orientation), sin(3.14159265 / 360 * 2 * orientation), 0.0f));
 	
 	//set impluse to owner
-	float objectA_reverseMass = owner->getReverseMass() * 0.1f;
+	float objectA_reverseMass = owner->getReverseMass() * 0.2f * fireRateAmp;
 	owner->setVelocity(owner->getVelocity() - objectA_reverseMass * newBullet->getVelocity());
 
 	newBullet->setOrientation(orientation);

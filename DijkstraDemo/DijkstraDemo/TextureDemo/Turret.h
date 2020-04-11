@@ -11,6 +11,8 @@ public:
 
 	void update(double deltaTime) override;
 
+	void render(Shader& shader);
+
 
 private:
 	glm::vec3 nextDest;

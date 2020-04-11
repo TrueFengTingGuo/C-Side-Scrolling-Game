@@ -52,10 +52,11 @@ void AliveGameObject::render(Shader& shader)
 
 	int intVecSize = intVec.size();
 	float numberRenderStartFrom = intVecSize * 0.4f / 2.0f-0.2f;
-	cout << intVecSize << endl;
 
 	for (int count = 0; count < intVecSize; count++) {
 
+		shader.enable();
+		shader.SetAttributes_sprite();
 		// Bind the entities texture
 		glBindTexture(GL_TEXTURE_2D, handler->savedTex[intVec.back() + 6]);
 
@@ -84,6 +85,7 @@ void AliveGameObject::render(Shader& shader)
 		}
 
 	}
+
 	GameObject::render(shader);
 }
 

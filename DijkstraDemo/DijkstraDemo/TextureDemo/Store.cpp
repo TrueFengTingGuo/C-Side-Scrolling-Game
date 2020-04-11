@@ -52,7 +52,7 @@ void Store::buyWeapon(double x, double y)
 		if (abs(cursor_x_pos - iconStartFrom.x) < 0.4f && abs(cursor_y_pos - iconStartFrom.y) < 0.4f) {
 			
 			mouseOnTheIcon_number = count; // mouse is on an icon
-			if (glfwGetMouseButton(Window::getWindow(), GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+			if (glfwGetMouseButton(Window::getWindow(), GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
 				Weapon* thisWeapon = handler->getPlayer()->findAWeapon(weaponCollection.at(count)->getName());
 
 				if (thisWeapon == NULL) {
@@ -66,7 +66,7 @@ void Store::buyWeapon(double x, double y)
 				else {
 					if (handler->getPlayer()->getCurrency() > int(weaponCollection.at(count)->getCost() * 0.2f)) {
 						handler->getPlayer()->setCurrency(handler->getPlayer()->getCurrency() - int(weaponCollection.at(count)->getCost() * 0.2f)); // cost money to ammo
-						thisWeapon->setAmmo(thisWeapon->getAmmo() + 10); // player have the weapon so buy ammo for it
+						thisWeapon->setAmmo(thisWeapon->getAmmo() + (int)20.0f * glm::abs((pow(2.0f, -1.0f * thisWeapon->getFireRate())))); // player have the weapon so buy ammo for it
 					}
 					
 				}

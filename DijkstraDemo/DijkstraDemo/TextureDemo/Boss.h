@@ -19,9 +19,9 @@ private:
 
 
 	//ability Cooldown
-	float contiuneShootingCD = 5.0f;
-	float contiuneShootingCurrentCD = 5.0f;
-	float contiuneShootingTime = 5.0f;
-	float contiuneShootingTimeCurrent = 5.0f;
+	float contiuneShootingCD = 15.0f;
+	float contiuneShootingCurrentCD = 15.0f;
+	float contiuneShootingTime = 10.0f;
+	float contiuneShootingTimeCurrent =10.0f;
 };
 

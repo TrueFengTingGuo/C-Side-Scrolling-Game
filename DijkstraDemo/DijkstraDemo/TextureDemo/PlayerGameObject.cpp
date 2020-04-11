@@ -51,9 +51,12 @@ void PlayerGameObject::update(double deltaTime) {
 	*/
 
 	// reduce velocity
-	velocity[0] *= 0.998;
-	velocity[1] *= 0.998;
-
+	if (glm::length(velocity) > 2.0f) {
+		velocity[0] *= 0.998;
+		velocity[1] *= 0.998;
+ 
+	}
+	
 	//player controller
 	// Checking for player input and changing velocity
 	if (glfwGetKey(Window::getWindow(), GLFW_KEY_W) == GLFW_PRESS) {
@@ -71,19 +74,48 @@ void PlayerGameObject::update(double deltaTime) {
 		// rotate player to face left
 	}
 
-	if (glfwGetKey(Window::getWindow(), GLFW_KEY_Q) == GLFW_PRESS) {
-		switchWeapon();
+
+	//swetich weapon
+	if (cuurentSwitchWeaponCD <= 0.0f) {
+		if (glfwGetKey(Window::getWindow(), GLFW_KEY_Q) == GLFW_PRESS) {
+		
+			weapons[currentWeapon]->setFireRateAmp(1.0);
+			switchWeapon();
+			cuurentSwitchWeaponCD = switchWeaponCD;
+
+		}
+		
+	}
+	else {
+		cuurentSwitchWeaponCD -= deltaTime;
+	}
+
+
+	if (currentdodgeCD <= 0.0f) {
+		if (glfwGetMouseButton(Window::getWindow(), GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+
+			velocity *= 7.0f *glm::abs((pow(2.0f, -1.0f* glm::length(velocity))));
+			
+			currentdodgeCD = dodgeCD;
+
+		}
+
+	}
+	else {
+		
+		currentdodgeCD -= deltaTime;
 	}
 
 	//power up
 	if (speedBuffTime > 0) {
 	
-		currentSpeedBuffVolumn = speedBuffVolumn;
 		speedBuffTime -= deltaTime;
+		weapons[currentWeapon]->setFireRateAmp(0.2);
 
 	}
 	else {
 		currentSpeedBuffVolumn = 1.0f;
+		weapons[currentWeapon]->setFireRateAmp(1.0);
 	}
 
 	if (weapons.size() > 0) {
@@ -101,6 +133,7 @@ void PlayerGameObject::update(double deltaTime) {
 		// Fire weapon
 		if (glfwGetKey(Window::getWindow(), GLFW_KEY_SPACE) == GLFW_PRESS) {
 			weapons[currentWeapon]->fire();
+			
 		}
 
 		
@@ -195,6 +228,6 @@ void PlayerGameObject::addExperience(int tempExperience)
 	if (neededExperience < experience) {
 		hp = level * getGrowingHealth();
 		level += 1;
-		neededExperience += level * 10;
+		neededExperience += level * 5;
 	}
 }

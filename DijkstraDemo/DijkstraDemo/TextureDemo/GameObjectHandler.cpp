@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "Map.h"
 #include "Partical.h"
+#include "Rock.h"
 
 
 GameObjectHandler::GameObjectHandler(GLuint newSavedTex[]) {
@@ -20,10 +21,14 @@ void GameObjectHandler::update(double deltaTime) {
 		// Get the current object
 		GameObject* currentGameObject = gameObjects[i];
 		
-
+		if (currentGameObject->destroy) {
+			gameObjects.erase(gameObjects.begin() + i);
+			continue;
+		}
 		//if current gameobject is active
 		if (currentGameObject->getActive()) {
-
+			
+			
 			// Updates game objects
 			currentGameObject->update(deltaTime);
 
@@ -47,7 +52,7 @@ void GameObjectHandler::update(double deltaTime) {
 
 							// enemy dies 
 							if (((AliveGameObject*)otherGameObject)->getHealth() <= 0) {
-								otherGameObject->setActive(false);
+								otherGameObject->destroy = true;
 								player->setCurrency(player->getCurrency() + 2); //earn money
 								player->addExperience(10); //earn Experience
 							}
@@ -60,10 +65,10 @@ void GameObjectHandler::update(double deltaTime) {
 							gameObjects.erase(gameObjects.begin() + i); // remove bullet
 
 							((Enemy*)otherGameObject)->hurt(((Bullet*)currentGameObject)->getDamage());
-
+							particals.push_back(new Partical(this, currentGameObject->getPosition(), savedTex[27], 6, "Partical", 0.0f, glm::vec4(0.2f, 1.0f, 1.0f, 1.0f)));
 							// enemy dies 
 							if (((AliveGameObject*)otherGameObject)->getHealth() <= 0) {
-								otherGameObject->setActive(false);
+								otherGameObject->destroy = true;
 								player->setCurrency(player->getCurrency() + 10); //earn money
 								player->addExperience(10); //earn Experience
 							}
@@ -77,10 +82,10 @@ void GameObjectHandler::update(double deltaTime) {
 
 							collisionReslove(currentGameObject, otherGameObject);
 							((Enemy*)otherGameObject)->hurt(((Bullet*)currentGameObject)->getDamage());
-
+							particals.push_back(new Partical(this, currentGameObject->getPosition(), savedTex[28], 6, "Partical", 0.0f, glm::vec4(0.2f, 1.0f, 1.0f, 1.0f)));
 							// enemy dies 
 							if (((AliveGameObject*)otherGameObject)->getHealth() <= 0) {
-								otherGameObject->setActive(false);
+								otherGameObject->destroy = true;
 								player->setCurrency(player->getCurrency() + 15); //earn money
 								player->addExperience(10); //earn Experience
 							}
@@ -97,7 +102,7 @@ void GameObjectHandler::update(double deltaTime) {
 					}
 
 					//all Player
-					if (currentGameObject->getType().compare("Player") == 0) {
+					else if (currentGameObject->getType().compare("Player") == 0) {
 
 						if (otherGameObject->getType().compare("mapBlock") == 0) {
 
@@ -107,27 +112,33 @@ void GameObjectHandler::update(double deltaTime) {
 							
 						}
 
-						if (otherGameObject->getType().compare("endBlock") == 0) {
+						else if (otherGameObject->getType().compare("endBlock") == 0) {
 
 							currentGameObject->setActive(false);
 							loadMapAgain = true;
 
 						}
 
-						if (otherGameObject->getType().compare("powerUp") == 0) {
+						else if (otherGameObject->getType().compare("exitBlock") == 0) {
+
+							exit(0);
+
+						}
+						else if (otherGameObject->getType().compare("powerUp") == 0) {
 
 							((PlayerGameObject*)currentGameObject)->setSpeedBuffTime(1.0f);
 
 						}
 
-						if (otherGameObject->getType().compare("Rock") == 0|| otherGameObject->getType().compare("EnemyHelicopter") == 0 || otherGameObject->getType().compare("Turret") == 0) {
+						else if (otherGameObject->getType().compare("Rock") == 0|| otherGameObject->getType().compare("EnemyHelicopter") == 0 || otherGameObject->getType().compare("Turret") == 0 && otherGameObject->getActive() == true) {
 
 							collisionReslove(currentGameObject, otherGameObject);
 						}
+
 					}
 
 					//all EnemyBullet
-					if (currentGameObject->getType().compare("EnemyBullet") == 0) {
+					else if (currentGameObject->getType().compare("EnemyBullet") == 0) {
 						if (otherGameObject->getType().compare("mapBlock") == 0) {
 
 							gameObjects.erase(gameObjects.begin() + i);
@@ -135,7 +146,7 @@ void GameObjectHandler::update(double deltaTime) {
 							break;
 						}
 
-						if (otherGameObject->getType().compare("Player") == 0) {
+						else if (otherGameObject->getType().compare("Player") == 0) {
 
 							collisionReslove(currentGameObject, otherGameObject);
 							gameObjects.erase(gameObjects.begin() + i);
@@ -152,8 +163,8 @@ void GameObjectHandler::update(double deltaTime) {
 					}
 
 					//all boss
-					if (currentGameObject->getType().compare("Boss") == 0) {
-						if (otherGameObject->getType().compare("mapBlock") == 0) {
+					else if (currentGameObject->getType().compare("Boss") == 0) {
+						if (otherGameObject->getType().compare("mapBlock") == 0|| otherGameObject->getType().compare("endBlock") == 0) {
 
 							//set to reversed velcoity
 							collisionReslove(currentGameObject, otherGameObject);
@@ -161,11 +172,18 @@ void GameObjectHandler::update(double deltaTime) {
 					}
 					
 					//all Enmey
-					if (currentGameObject->getType().compare("EnemyHelicopter") == 0 || currentGameObject->getType().compare("Turret") == 0){
+					else if (currentGameObject->getType().compare("EnemyHelicopter") == 0 || currentGameObject->getType().compare("Turret") == 0){
 						if (otherGameObject->getType().compare("mapBlock") == 0) {
 
 							//set to reversed velcoity
 							collisionReslove(currentGameObject, otherGameObject);
+						}
+					}
+
+					else if (currentGameObject->getType().compare("Rock") == 0) {
+						if (otherGameObject->getType().compare("mapBlock") == 0) {
+							collisionReslove(currentGameObject, otherGameObject);
+							((Rock*)currentGameObject)->restPosition(deltaTime);
 						}
 					}
 
@@ -256,14 +274,15 @@ void GameObjectHandler::restMap()
 {
 	gameObjects.clear();
 	gameObjectInTableOrder.clear();
-	
+	particals.clear();
 
 }
 
 
 void GameObjectHandler::setActiveByTableCol(Map* map,int colStart, int colEnd)
 {
-	
+	glm::vec3 playerPosition = player->getPosition();
+
 	for (int col = 0; col < map->getaLevelMap().size(); col++) {
 		
 		for (int row = 0; row < map->getaLevelMap()[col].size(); row++) {
@@ -281,7 +300,6 @@ void GameObjectHandler::setActiveByTableCol(Map* map,int colStart, int colEnd)
 					if (tempGameObject->getType().compare("EnemyHelicopter") == 0|| tempGameObject->getType().compare("Boss") == 0|| tempGameObject->getType().compare("Turret") == 0) {
 						Enemy* tempEnemy = ((Enemy*)tempGameObject);
 						tempEnemy->setCurrentWeaponActiveTo(true);
-						tempEnemy->setHealth(tempEnemy->getInitHP());
 					}
 
 				}
@@ -302,7 +320,7 @@ void GameObjectHandler::setActiveByTableCol(Map* map,int colStart, int colEnd)
 
 		
 	}
-
+	player->setPosition(playerPosition);
 }
 
 void GameObjectHandler::CleanOutOfRangeGameObject() {

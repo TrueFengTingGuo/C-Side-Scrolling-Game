@@ -8,6 +8,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/glm.hpp>
 #include <vector>
+#include "PlayerGameObject.h"
 
 using namespace std;
 
@@ -17,7 +18,7 @@ public:
 
 	Map(string fileName_number);
 	~Map();
-	bool loadPartialMap(glm::vec3 playerPosition);
+	bool loadPartialMap(PlayerGameObject* player);
 
 	vector<vector<string>> getPartialMap() { return twoDTemp; }
 	vector<vector<string>> getaLevelMap() { return aLevelMap; }
