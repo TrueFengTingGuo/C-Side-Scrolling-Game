@@ -37,6 +37,7 @@ public:
 	inline GLuint& getTexture() { return texture; }
 	inline float getRestitution() { return restitution; }
 	inline float getObjectRadius() { return objectRadius; }
+	inline glm::vec3& getInitPosition() { return initPosition; }
 	// Setters
 	inline void setPosition(glm::vec3& newPosition) { position = newPosition; }
 	inline void setVelocity(glm::vec3& newVelocity) { velocity = newVelocity; }
@@ -54,6 +55,7 @@ protected:
 	// Object's Transform Variables
 	// TODO: Add more transformation variables
 	glm::vec3 position;
+	glm::vec3 initPosition;
 	glm::vec3 velocity;
 	glm::vec3 rotation;
 	float mass;

@@ -10,6 +10,7 @@ GameObject::GameObject(GameObjectHandler* h, glm::vec3 &entityPosition, GLuint e
 	handler = h;
 
 	position = entityPosition;
+	initPosition = position;
 	texture = entityTexture;
 	numElements = entityNumElements;
 	velocity = glm::vec3(0.0f, 0.0f, 0.0f);

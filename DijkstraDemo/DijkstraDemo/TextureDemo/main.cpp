@@ -150,7 +150,6 @@ void loadMap(Map* map, PlayerGameObject* player, Store* playerStore) {
 	
 	//reset
 	gameObjectHandler->restMap();
-	
 
 	//add new blocks
 	for (int col = 0; col < map->getaLevelMap().size(); col++) {
@@ -172,6 +171,7 @@ void loadMap(Map* map, PlayerGameObject* player, Store* playerStore) {
 				gameObjectHandler->add(newEnemyHelicopter);
 				newEnemyHelicopter->addWeapon(testWeapon);
 				tempBlock.push_back(newEnemyHelicopter);
+				
 			}
 			else if (map->getaLevelMap()[col][row].compare("B") == 0) {
 				Boss* newBoss = new Boss(map, gameObjectHandler, glm::vec3(row, -col, 0.0f), tex[25], 6, "Boss",300.0f,1.0, 1, 10, 10.0f);
@@ -282,7 +282,7 @@ int main(void){
 		PlayerGameObject* player = new PlayerGameObject(gameObjectHandler, DefaultPosition, tex[1], 6, tex, "Player", 2.0f, 1, 1, 1);
 		gameObjectHandler->add(player);
 
-		Weapon* basicWeapon = new Weapon(gameObjectHandler, DefaultPosition, tex[4], 6, "Weapon", 0.0f, "Pistol", tex[0], 0.8f, 100000, 0, 1, "PlayerBullet", 5.0f, player);
+		Weapon* basicWeapon = new Weapon(gameObjectHandler, DefaultPosition, tex[4], 6, "Weapon", 0.0f, "Pistol", tex[0], 0.8f, 100000, 0,1, "PlayerBullet", 5.0f, player);
 		player->addWeapon(basicWeapon);
 
 		//adding store (store must init after the player)
@@ -363,6 +363,7 @@ int main(void){
 				delete(gameMap);
 
 				gameMap = new Map(mapFileName);
+
 				loadMap(gameMap, player, gameStore);
 
 			}
@@ -371,7 +372,7 @@ int main(void){
 			// Update and render all GameObjects
 			gameObjectHandler->update(deltaTime);
 
-			
+
 			gameObjectHandler->renderPSS(pss, deltaTime);
 			gameObjectHandler->render(shader);
 ///////////////////////////////////////////////////////////////////////////////////////////////////

@@ -103,9 +103,9 @@ void Boss::update(double deltaTime)
 					glm::vec3 directionToDodge = aGameObject->getPosition() - position;
 					float distanceToDodge = glm::length(aGameObject->getPosition() - position);
 					float speedToDodgeBasedOnDistance = -1.0f * (distanceToDodge - 0.2f);
-					if (distanceToDodge < 1.5f) {
+					if (distanceToDodge < 2.5f) {
 
-						velocity += directionToDodge * (-0.8f) * glm::abs((glm::pow(2.0f, speedToDodgeBasedOnDistance))) * (float)deltaTime;
+						velocity += directionToDodge * (-0.4f) * glm::abs((glm::pow(2.0f, speedToDodgeBasedOnDistance))) * (float)deltaTime;
 
 					}
 

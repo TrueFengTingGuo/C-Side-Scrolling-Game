@@ -45,7 +45,7 @@ void Rock::render(Shader& shader)
 
 void Rock::restPosition(float DeltaTime)
 {
-	cout << RockDouncingTime << endl;
+
 	if (RockDouncingTime > 0) {
 		RockDouncingTime -= DeltaTime;
 	}

@@ -27,7 +27,6 @@ public:
 	void update(double deltaTime);
 
 	void render(Shader& shader);
-	
 	void renderPSS(Shader& shader, double deltaTime);
 
 	void add(GameObject* go);
@@ -54,8 +53,8 @@ private:
 
 	std::vector<GameObject*> gameObjects;
 	std::vector<Partical*> particals;
-	void CleanOutOfRangeGameObject();
 
+	void CleanOutOfRangeGameObject();
 	float collisionReslove(GameObject* objectA, GameObject* objectB);
 	
 };

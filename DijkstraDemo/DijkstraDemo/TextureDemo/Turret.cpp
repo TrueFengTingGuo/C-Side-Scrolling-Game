@@ -15,7 +15,7 @@ void Turret::update(double deltaTime)
 	//fire
 	glm::vec3 playerPosition = glm::vec3(handler->getPlayer()->getPosition().x, handler->getPlayer()->getPosition().y, 0.0f);
 	float distanceToShoot = glm::length(position - playerPosition);
-	if (distanceToShoot < 4.0f) { // if distance to the next node is far enough
+	if (distanceToShoot < 10.0f) { // if distance to the next node is far enough
 
 		weapons[currentWeapon]->setOrientation(-360.0f / 3.14159265 / 2.0f * atan2(position[1] - playerPosition.y, playerPosition.x - position[0]));
 		weapons[currentWeapon]->fire();

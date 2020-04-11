@@ -88,7 +88,7 @@ void EnemyHelicopter::update(double deltaTime)
 			float speedToDodgeBasedOnDistance = -1.0f * (distanceToDodge - 0.2f);
 			if (distanceToDodge < 2.0f) {
 
-				velocity += directionToDodge * (-0.5f) * glm::abs((glm::pow(2.0f, speedToDodgeBasedOnDistance))) * (float)deltaTime;
+				velocity += directionToDodge * (-0.3f) * glm::abs((glm::pow(2.0f, speedToDodgeBasedOnDistance))) * (float)deltaTime;
 
 			}
 
@@ -123,7 +123,9 @@ void EnemyHelicopter::render(Shader& shader)
 		glDrawElements(GL_TRIANGLES, numElements, GL_UNSIGNED_INT, 0);
 
 	}
-	
+
+	//std::cout << "hELICOPTER rendered  " << position.x << " , "<< position.y << std::endl;
+
 	AliveGameObject::render(shader);
 
 }

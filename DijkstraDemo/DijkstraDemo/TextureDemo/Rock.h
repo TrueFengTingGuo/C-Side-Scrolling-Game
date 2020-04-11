@@ -18,6 +18,6 @@ private:
 	glm::vec3 orignLocation;
 	int currenEndtNodeId = 0;
 	int currenStartNodeId = 0;
-	float rockMass = 0.07f;
+
 };
 
