@@ -81,14 +81,14 @@ void EnemyHelicopter::update(double deltaTime)
 	for each (GameObject * aGameObject in handler->getGameobjects())
 	{
 
-		if (aGameObject->getType().compare("mapBlock") == 0 || aGameObject->getType().compare("endBlock") == 0) {
+		if (aGameObject->getType().compare("Rock") == 0) {
 
 			glm::vec3 directionToDodge = aGameObject->getPosition() - position;
 			float distanceToDodge = glm::length(aGameObject->getPosition() - position);
 			float speedToDodgeBasedOnDistance = -1.0f * (distanceToDodge - 0.2f);
 			if (distanceToDodge < 2.0f) {
 
-				velocity += directionToDodge * (-0.3f) * glm::abs((glm::pow(2.0f, speedToDodgeBasedOnDistance))) * (float)deltaTime;
+				velocity += directionToDodge * (-2.3f) * glm::abs((glm::pow(2.0f, speedToDodgeBasedOnDistance))) * (float)deltaTime;
 
 			}
 

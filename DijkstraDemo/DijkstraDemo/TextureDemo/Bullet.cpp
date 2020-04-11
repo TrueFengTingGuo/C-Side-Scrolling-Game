@@ -10,11 +10,14 @@ Bullet::Bullet(GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTexture,
 }
 
 void Bullet::render(Shader& shader) {
-	// Bind the entities texture
-	glBindTexture(GL_TEXTURE_2D, texture);
 
 	shader.enable();
 	shader.SetAttributes_sprite();
+
+	// Bind the entities texture
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	
 
 	orientation = 360.0f / 3.14159265 / 2.0f * atan2(velocity.y, velocity.x);
 	// Setup the transformation matrix for the shader

@@ -36,7 +36,7 @@ void GameObjectHandler::update(double deltaTime) {
 			for (int j = 0; j < gameObjects.size(); j++) {
 				GameObject* otherGameObject = gameObjects[j];
 				float distance = glm::length(currentGameObject->getPosition() - otherGameObject->getPosition());
-				if (distance < 0.8f) {
+				if (distance < 1.0f) {
 
 					//player bullet
 					if (currentGameObject->getType().compare("PlayerBullet") == 0) {
@@ -186,9 +186,14 @@ void GameObjectHandler::update(double deltaTime) {
 					}
 					
 					//all Enmey
-					else if (currentGameObject->getType().compare("EnemyHelicopter") == 0 || currentGameObject->getType().compare("Turret") == 0){
+					else if (currentGameObject->getType().compare("EnemyHelicopter") == 0 ){
 						if (otherGameObject->getType().compare("mapBlock") == 0) {
 
+							//set to reversed velcoity
+							collisionReslove(currentGameObject, otherGameObject);
+						}
+						else if (otherGameObject->getType().compare("Turret") == 0) {
+						
 							//set to reversed velcoity
 							collisionReslove(currentGameObject, otherGameObject);
 						}

@@ -77,13 +77,13 @@ void Weapon::fire() {
 	 // temp bullet damage (same problem as texture)
 	glm::vec3 bulletPosition = glm::vec3(position + rotation);
 
-	Bullet* newBullet = new Bullet(handler, bulletPosition, BulletTexture, numElements, bulletType,10.0f,bulletDamage, bulletType);
+	Bullet* newBullet = new Bullet(handler, bulletPosition, BulletTexture, numElements, bulletType,5.0f,bulletDamage, bulletType);
 
 	// Bullet velocity
 	newBullet->setVelocity(bulletSpeed * glm::vec3(cos(3.14159265 / 360 * 2 * orientation), sin(3.14159265 / 360 * 2 * orientation), 0.0f));
 	
 	//set impluse to owner
-	float objectA_reverseMass = owner->getReverseMass() * 0.5f * fireRateAmp;
+	float objectA_reverseMass = owner->getReverseMass() * 0.3f * fireRateAmp;
 	owner->setVelocity(owner->getVelocity() - objectA_reverseMass * newBullet->getVelocity());
 
 	newBullet->setOrientation(orientation);

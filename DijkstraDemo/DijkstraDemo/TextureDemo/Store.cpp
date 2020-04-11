@@ -66,7 +66,7 @@ void Store::buyWeapon(double x, double y)
 				else {
 					if (handler->getPlayer()->getCurrency() > int(weaponCollection.at(count)->getCost() * 0.2f)) {
 						handler->getPlayer()->setCurrency(handler->getPlayer()->getCurrency() - int(weaponCollection.at(count)->getCost() * 0.2f)); // cost money to ammo
-						thisWeapon->setAmmo(thisWeapon->getAmmo() + (int)20.0f * glm::abs((pow(2.0f, -1.0f * thisWeapon->getFireRate())))); // player have the weapon so buy ammo for it
+						thisWeapon->setAmmo(thisWeapon->getAmmo() + (int)25.0f * glm::abs((pow(2.0f, -1.0f * thisWeapon->getFireRate())))); // player have the weapon so buy ammo for it
 					}
 					
 				}

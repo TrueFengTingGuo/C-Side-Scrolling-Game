@@ -12,7 +12,7 @@ void Rock::update(double deltaTime)
 {
 
 	//gravity
-	glm::vec3 Accel = glm::vec3(0.0f, -0.98f, 0.0f);
+	glm::vec3 Accel = glm::vec3(0.0f, -1.98f, 0.0f);
 	glm::vec3 newVel = getVelocity() + Accel * (float)deltaTime;
 	setVelocity(newVel);
 

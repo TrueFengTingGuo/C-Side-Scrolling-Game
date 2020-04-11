@@ -60,7 +60,7 @@ protected:
 	glm::vec3 rotation;
 	float mass;
 	float reverseMass;
-	float restitution = 0.5f;
+	float restitution = 0.2f;
 	float objectRadius = 0.0f;
 	float orientation;
 	std::string  type;
