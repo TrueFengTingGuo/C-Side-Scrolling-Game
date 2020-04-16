@@ -45,5 +45,9 @@ private:
 	//dodge cd
 	float dodgeCD = 1.0f;
 	float currentdodgeCD = 0.0f;
+
+	//FIRE Amp partical timing
+	bool isAmped = false;
+	Partical* fireAmpPartical = NULL;
 };
 

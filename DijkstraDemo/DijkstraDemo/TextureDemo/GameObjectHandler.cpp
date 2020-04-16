@@ -36,7 +36,7 @@ void GameObjectHandler::update(double deltaTime) {
 			for (int j = 0; j < gameObjects.size(); j++) {
 				GameObject* otherGameObject = gameObjects[j];
 				float distance = glm::length(currentGameObject->getPosition() - otherGameObject->getPosition());
-				if (distance < 1.0f) {
+				if (currentGameObject->isCollided(otherGameObject)) {
 
 					//player bullet
 					if (currentGameObject->getType().compare("PlayerBullet") == 0) {
@@ -251,16 +251,34 @@ void GameObjectHandler::render(Shader& shader) {
 	}
 }
 
+//update all pss
+void GameObjectHandler::updatePSS(double deltaTime) {
+	for (int i = 0; i < particals.size(); i++) {
+		Partical* currentGameObject = particals[i];
+		currentGameObject->update(deltaTime);
+	}
+}
+
 // Renders all game objects
-void GameObjectHandler::renderPSS(Shader& shader, double deltaTime) {
+void GameObjectHandler::renderPSS(Shader& shader1, Shader& shader2, double deltaTime) {
 
 	for (int i = 0; i < particals.size(); i++) {
 		// Get the current object
 		Partical* currentGameObject = particals[i];
 
+		//destroy partical
+		if (currentGameObject->destroy) {
+			particals.erase(particals.begin() + i);
+		}
 
-		// Render game objects
-		currentGameObject->render(shader, deltaTime);
+		if(currentGameObject->getType().compare("Partical")) {
+			// Render game objects
+			currentGameObject->render(shader2, deltaTime);
+		}
+		else if(currentGameObject->getType().compare("Partical_fire")) {
+			// Render game objects
+			currentGameObject->render(shader1, deltaTime);
+		}
 
 	}
 }
@@ -278,6 +296,11 @@ void GameObjectHandler::add(GameObject* go) {
 
 }
 
+void GameObjectHandler::addPartical(Partical* go) {
+
+	particals.push_back(go);
+
+}
 
 void GameObjectHandler::setActiveByType(std::string type,bool setBoolVar)
 {

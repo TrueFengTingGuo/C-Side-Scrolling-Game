@@ -47,7 +47,7 @@ const glm::vec3 viewport_background_color_g(0.15, 0.17, 0.21);
 
 
 // Global texture info
-GLuint tex[30];
+GLuint tex[35];
 
 // Global game object info
 GameObjectHandler* gameObjectHandler;
@@ -112,7 +112,7 @@ void setthisTexture(GLuint w, char *fname){
 }
 
 void setallTexture(void){
-	glGenTextures(29, tex);
+	glGenTextures(30, tex);
 	setthisTexture(tex[0], "orb.png");
 	setthisTexture(tex[1], "helicopter.jpg");
 	setthisTexture(tex[2], "bullet.png");
@@ -142,6 +142,7 @@ void setallTexture(void){
 	setthisTexture(tex[26], "timeToAttackText.png");
 	setthisTexture(tex[27], "rock_frag.png");
 	setthisTexture(tex[28], "YellowOrb.png");
+	setthisTexture(tex[29], "helicopterPlayer.jpg");
 	glBindTexture(GL_TEXTURE_2D, tex[0]); 
 }
 
@@ -150,7 +151,8 @@ void loadMap(Map* map, PlayerGameObject* player, Store* playerStore) {
 	
 	//reset
 	gameObjectHandler->restMap();
-
+	gameObjectHandler->add(playerStore);
+	gameObjectHandler->add(player);
 	//add new blocks
 	for (int col = 0; col < map->getaLevelMap().size(); col++) {
 
@@ -235,8 +237,7 @@ void loadMap(Map* map, PlayerGameObject* player, Store* playerStore) {
 	}
 
 	player->setActive(true);
-	gameObjectHandler->add(playerStore);
-	gameObjectHandler->add(player);
+	
 
 }
 // Main function that builds and runs the game
@@ -251,6 +252,7 @@ int main(void){
 		// Set up shaders
 		Shader shader("shader.vert", "shader.frag", true);
 		Shader pss("ps_shader.vert", "shader.frag", true);
+		Shader firepss("ps_shader_fire.vert", "shader.frag", true);
 
 		// Set up z-buffer for rendering
 		glEnable(GL_DEPTH_TEST);
@@ -276,13 +278,15 @@ int main(void){
 		////////////////////////////These are implemented ////////////////////////////
 		Map *gameMap = new Map("Map_1.csv");	
 		gameObjectHandler = new GameObjectHandler(tex);
+		bool pause = false;
+		double pasueCD = 0;
 
 		//adding player
 		glm::vec3 DefaultPosition = glm::vec3(0.0f, 0.0f, 0.0f);
-		PlayerGameObject* player = new PlayerGameObject(gameObjectHandler, DefaultPosition, tex[1], 6, tex, "Player", 2.0f, 1, 1, 1);
+		PlayerGameObject* player = new PlayerGameObject(gameObjectHandler, DefaultPosition, tex[29], 6, tex, "Player", 2.0f, 1, 1, 1);
 		gameObjectHandler->add(player);
 
-		Weapon* basicWeapon = new Weapon(gameObjectHandler, DefaultPosition, tex[4], 6, "Weapon", 0.0f, "Pistol", tex[0], 0.8f, 100000, 0,1, "PlayerBullet", 5.0f, player);
+		Weapon* basicWeapon = new Weapon(gameObjectHandler, DefaultPosition, tex[4], 6, "Weapon", 0.0f, "Pistol", tex[5], 0.8f, 100000, 0,1, "PlayerBullet", 5.0f, player);
 		player->addWeapon(basicWeapon);
 
 		//adding store (store must init after the player)
@@ -331,6 +335,8 @@ int main(void){
 			pss.enable();
 			pss.setUniformMat4("viewMatrix", viewMatrix);
 
+			firepss.enable();
+			firepss.setUniformMat4("viewMatrix", viewMatrix);
 
 			cameraZoom = mult * 0.05f;
 			mod = 13 / mult;  //allows you to play with the size of the graph by changing mult before running
@@ -369,11 +375,31 @@ int main(void){
 			}
 
 
+			//pause the game
+			if (pasueCD < 0.0f) {
+				if (glfwGetKey(Window::getWindow(), GLFW_KEY_P) == GLFW_PRESS) {
+					pause = !pause;
+					pasueCD = 0.5;
+				}
+			}
+			else {
+				pasueCD -= deltaTime;
+			}
+
+			if(pause){
+				deltaTime *= 0;
+			}
+			else {
+				deltaTime *= 1;
+			}
+
+
+
 			// Update and render all GameObjects
 			gameObjectHandler->update(deltaTime);
+			gameObjectHandler->updatePSS(deltaTime);
 
-
-			gameObjectHandler->renderPSS(pss, deltaTime);
+			gameObjectHandler->renderPSS(pss, firepss, deltaTime);
 			gameObjectHandler->render(shader);
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

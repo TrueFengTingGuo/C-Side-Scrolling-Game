@@ -157,5 +157,8 @@
     <None Include="ps_shader.vert">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="ps_shader_fire.vert">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

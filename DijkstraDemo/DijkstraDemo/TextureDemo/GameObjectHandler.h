@@ -27,9 +27,11 @@ public:
 	void update(double deltaTime);
 
 	void render(Shader& shader);
-	void renderPSS(Shader& shader, double deltaTime);
+	void updatePSS(double deltaTime);
+	void renderPSS(Shader& shader1, Shader& shader2, double deltaTime);
 
 	void add(GameObject* go);
+	void addPartical(Partical* go);
 	void setActiveByType(std::string type, bool setBoolVar);
 	void deleteByType(std::string type);
 	void restMap();

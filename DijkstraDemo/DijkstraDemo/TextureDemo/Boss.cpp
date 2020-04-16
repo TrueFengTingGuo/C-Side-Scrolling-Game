@@ -3,7 +3,7 @@ Boss::Boss(Map* map, GameObjectHandler* h, glm::vec3& entityPos, GLuint entityTe
 	: Enemy(h, entityPos, entityTexture, entityNumElements, myType,newMass, newHealth, newDamage, newLevel, newSpottingRange) {
 
 	graph = new Graph(h->getPlayer()->getPosition(), map->getaLevelMap());
-
+	objectRadius = 0.5f;
 }
 
 

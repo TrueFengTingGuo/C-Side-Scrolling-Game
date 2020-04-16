@@ -56,7 +56,7 @@ void Store::buyWeapon(double x, double y)
 				Weapon* thisWeapon = handler->getPlayer()->findAWeapon(weaponCollection.at(count)->getName());
 
 				if (thisWeapon == NULL) {
-					if (handler->getPlayer()->getCurrency() > weaponCollection.at(count)->getCost()) {
+					if (handler->getPlayer()->getCurrency() >= weaponCollection.at(count)->getCost()) {
 						Weapon* newWeapon = new Weapon(*weaponCollection.at(count)); // used copy constructor
 						newWeapon->setActive(false);
 						handler->getPlayer()->setCurrency(handler->getPlayer()->getCurrency() - weaponCollection.at(count)->getCost()); // cost money to buy the weapon
@@ -137,6 +137,42 @@ void Store::render(Shader& shader) {
 
 		// Draw the entity
 		glDrawElements(GL_TRIANGLES, numElements, GL_UNSIGNED_INT, 0);
+
+
+		//render currency
+		vector<int> intVec;
+		int tempCost = weaponCollection.at(count)->getCost();
+		intVec.clear();
+
+		while (tempCost > 0) {
+			int digit = tempCost % 10;
+			tempCost = tempCost / 10;
+			intVec.push_back(digit);
+		}
+
+		int intVecSize = intVec.size();
+		float numberRenderStartFrom = intVecSize * 0.4f / 2.0f - 0.2f;
+
+		for (int count = 0; count < intVecSize; count++) {
+
+
+			// Bind the entities texture
+			glBindTexture(GL_TEXTURE_2D, handler->savedTex[intVec.back() + 6]);
+
+			intVec.pop_back();//take out one digit
+
+			// Setup the transformation matrix for the shader
+			glm::mat4 numberTranslationMatrix = glm::translate(glm::mat4(1.0f), getPosition() + glm::vec3(-numberRenderStartFrom + count * 0.3f, -0.5f, 0.0f));
+			glm::mat4 numberScaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.5f, 0.5f, 0.5f));
+			// Set the transformation matrix in the shader
+			glm::mat4 numberTransformationMatrix = translationMatrix * numberTranslationMatrix* numberScaleMatrix;
+			//transformationMatrix = rotationMatrix * translationMatrix  * scaleMatrix;
+			shader.setUniformMat4("transformationMatrix", numberTransformationMatrix);
+
+			// Draw the entity
+			glDrawElements(GL_TRIANGLES, numElements, GL_UNSIGNED_INT, 0);
+		}
+
 	}
 	
 }

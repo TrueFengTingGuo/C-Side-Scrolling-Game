@@ -13,20 +13,18 @@ void EnemyHelicopter::update(double deltaTime)
 
 	//set path start
 	glm::vec2 inGameWallSize = glm::vec2(1.0f, 1.0f);
+
+	//get position corresponding to the pathfinding node
 	glm::vec3 enemyPositionOnTheTable = getPosition();
 	enemyPositionOnTheTable.x = round(enemyPositionOnTheTable.x / inGameWallSize.x);
 	enemyPositionOnTheTable.y = -round(enemyPositionOnTheTable.y / inGameWallSize.y);
 	int n = graph->selectNodeUsingTable(enemyPositionOnTheTable.x, enemyPositionOnTheTable.y);
 
+	//set start of the graph
 	graph->setStart(n);	//set path start
-
-	/*if (currenStartNodeId != graph->getStartId()) {
-		currenStartNodeId = graph->getStartId();
-		if (graph->sizeOfPathNodes() > 0) {
-			nextDest = graph->popNodeFromPath(); //get next node
-		}
-
-	}*/
+	if (currenStartNodeId != n) {
+		currenStartNodeId = n;
+	}
 
 
 	//set path end
@@ -37,8 +35,9 @@ void EnemyHelicopter::update(double deltaTime)
 	n = graph->selectNodeUsingTable(playerPositionOnTheTable.x, playerPositionOnTheTable.y);
 	//cout << "target position" << graph->getNode(n).getX() << " ," << graph->getNode(n).getY() << endl;
 
+		//set path end 
 	graph->setEnd(n);
-	if (currenEndtNodeId != graph->getEndId()) {
+	if (currenEndtNodeId != graph->getEndId()|| currenStartNodeId!= graph->getStartId()) {
 		findPlayer();
 		currenEndtNodeId = graph->getEndId();
 		if (graph->sizeOfPathNodes() > 0) {//take out the starting Node
@@ -49,12 +48,15 @@ void EnemyHelicopter::update(double deltaTime)
 		}
 
 	}
-	//set path end 
+
 
 	float distanceToNextNode = glm::length(position - nextDest);
 	if (distanceToNextNode > 0.1f) { // if distance to the next node is far enough
 		//cout << "next  dest" << graph->getNode(graph->getEndId()).getX() << " ," << graph->getNode(graph->getEndId()).getY() << endl;
 		velocity += glm::normalize(nextDest - position) * (float)deltaTime;
+		if (glm::length(velocity) > 2.0f) {
+			velocity *= 0.97f;
+		}
 	}
 	else {
 		if (graph->sizeOfPathNodes() > 0) {
@@ -88,11 +90,24 @@ void EnemyHelicopter::update(double deltaTime)
 			float speedToDodgeBasedOnDistance = -1.0f * (distanceToDodge - 0.2f);
 			if (distanceToDodge < 2.0f) {
 
-				velocity += directionToDodge * (-2.3f) * glm::abs((glm::pow(2.0f, speedToDodgeBasedOnDistance))) * (float)deltaTime;
+				velocity += directionToDodge * (-5.3f) * glm::abs((glm::pow(2.0f, speedToDodgeBasedOnDistance))) * (float)deltaTime;
 
 			}
 
 		}
+		else if (aGameObject->getType().compare("mapBlock") == 0) {
+
+			glm::vec3 directionToDodge = aGameObject->getPosition() - position;
+			float distanceToDodge = glm::length(aGameObject->getPosition() - position);
+			float speedToDodgeBasedOnDistance = -1.0f * (distanceToDodge - 0.2f);
+			if (distanceToDodge < 1.5f) {
+
+				velocity += directionToDodge * (-0.3f) * glm::abs((glm::pow(2.0f, speedToDodgeBasedOnDistance))) * (float)deltaTime;
+
+			}
+
+		}
+		
 	}
 	AliveGameObject::update(deltaTime);
 }

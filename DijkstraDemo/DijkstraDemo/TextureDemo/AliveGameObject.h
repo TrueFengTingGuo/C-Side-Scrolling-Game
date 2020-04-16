@@ -2,6 +2,7 @@
 
 #include "GameObject.h"
 #include "Weapon.h"
+#include "Partical.h"
 using namespace std;
 
 class AliveGameObject :

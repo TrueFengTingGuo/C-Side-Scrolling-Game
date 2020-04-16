@@ -200,6 +200,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ps_shader.vert" />
+    <None Include="ps_shader_fire.vert" />
     <None Include="shader.frag" />
     <None Include="shader.vert" />
   </ItemGroup>

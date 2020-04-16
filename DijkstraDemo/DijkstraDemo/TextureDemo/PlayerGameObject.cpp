@@ -71,6 +71,7 @@ void PlayerGameObject::update(double deltaTime) {
 	}
 	if (glfwGetKey(Window::getWindow(), GLFW_KEY_A) == GLFW_PRESS) {
 		setVelocity(getVelocity() + glm::vec3(-2.0f * currentSpeedBuffVolumn, 0.0f, 0.0f) * (float)deltaTime);
+		
 		// rotate player to face left
 	}
 
@@ -82,7 +83,7 @@ void PlayerGameObject::update(double deltaTime) {
 			weapons[currentWeapon]->setFireRateAmp(1.0);
 			switchWeapon();
 			cuurentSwitchWeaponCD = switchWeaponCD;
-
+			
 		}
 		
 	}
@@ -97,6 +98,7 @@ void PlayerGameObject::update(double deltaTime) {
 			velocity *= 7.0f *glm::abs((pow(2.0f, -1.0f* glm::length(velocity))));
 			
 			currentdodgeCD = dodgeCD;
+			
 
 		}
 
@@ -111,9 +113,23 @@ void PlayerGameObject::update(double deltaTime) {
 	
 		speedBuffTime -= deltaTime;
 		weapons[currentWeapon]->setFireRateAmp(0.2);
+		if (!isAmped) {
+			fireAmpPartical = new Partical(handler, getPosition(), handler->savedTex[0], 6, "Partical_fire", 0.0f, glm::vec4(0.2f, 1.0f, 1.0f, 1.0f), this, 0.1f);
+			fireAmpPartical->setDontDestroyOnTime(true);
+			handler->addPartical(fireAmpPartical);
+		}
 
+		isAmped = true;
+		
 	}
 	else {
+
+		if (fireAmpPartical != NULL) {
+			isAmped = false;
+			fireAmpPartical->destroy = true;//destory partical
+		}
+		
+
 		currentSpeedBuffVolumn = 1.0f;
 		weapons[currentWeapon]->setFireRateAmp(1.0);
 	}
