@@ -153,6 +153,9 @@ void Store::render(Shader& shader) {
 		int intVecSize = intVec.size();
 		float numberRenderStartFrom = intVecSize * 0.4f / 2.0f - 0.2f;
 
+		glm::mat4 numberScaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.5f, 0.5f, 0.5f));
+		glm::mat4 numberTransformationMatrix = translationMatrix * glm::translate(glm::mat4(1.0f), getPosition() + glm::vec3(-numberRenderStartFrom, -0.5f, 0.0f)) * numberScaleMatrix;
+
 		for (int count = 0; count < intVecSize; count++) {
 
 
@@ -162,11 +165,14 @@ void Store::render(Shader& shader) {
 			intVec.pop_back();//take out one digit
 
 			// Setup the transformation matrix for the shader
-			glm::mat4 numberTranslationMatrix = glm::translate(glm::mat4(1.0f), getPosition() + glm::vec3(-numberRenderStartFrom + count * 0.3f, -0.5f, 0.0f));
-			glm::mat4 numberScaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.5f, 0.5f, 0.5f));
+			glm::mat4 numberTranslationMatrix = glm::translate(glm::mat4(1.0f),  glm::vec3(0.5f, 0.0f, 0.0f));
+
+
 			// Set the transformation matrix in the shader
-			glm::mat4 numberTransformationMatrix = translationMatrix * numberTranslationMatrix* numberScaleMatrix;
+			numberTransformationMatrix *= numberTranslationMatrix ;
 			//transformationMatrix = rotationMatrix * translationMatrix  * scaleMatrix;
+
+
 			shader.setUniformMat4("transformationMatrix", numberTransformationMatrix);
 
 			// Draw the entity
