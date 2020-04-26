@@ -22,7 +22,11 @@ There are four enemies in this game. Enemy helicopter can chase player down. As 
  
 ## Dodge Mechanics	
 
-The core gameplay is to dodge all bullets. Most of the enemies will sign before they are about to fire. The sign is shown as   in the game.  Here is an example where the enemy on the top right corner is ready to shoot. In this case, player should be alerted and ready to dodge the bullet. 
+The core gameplay is to dodge all bullets. Most of the enemies will sign before they are about to fire. The sign is shown as <img src="https://github.com/TrueFengTingGuo/C-Side-Scrolling-Game/blob/master/screenshot/dodgingmark.png" width="20" height="30" border="10" />    in the game. 
+
+<img src="https://github.com/TrueFengTingGuo/C-Side-Scrolling-Game/blob/master/screenshot/dodgingscreenshot.png" width="420" height="250" border="10" /> 
+
+Here is an example where the enemy on the top right corner is ready to shoot. In this case, player should be alerted and ready to dodge the bullet. 
 
 ## Boost Speed	
 
@@ -30,13 +34,20 @@ Sometime player may get into a sticky situation where there is not enough speed 
 
 ## Bottom left UI
 
+<img src="https://github.com/TrueFengTingGuo/C-Side-Scrolling-Game/blob/master/screenshot/currency.png" width="300" height="250" border="10" /> 
+
 Ammo is shown on the top, Currency is shown on the bottom
 
+
 ## Top right UI (store)
+
+<img src="https://github.com/TrueFengTingGuo/C-Side-Scrolling-Game/blob/master/screenshot/store.png" width="300" height="250" border="10" /> 
 
 We have store system in the game. When player has enough currency, player can press right mouse bottom on the corresponding weapon to buy a weapon. The weapon icon should stretch and shrink when player put his mouse on the icon. If player has already owned the weapon, it will buy ammo instead. There are two weapons: SMG (low damage, high fire rate), Rifle (high damage, low fire rate).
 
 ## Power Zone
+
+<img src="https://github.com/TrueFengTingGuo/C-Side-Scrolling-Game/blob/master/screenshot/Powerup.png" width="300" height="250" border="10" /> 
 
 When character touches the green area  on the map, this zone will temporally grant player’s massive attack speed and reduced recoil. Under this effect, character will have a visual effect like example on the right.
 
