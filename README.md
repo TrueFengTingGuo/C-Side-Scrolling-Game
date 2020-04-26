@@ -41,5 +41,8 @@ We have store system in the game. When player has enough currency, player can pr
 When character touches the green area  on the map, this zone will temporally grant player’s massive attack speed and reduced recoil. Under this effect, character will have a visual effect like example on the right.
 
 
+## Particle System
+
+Particles are mainly used on powerup and collision handling
 
 
