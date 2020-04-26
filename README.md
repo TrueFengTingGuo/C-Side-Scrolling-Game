@@ -1,7 +1,7 @@
 # Side Scrolling Game(C++ , OpenGL)
 
 # Project Description
- This game uses C++ and OpenGL language. In this project, all screen is direactly handled by vertex shdaers and fragment shader without use any third party editor. It features sprite rendering ,basic game physcis and particle system.
+ This game uses C++ and OpenGL language. In this project, all display is direactly handled by vertex shdaers and fragment shader without use any third party editor. It features sprite rendering ,basic game physcis and particle system.
 
 ---
 
