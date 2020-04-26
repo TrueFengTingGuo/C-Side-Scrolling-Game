@@ -286,7 +286,7 @@ int main(void){
 		PlayerGameObject* player = new PlayerGameObject(gameObjectHandler, DefaultPosition, tex[29], 6, tex, "Player", 2.0f, 1, 1, 1);
 		gameObjectHandler->add(player);
 
-		Weapon* basicWeapon = new Weapon(gameObjectHandler, DefaultPosition, tex[4], 6, "Weapon", 0.0f, "Pistol", tex[5], 0.8f, 100000, 0,1, "PlayerBullet", 5.0f, player);
+		Weapon* basicWeapon = new Weapon(gameObjectHandler, DefaultPosition, tex[4], 6, "Weapon", 0.0f, "Pistol", tex[5], 0.2f, 100000, 0,1, "PlayerBullet", 5.0f, player);
 		player->addWeapon(basicWeapon);
 
 		//adding store (store must init after the player)

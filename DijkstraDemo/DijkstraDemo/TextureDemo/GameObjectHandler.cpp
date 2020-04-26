@@ -45,7 +45,7 @@ void GameObjectHandler::update(double deltaTime) {
 						if ((otherGameObject->getType().compare("EnemyHelicopter") == 0|| otherGameObject->getType().compare("Turret") == 0) && otherGameObject->getActive() == true) {
 							
 							gameObjects.erase(gameObjects.begin() + i); // remove bullet
-							 collisionReslove(currentGameObject, otherGameObject);
+							 collisionReslove(otherGameObject, currentGameObject);
    							((Enemy*)otherGameObject)->hurt(((Bullet*)currentGameObject)->getDamage());
 							particals.push_back(new Partical(this, currentGameObject->getPosition(), savedTex[24], 6, "Partical",0.0f, glm::vec4(0.2f, 1.0f, 1.0f, 1.0f)));
 							
@@ -107,7 +107,7 @@ void GameObjectHandler::update(double deltaTime) {
 						if (otherGameObject->getType().compare("mapBlock") == 0) {
 
 							//set to reversed velcoity
-							collisionReslove(currentGameObject, otherGameObject);
+							collisionReslove(otherGameObject, currentGameObject);
 							//((PlayerGameObject*)currentGameObject)->reverseVelocity(deltaTime);
 							
 						}

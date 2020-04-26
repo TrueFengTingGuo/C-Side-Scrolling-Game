@@ -1,15 +1,15 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(459,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (TextureDemo.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Store.cpp
-C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\Store.cpp(40,21): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\Store.cpp(41,21): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\Store.cpp(48,28): warning C4018: '<': signed/unsigned mismatch
-C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\Store.cpp(69,49): warning C4244: 'argument': conversion from 'genFIType' to 'int', possible loss of data
-          with
-          [
-              genFIType=float
-          ]
-C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\Store.cpp(111,28): warning C4018: '<': signed/unsigned mismatch
-  GLM: rotate function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GameObjectHandler.cpp
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\GameObjectHandler.cpp(36,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\GameObjectHandler.cpp(205,49): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\GameObjectHandler.cpp(239,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\GameObjectHandler.cpp(256,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\GameObjectHandler.cpp(265,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\GameObjectHandler.cpp(308,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\GameObjectHandler.cpp(319,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\GameObjectHandler.cpp(343,24): warning C4018: '<': signed/unsigned mismatch
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\GameObjectHandler.cpp(345,25): warning C4018: '<': signed/unsigned mismatch
+C:\Users\guofe\Documents\GitHub\COMP-2501-Project\DijkstraDemo\DijkstraDemo\TextureDemo\GameObjectHandler.cpp(391,28): warning C4018: '<': signed/unsigned mismatch
   SOIL.lib(SOIL.obj) : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
 LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
