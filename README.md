@@ -1,7 +1,7 @@
 # Side Scrolling Game(C++ , OpenGL)
 
 # Project Description
- This game uses C++ and OpenGL language in VS 2019. In this project, all display is direactly handled by vertex shdaers and fragment shader without using any third party editor. It features sprite rendering ,basic game physcis and particle system.
+ This game using C++ and OpenGL language in VS 2019. In this project, all display is directly handled by vertex shaders and fragment shader without using any third-party editor. It features sprite rendering, basic game physics and a particle system.
 
 ---
 
